@@ -1,0 +1,2522 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>EPIC ANIME BATTLE: LEGENDARY QUESTION FIGHTER</title>
+<style>
+/* ฟอนต์ FkBurger: วางไฟล์ฟอนต์ที่ได้รับสิทธิ์ใช้งานไว้ที่ fonts/FkBurger.ttf (หรือ .otf/.woff2) ถ้าไม่มีไฟล์จะใช้ฟอนต์สำรองอัตโนมัติ */
+@font-face{
+  font-family:'FkBurger';
+  src:local('FkBurger'),local('FK Burger'),local('FkBurger Regular'),
+      url('fonts/FkBurger.woff2') format('woff2'),
+      url('fonts/FkBurger.ttf') format('truetype'),
+      url('fonts/FkBurger.otf') format('opentype');
+  font-weight:100 900; font-style:normal; font-display:swap;
+}
+@font-face{
+  font-family:'KanchaEmpty';
+  src:local('KanchaEmpty'),url('fonts/KanchaEmpty.ttf') format('truetype'),url('fonts/KanchaEmpty.otf') format('opentype');
+  font-weight:100 900; font-style:normal; font-display:swap;
+}
+:root{
+  --font:'KanchaEmpty','Leelawadee UI','Noto Sans Thai','Tahoma','Sarabun',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --bg:#05060f; --panel:rgba(8,12,36,.92); --line:#6fd8ff; --gold:#ffd24a; --red:#ff4a5e; --violet:#a46bff; --blue:#4aa8ff; --green:#3df0a0; --ink:#eef3ff; --mute:#9aa8d8;
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+html,body{margin:0}
+body{
+  font-family:var(--font); font-size:19px; line-height:1.5; color:var(--ink); min-height:100vh;
+  background:radial-gradient(1200px 700px at 50% -10%,#1b2a7a 0,#0a0e33 45%,var(--bg) 100%) fixed;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+button,input,select{font-family:inherit}
+.wrap{max-width:1040px; margin:0 auto; padding:10px 12px 40px}
+.top{display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:10px}
+.brand{font-weight:900; letter-spacing:.06em; font-size:1rem; color:var(--gold); text-shadow:0 0 12px rgba(255,200,60,.6)}
+.snd{display:flex; align-items:center; gap:8px}
+.snd input[type=range]{width:110px; accent-color:var(--gold)}
+.mini{font-size:.9rem; font-weight:800; color:var(--ink); background:rgba(255,255,255,.08); border:2px solid var(--line); border-radius:999px; padding:3px 12px; cursor:pointer}
+.mini:hover{background:rgba(111,216,255,.2)}
+:focus-visible{outline:3px solid var(--gold); outline-offset:2px}
+
+h1,h2,h3{margin:0; line-height:1.15}
+.logo{font-size:clamp(2rem,8.4vw,4.4rem); font-weight:900; font-style:italic; letter-spacing:.02em; text-transform:uppercase;
+  background:linear-gradient(180deg,#fff 10%,#ffe27a 45%,#ff8a2a 100%); -webkit-background-clip:text; background-clip:text; color:transparent;
+  filter:drop-shadow(0 4px 0 #3a0f00) drop-shadow(0 0 18px rgba(255,150,40,.55)); transform:skewX(-6deg); margin:6px 0 0}
+.logo small{display:block; font-size:.36em; letter-spacing:.34em; color:var(--blue); -webkit-text-fill-color:var(--blue); filter:none; font-style:normal}
+.tag{color:var(--ink); font-size:1.1rem; margin:4px 0 14px; opacity:.9}
+.panel{background:var(--panel); border:2px solid rgba(111,216,255,.5); border-radius:12px; box-shadow:0 0 24px rgba(74,168,255,.25), inset 0 0 30px rgba(74,168,255,.07); padding:16px}
+.panel + .panel{margin-top:14px}
+.panel h3{font-size:1.2rem; margin-bottom:6px; color:var(--gold)}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+.rules{margin:0; padding-left:1.2em; font-size:.95rem}
+.rules li{margin:3px 0}
+.lbl{font-weight:900; font-size:1.1rem}
+.field{display:block; width:100%; font-size:1.25rem; font-weight:700; color:var(--ink); padding:10px 14px; border:3px solid var(--line); border-radius:10px; background:rgba(0,0,0,.45); margin-top:6px}
+.field[aria-invalid="true"]{border-color:var(--red); background:rgba(255,74,94,.12)}
+.err{color:#ff8a98; font-weight:800; min-height:1.4em; margin:4px 0 0}
+.info{color:var(--green); font-weight:700; min-height:1.4em; margin:2px 0 0; font-size:.95rem}
+.diffs{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:8px}
+.diff{font-size:1rem; font-weight:900; padding:8px 4px; color:var(--ink); background:rgba(255,255,255,.06); border:3px solid #3a4a8a; border-radius:10px; cursor:pointer; text-align:center; line-height:1.25}
+.diff small{display:block; font-weight:600; font-size:.72rem; color:var(--mute)}
+.diff[aria-checked="true"]{border-color:var(--gold); background:rgba(255,210,74,.16); box-shadow:0 0 14px rgba(255,210,74,.45)}
+.row{display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:14px}
+.btn{font-size:1.2rem; font-weight:900; color:#2a1600; padding:10px 26px; min-height:50px; cursor:pointer;
+  background:linear-gradient(#ffe98a,#ffb02e); border:3px solid #fff3b0; border-radius:10px; box-shadow:0 0 18px rgba(255,190,50,.5),0 5px 0 #8a4d00; transition:transform .08s}
+.btn:hover:not(:disabled){transform:translateY(-2px)}
+.btn:active:not(:disabled){transform:translateY(4px); box-shadow:0 0 12px rgba(255,190,50,.5),0 1px 0 #8a4d00}
+.btn.blue{background:linear-gradient(#a8e4ff,#3aa0ff); border-color:#d8f2ff; color:#04183a; box-shadow:0 0 18px rgba(74,168,255,.55),0 5px 0 #0b3d85}
+.btn.red{background:linear-gradient(#ff8a98,#e02244); border-color:#ffd0d6; color:#fff; box-shadow:0 0 18px rgba(255,74,94,.55),0 5px 0 #7a0c20}
+.btn.ghost{background:rgba(255,255,255,.08); color:var(--ink); border-color:var(--line); box-shadow:none}
+.btn:disabled{background:#3a4066; color:#8a90b8; border-color:#59608a; box-shadow:none; cursor:not-allowed}
+
+/* stage */
+#stage{position:relative; max-width:1000px; margin:0 auto; border:3px solid #28409a; border-radius:14px; overflow:hidden; background:#02030a; box-shadow:0 0 40px rgba(74,168,255,.3)}
+.view{position:relative; line-height:0}
+#cv{display:block; width:100%; height:auto; aspect-ratio:16/9; background:#000}
+#fx{position:absolute; left:0; top:0; pointer-events:none; z-index:6}
+#hud{position:absolute; left:0; right:0; top:0; padding:8px 10px; display:grid; grid-template-columns:1fr minmax(120px,.8fr) 1fr; gap:10px; pointer-events:none; line-height:1.2; z-index:3}
+.hb .nm{font-weight:900; font-size:.95rem; text-shadow:0 2px 4px #000, 0 0 8px #000; display:flex; justify-content:space-between; gap:6px}
+.hb.r{text-align:right}
+.bar{position:relative; height:13px; margin-top:3px; background:rgba(0,0,0,.6); border:2px solid rgba(255,255,255,.75); border-radius:8px; overflow:hidden; transform:skewX(-14deg)}
+.bar i{position:absolute; left:0; top:0; bottom:0; width:100%}
+.bar .lag{background:#fff; opacity:.8; transition:width .9s .25s}
+.bar .now{transition:width .22s}
+.hp-pl .now{background:linear-gradient(#7dffc0,#14c46a)}
+.hp-bs .now{background:linear-gradient(#ff8a98,#e02244)}
+.en .now{background:linear-gradient(#a8e4ff,#3aa0ff)}
+.en.full .now{background:linear-gradient(#fff6b0,#ffb02e); animation:glow 1s infinite alternate}
+@keyframes glow{to{filter:brightness(1.5)}}
+.bar.thin{height:9px; margin-top:4px}
+.mid{text-align:center; font-weight:900; text-shadow:0 2px 4px #000,0 0 8px #000}
+.mid .lv{font-size:.82rem; color:var(--gold)}
+.timer .now{background:linear-gradient(#ffe98a,#ffb02e)}
+.timer.low .now{background:linear-gradient(#ff8a98,#e02244)}
+.chips{display:flex; gap:6px; justify-content:center; flex-wrap:wrap; margin-top:5px}
+.chip{font-size:.8rem; font-weight:900; padding:0 9px; border-radius:999px; background:rgba(0,0,0,.6); border:2px solid rgba(255,255,255,.6); white-space:nowrap}
+.chip.hot{border-color:var(--gold); color:var(--gold)}
+.chip.mult{border-color:var(--red); color:#ffb0ba}
+#banner{position:absolute; left:0; right:0; top:34%; text-align:center; pointer-events:none; z-index:5; line-height:1.1}
+#banner span{display:inline-block; font-weight:900; font-style:italic; font-size:clamp(1.6rem,7vw,4rem); letter-spacing:.04em; color:#fff;
+  text-shadow:0 0 18px var(--bc,#4aa8ff),0 0 40px var(--bc,#4aa8ff),0 4px 0 #000; -webkit-text-stroke:1.5px var(--bc,#4aa8ff); animation:ban 1.6s forwards}
+#banner small{display:block; font-size:.34em; letter-spacing:.2em; color:#fff; -webkit-text-stroke:0; font-style:normal; margin-top:4px}
+@keyframes ban{0%{opacity:0; transform:scale(2.6) skewX(-8deg)} 14%{opacity:1; transform:scale(1) skewX(-8deg)} 78%{opacity:1; transform:scale(1.04) skewX(-8deg)} 100%{opacity:0; transform:scale(1.25) skewX(-8deg)}}
+.acts{position:absolute; left:0; right:0; bottom:8px; display:flex; justify-content:space-between; padding:0 10px; pointer-events:none; z-index:4; line-height:1.2}
+.acts .btn{pointer-events:auto; font-size:1rem; padding:6px 16px; min-height:44px}
+.acts .btn small{display:block; font-size:.62rem; font-weight:700; opacity:.85}
+.btn.armed{animation:armed .35s infinite alternate; background:linear-gradient(#ff8a98,#e02244); color:#fff; border-color:#fff}
+@keyframes armed{to{transform:scale(1.1); box-shadow:0 0 34px rgba(255,74,94,.95)}}
+.btn.ready{animation:glow 1s infinite alternate}
+
+#qpanel{position:relative; z-index:2; padding:12px 14px 14px; background:linear-gradient(#0a1038,#060a22); border-top:3px solid #28409a}
+.qtop{display:flex; justify-content:space-between; gap:8px; font-weight:800; font-size:.9rem; color:var(--mute); margin-bottom:4px}
+.qtext{font-size:clamp(1.3rem,4.4vw,1.9rem); font-weight:800; margin:0; line-height:1.35; min-height:2.7em}
+.blank{display:inline-block; min-width:3.6em; border-bottom:4px solid var(--gold); margin:0 4px; text-align:center; color:var(--gold)}
+.opts{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px}
+.opt{display:flex; align-items:center; gap:10px; text-align:left; font-size:1.1rem; font-weight:800; color:var(--ink); padding:9px 12px; min-height:54px;
+  background:linear-gradient(rgba(74,168,255,.18),rgba(74,168,255,.06)); border:3px solid #3f63d6; border-radius:10px; cursor:pointer}
+.opt .k{flex:none; width:32px; height:32px; border-radius:50%; background:var(--gold); color:#2a1600; display:grid; place-items:center; font-weight:900}
+.opt:hover:not(:disabled){background:rgba(111,216,255,.28); border-color:var(--line)}
+.opt:disabled{cursor:default}
+.opt.correct{background:rgba(61,240,160,.35); border-color:var(--green)}
+.opt.wrong{background:rgba(255,74,94,.4); border-color:var(--red)}
+.opt.dim{opacity:.5}
+.opt.pop{animation:optIn .5s both}
+@keyframes optIn{0%{opacity:0; transform:translateX(-30px) scale(.8); filter:blur(8px)} 100%{opacity:1; transform:none; filter:none}}
+.qhide{opacity:0; filter:blur(10px)}
+.qshow{animation:qIn .7s both}
+@keyframes qIn{0%{opacity:0; filter:blur(12px); letter-spacing:.3em} 100%{opacity:1; filter:none; letter-spacing:0}}
+.fb{margin-top:10px; padding:10px 12px; border-radius:10px; border:3px solid; font-size:1rem}
+.fb.good{background:rgba(61,240,160,.16); border-color:var(--green)}
+.fb.bad{background:rgba(255,74,94,.16); border-color:var(--red)}
+.fb p{margin:3px 0 0}
+.fb .go{display:flex; justify-content:flex-end; margin-top:8px}
+
+/* result / board */
+.center{text-align:center}
+.big{font-size:clamp(2.6rem,12vw,4.6rem); font-weight:900; color:var(--gold); text-shadow:0 0 20px rgba(255,200,60,.6); margin:2px 0}
+.verdict{display:inline-block; font-weight:900; font-size:1.25rem; padding:4px 18px; border:3px solid; border-radius:999px}
+.verdict.pass{border-color:var(--green); color:var(--green); background:rgba(61,240,160,.14)}
+.verdict.fail{border-color:var(--red); color:#ff8a98; background:rgba(255,74,94,.14)}
+.tbl{width:100%; border-collapse:collapse; font-size:.95rem; margin-top:8px}
+.tbl th,.tbl td{border-bottom:1px solid rgba(111,216,255,.35); padding:6px 4px; text-align:left}
+.tbl th{color:var(--gold)}
+.tbl td.n,.tbl th.n{text-align:right}
+.tbl button.who{font-size:1rem; font-weight:800; background:none; color:var(--blue); border:none; text-decoration:underline; cursor:pointer; padding:0}
+.scroll{overflow-x:auto}
+.weapon{font-size:clamp(70px,22vw,120px); line-height:1.1}
+.weapon.locked{filter:brightness(0) opacity(.35)}
+.weapon.got{animation:wp .6s}
+@keyframes wp{0%{transform:scale(.3) rotate(-20deg)} 70%{transform:scale(1.2) rotate(6deg)} 100%{transform:none}}
+
+@media (max-width:700px){
+  body{font-size:17px}
+  .grid2{grid-template-columns:1fr}
+  .opts{grid-template-columns:1fr}
+  #hud{gap:6px; padding:5px 6px}
+  .hb .nm{font-size:.72rem}
+  .bar{height:9px}
+  .chip{font-size:.62rem; padding:0 6px}
+  .mid .lv{font-size:.65rem}
+  .acts{bottom:4px}
+  .acts .btn{font-size:.8rem; padding:4px 10px; min-height:38px}
+  .acts .btn small{display:none}
+  .snd input[type=range]{width:70px}
+}
+@media (max-width:420px){ .diffs{grid-template-columns:1fr 1fr} }
+@media (prefers-reduced-motion:reduce){
+  #banner span{animation-duration:1.2s}
+  .btn.armed,.btn.ready,.en.full .now{animation:none}
+}
+.stats{display:flex; flex-wrap:wrap; gap:6px; align-items:center; padding:6px 10px; background:#060a22; border-top:2px solid #1b2a6b}
+.stats .chip{font-size:.8rem}
+.chip.dev{border-color:var(--green); color:var(--green)}
+.chip.good{border-color:var(--green); color:var(--green)}
+.qprog{flex:1 1 150px; min-width:110px; display:flex; align-items:center; gap:6px; font-size:.78rem; font-weight:800; color:var(--mute)}
+.qprog .bar{flex:1; margin:0; height:10px; transform:none}
+.qprog .now{background:linear-gradient(#a8e4ff,#3aa0ff)}
+.typeTag{display:inline-block; padding:0 10px; border-radius:999px; border:2px solid var(--gold); color:var(--gold); font-weight:900; font-size:.8rem; margin-right:8px}
+.how{color:var(--mute); font-size:.92rem; margin:2px 0 6px}
+.ctx{background:rgba(255,255,255,.07); border-left:5px solid var(--gold); border-radius:8px; padding:8px 12px; margin:6px 0; font-size:1.02rem}
+.bub{max-width:90%; padding:8px 12px; border-radius:14px; margin:6px 0; font-weight:700; border:2px solid #3f63d6; background:rgba(74,168,255,.14)}
+.bub.me{margin-left:auto; background:rgba(255,210,74,.14); border-color:var(--gold)}
+.bub .who{display:block; font-size:.72rem; color:var(--mute)}
+.bank,.tiles{display:flex; flex-wrap:wrap; gap:8px; margin-top:8px}
+.tile{font:inherit; font-size:1.1rem; font-weight:900; color:var(--ink); padding:6px 14px; min-height:44px; border-radius:10px; background:linear-gradient(rgba(255,210,74,.28),rgba(255,210,74,.1)); border:3px solid var(--gold); cursor:pointer}
+.tile.used{opacity:.3}
+.slots{display:flex; flex-wrap:wrap; gap:8px; min-height:58px; padding:8px; margin-top:8px; border:3px dashed #3f63d6; border-radius:12px; background:rgba(0,0,0,.25)}
+.slots .tile{border-color:var(--green); background:rgba(61,240,160,.18)}
+.bl{display:inline-block; font:inherit; font-weight:900; color:var(--gold); min-width:3.6em; padding:0 8px; margin:0 3px; border:none; border-bottom:4px solid var(--gold); background:rgba(255,210,74,.1); cursor:pointer; text-align:center}
+.tok{font:inherit; font-size:1.2rem; font-weight:800; padding:4px 10px; margin:3px; border-radius:8px; border:3px solid #3f63d6; background:rgba(74,168,255,.12); color:var(--ink); cursor:pointer}
+.tok.sel{border-color:var(--red); background:rgba(255,74,94,.28)}
+.mcols{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:8px}
+.mi{display:block; width:100%; font:inherit; text-align:left; font-size:1rem; font-weight:800; padding:8px 10px; margin-bottom:8px; border-radius:10px; border:3px solid #3f63d6; background:rgba(74,168,255,.12); color:var(--ink); cursor:pointer; min-height:46px}
+.mi.sel{border-color:var(--gold); background:rgba(255,210,74,.22)}
+.mi.paired{border-color:var(--green); background:rgba(61,240,160,.14)}
+.pn{display:inline-grid; place-items:center; width:22px; height:22px; border-radius:50%; background:var(--green); color:#022; font-size:.8rem; margin-right:6px}
+.typein{display:flex; gap:8px; margin-top:8px; flex-wrap:wrap}
+.typein .field{flex:1 1 220px; margin:0}
+.tfrow{display:flex; gap:10px; margin-top:8px}
+.tfrow .opt{justify-content:center; flex:1}
+.stmt{font-size:1.3rem; font-weight:800; padding:8px 12px; border:3px solid #3f63d6; border-radius:10px; background:rgba(74,168,255,.1)}
+.wrongs{font-size:1.25rem; font-weight:800; padding:6px 10px; border:3px dashed var(--red); border-radius:10px; background:rgba(255,74,94,.1)}
+.act{margin-top:10px; display:flex; gap:8px; justify-content:flex-end; flex-wrap:wrap}
+.act .btn{font-size:1rem; padding:6px 20px; min-height:44px}
+.locked button,.locked input{pointer-events:none}
+#ov{position:fixed; inset:0; z-index:50; background:rgba(2,3,12,.84); overflow:auto; display:grid; place-items:center; padding:14px}
+.modal{max-width:660px; width:100%; max-height:92vh; overflow:auto}
+.modal h2{color:var(--gold); font-size:1.5rem; margin-bottom:8px; text-align:center}
+.modal p{margin:6px 0}
+.qrow{display:flex; gap:8px; align-items:flex-start; padding:6px 0; border-bottom:1px solid rgba(111,216,255,.3)}
+.qrow .st{font-weight:900; font-size:1.2rem; min-width:1.4em}
+.ok{color:var(--green)} .no{color:#ff8a98}
+.inv{display:grid; grid-template-columns:repeat(auto-fill,minmax(125px,1fr)); gap:8px; margin:6px 0 10px}
+.it{border:3px solid #3a4a8a; border-radius:10px; padding:6px; text-align:center; background:rgba(255,255,255,.05); font-size:.85rem; font-weight:800}
+.it.have{border-color:var(--green); background:rgba(61,240,160,.12)}
+.it.off{opacity:.45}
+.it .ic{font-size:1.9rem; line-height:1.2}
+.note{font-size:.85rem; color:var(--mute)}
+.advice li{margin:2px 0}
+@media (max-width:700px){ .mcols{grid-template-columns:1fr} .stats .chip{font-size:.7rem; padding:0 6px} }
+/* ===== ธีมพาสเทล ===== */
+:root{
+  --font:'FkBurger','KanchaEmpty','Leelawadee UI','Noto Sans Thai','Tahoma','Sarabun',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --bg:#fdf1fb; --panel:rgba(255,255,255,.9); --line:#b7a4ff; --gold:#ffb35c; --red:#ff8fae; --violet:#c4a8ff; --blue:#7fbaff; --green:#59cf9f; --ink:#4a4172; --mute:#8a82b0;
+}
+body{color:var(--ink); background:linear-gradient(160deg,#ffe1f0 0%,#e4ecff 48%,#d8f6ea 100%) fixed}
+.brand{color:#ff7fa6; text-shadow:0 2px 0 #fff}
+.mini{background:#fff; color:var(--ink); border-color:#cdbdff}
+.mini:hover{background:#f1e9ff}
+.snd input[type=range]{accent-color:#ff9fc0}
+.logo{background:linear-gradient(180deg,#ff9ec2 5%,#ffc98a 55%,#a98cff 100%); -webkit-background-clip:text; background-clip:text; color:transparent;
+  filter:drop-shadow(0 4px 0 #fff) drop-shadow(0 8px 12px rgba(170,130,255,.55))}
+.logo small{color:#6fa6ff; -webkit-text-fill-color:#6fa6ff}
+.tag{color:var(--ink)}
+.panel{background:var(--panel); border:3px solid #cdbdff; box-shadow:0 10px 26px rgba(160,130,230,.25); border-radius:18px}
+.panel h3,.modal h2{color:#ff7fa6}
+.field{background:#fff; border-color:#cdbdff; color:var(--ink)}
+.field[aria-invalid="true"]{border-color:#ff8fae; background:#fff0f5}
+.err{color:#d6527a} .info{color:#2a9a72}
+.diff{background:#fff; border-color:#d7caff; color:var(--ink)} .diff small{color:var(--mute)}
+.diff[aria-checked="true"]{border-color:#ffb35c; background:#fff3df; box-shadow:0 0 0 3px rgba(255,179,92,.3)}
+.btn{color:#5a3516; background:linear-gradient(#ffe6a8,#ffbf78); border-color:#fff; box-shadow:0 5px 0 #e29a52,0 8px 14px rgba(255,170,90,.35)}
+.btn:active:not(:disabled){box-shadow:0 1px 0 #e29a52}
+.btn.blue{background:linear-gradient(#d2ecff,#8fc8ff); color:#1f3f6e; box-shadow:0 5px 0 #6aa6e6,0 8px 14px rgba(110,170,240,.35)}
+.btn.red{background:linear-gradient(#ffd0de,#ff98b6); color:#6e1f3a; box-shadow:0 5px 0 #e0708f,0 8px 14px rgba(255,130,170,.35)}
+.btn.ghost{background:#fff; color:var(--ink); border-color:#cdbdff; box-shadow:0 4px 0 #d7caff}
+.btn:disabled{background:#ece7f8; color:#aaa3c8; border-color:#ddd5f2; box-shadow:none}
+.btn.armed{background:linear-gradient(#ff9fb8,#ff5f8a); color:#fff}
+#stage{border-color:#cdbdff; background:#fff; box-shadow:0 12px 34px rgba(160,130,230,.35)}
+.chip{background:rgba(255,255,255,.92); color:var(--ink); border-color:#cdbdff}
+.chip.hot{border-color:#ffb35c; color:#c06a1a} .chip.mult{border-color:#ff8fae; color:#d6527a}
+.chip.dev,.chip.good{border-color:#59cf9f; color:#2a8a62}
+.stats{background:#f6f0ff; border-top:3px solid #d7caff}
+.qprog{color:var(--mute)}
+.qprog .bar{background:#fff; border-color:#cdbdff}
+#qpanel{background:linear-gradient(#ffffff,#f7f1ff); border-top:3px solid #d7caff; color:var(--ink)}
+.qtop,.how{color:var(--mute)}
+.typeTag{border-color:#ffb35c; color:#c06a1a; background:#fff6e6}
+.blank,.bl{color:#e07a2a; border-bottom-color:#ffb35c; background:rgba(255,179,92,.12)}
+.opt{color:var(--ink); background:#fff; border-color:#d7caff; box-shadow:0 3px 0 #d7caff}
+.opt .k{background:#ffd98a; color:#5a3516}
+.opt:hover:not(:disabled){background:#f3ecff; border-color:#b7a4ff}
+.opt.correct{background:#d8f7e9; border-color:#59cf9f} .opt.wrong{background:#ffdde8; border-color:#ff8fae}
+.fb.good{background:#e3faef; border-color:#59cf9f} .fb.bad{background:#ffe6ee; border-color:#ff8fae}
+.ctx{background:#fff6e3; border-left-color:#ffc36b}
+.bub{background:#eaf3ff; border-color:#bcd8ff; color:var(--ink)} .bub.me{background:#fff3dc; border-color:#ffd08a}
+.tile{color:var(--ink); background:linear-gradient(#fff6dc,#ffe9b8); border-color:#ffc36b}
+.tile.used{opacity:.35}
+.slots{background:#faf7ff; border-color:#cdbdff} .slots .tile{border-color:#59cf9f; background:#e3faef}
+.tok{background:#fff; border-color:#cdbdff; color:var(--ink)} .tok.sel{border-color:#ff8fae; background:#ffdde8}
+.mi{background:#fff; border-color:#d7caff; color:var(--ink)} .mi.sel{border-color:#ffb35c; background:#fff3df} .mi.paired{border-color:#59cf9f; background:#e3faef}
+.pn{background:#59cf9f; color:#fff}
+.stmt{background:#eef5ff; border-color:#bcd8ff} .wrongs{background:#ffe8ef; border-color:#ff8fae}
+#ov{background:rgba(255,236,248,.78)}
+.qrow{border-bottom-color:#e3d9ff}
+.ok{color:#2a8a62} .no{color:#d6527a}
+.it{background:#fff; border-color:#e0d6ff} .it.have{border-color:#59cf9f; background:#e3faef}
+.note{color:var(--mute)}
+.big{color:#ff9a4a; text-shadow:0 3px 0 #fff,0 0 18px rgba(255,170,100,.6)}
+.verdict.pass{border-color:#59cf9f; color:#2a8a62; background:#e3faef} .verdict.fail{border-color:#ff8fae; color:#c0345c; background:#ffe6ee}
+.tbl th,.tbl td{border-bottom-color:#e3d9ff} .tbl th{color:#e07a2a} .tbl button.who{color:#5a8fe6}
+.rules{color:var(--ink)}
+#hud .nm,#hud .mid,#hud .mid .lv{color:#fff; text-shadow:0 0 3px #4a3a8a,0 2px 3px #4a3a8a,0 0 8px #4a3a8a}
+#hud .mid .lv{color:#fff3b8}
+#hud .chip{color:var(--ink); text-shadow:none}
+#hud .chip.mult{color:#d6527a}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <span class="brand">TIME TRAVELERS</span>
+    <div class="snd">
+      <button class="mini" id="btn-pause" type="button" hidden>⏸ Pause</button>
+      <button class="mini" id="btn-inv" type="button" hidden>🎒 Inventory</button>
+      <button class="mini" id="mute" type="button" aria-pressed="false">🔊</button>
+      <label class="note" for="vol-mus">เพลง</label><input id="vol-mus" type="range" min="0" max="100" value="60" aria-label="ระดับเสียงเพลง">
+      <label class="note" for="vol-sfx">เสียง</label><input id="vol-sfx" type="range" min="0" max="100" value="80" aria-label="ระดับเสียงเอฟเฟกต์">
+    </div>
+  </header>
+
+  <!-- หน้าแรก -->
+  <section id="screen-start" aria-labelledby="t-start">
+    <h1 class="logo" id="t-start">Time Travelers<small>THE PRESENT PERFECT QUEST</small></h1>
+    <p class="tag">เกมผจญภัยข้ามเวลาสำหรับนักเรียน Grade 6: ใช้ Present Perfect ซ่อมเครื่องข้ามเวลา แล้วกลับบ้าน!</p>
+    <div class="grid2">
+      <div class="panel">
+        <label class="lbl" for="pname">ชื่อนักเรียน</label>
+        <input class="field" id="pname" type="text" maxlength="30" autocomplete="off" placeholder="พิมพ์ชื่อของคุณที่นี่" aria-describedby="name-err name-info">
+        <p class="err" id="name-err" aria-live="polite"></p>
+        <p class="info" id="name-info" aria-live="polite"></p>
+        <div class="lbl" id="diff-lbl" style="margin-top:6px">ระดับความยาก</div>
+        <div class="diffs" role="radiogroup" aria-labelledby="diff-lbl" id="diffs"></div>
+        <div class="row">
+          <button class="btn" id="btn-start" type="button">เริ่มผจญภัย</button>
+          <button class="btn ghost" id="btn-board" type="button">คะแนน &amp; ประวัติ</button>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>วิธีเล่น</h3>
+        <ul class="rules">
+          <li>3 ด่าน ด่านละ 5 ข้อ รวม 15 ข้อ มีมินิเกมหลายแบบ (เติมคำ เรียงตัวอักษร เรียงประโยค จับคู่ ฯลฯ)</li>
+          <li>ตอบถูก 10 คะแนน/ข้อ (เต็ม 150) ผ่านเกณฑ์เมื่อได้ 105 คะแนนขึ้นไป (70%)</li>
+          <li>ตอบถูกสะสมครบทุก 5 ข้อ = <b>TIME MULTIPLIER CHALLENGE</b> ตัวคูณโบนัสของข้อถัดไป 1 ข้อ (ตอบถูกจึงจะได้) คะแนนโบนัสแยกจากคะแนนหลัก</li>
+          <li>ตอบผิดบอสจะโต้กลับ กด DODGE (หรือ Space) ตอนปุ่มกะพริบเพื่อลดความเสียหาย</li>
+          <li>พลังงานเต็ม กด ULTIMATE (หรือ U) ได้ ชนะบอสเพื่อรับชิ้นส่วนเครื่องข้ามเวลา 5 ชิ้นและเปิด Time Portal</li>
+          <li>คีย์ลัด: a b c d หรือ 1–4 ตอบคำถามแบบตัวเลือก, P = พัก</li>
+        </ul>
+        <p class="note">ข้อมูลคะแนนเก็บในเบราว์เซอร์ของเครื่องนี้เท่านั้น ไม่ซิงก์ข้ามอุปกรณ์</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- เกม -->
+  <section id="screen-game" hidden aria-label="หน้าต่อสู้">
+    <div id="stage">
+      <div class="view">
+        <canvas id="cv" width="960" height="540" aria-label="ฉากต่อสู้"></canvas>
+        <div id="hud">
+          <div class="hb">
+            <div class="nm"><span id="pl-name">ผู้กล้า</span><span id="pl-hpn">100</span></div>
+            <div class="bar hp-pl"><i class="lag" id="pl-lag"></i><i class="now" id="pl-now"></i></div>
+            <div class="bar thin en" id="en-bar"><i class="now" id="en-now" style="width:0"></i></div>
+          </div>
+          <div class="mid">
+            <div class="lv" id="lv-title">Stage 1</div>
+            <div class="bar thin timer" id="tm-bar"><i class="now" id="tm-now"></i></div>
+            <div class="chips"><span class="chip" id="c-combo">COMBO 0</span><span class="chip mult" id="c-mult">x1</span></div>
+          </div>
+          <div class="hb r">
+            <div class="nm"><span id="bs-hpn">0</span><span id="bs-name">BOSS</span></div>
+            <div class="bar hp-bs"><i class="lag" id="bs-lag"></i><i class="now" id="bs-now"></i></div>
+          </div>
+        </div>
+        <div id="banner" aria-live="polite"></div>
+        <div class="acts">
+          <button class="btn red" id="btn-dodge" type="button" disabled>DODGE <small>Space</small></button>
+          <button class="btn" id="btn-ult" type="button" disabled>ULTIMATE <small>U</small></button>
+        </div>
+      </div>
+      <div class="stats" id="stats">
+        <span class="chip hot" id="s-score">คะแนน 0/150</span>
+        <span class="chip good" id="s-bonus">โบนัส +0</span>
+        <span class="chip" id="s-ok">✔ 0 · ✘ 0</span>
+        <span class="chip dev" id="s-dev">🧩 0/5</span>
+        <div class="qprog"><span id="s-quest">ภารกิจ</span><div class="bar"><i class="now" id="s-qbar" style="width:0"></i></div></div>
+      </div>
+      <div id="qpanel">
+        <div class="qtop"><span id="q-meta"><span class="typeTag" id="q-type">TYPE</span>ข้อ 1 / 5</span><span id="q-time"></span></div>
+        <div class="how" id="q-how"></div>
+        <p class="qtext" id="qtext" lang="en"></p>
+        <div id="qbody"></div>
+        <div class="fb" id="fb" hidden aria-live="polite"></div>
+      </div>
+      <canvas id="fx"></canvas>
+    </div>
+  </section>
+
+  <!-- สรุปผล -->
+  <section id="screen-result" hidden aria-labelledby="t-result">
+    <div class="panel center">
+      <h2 id="t-result" style="font-size:1.6rem;color:var(--gold)">สรุปผลการผจญภัย</h2>
+      <p id="res-who" style="margin:4px 0 0;font-weight:800"></p>
+      <div class="big" id="res-score">0</div>
+      <div>คะแนนหลัก (เต็ม 150)</div>
+      <p style="margin:8px 0">โบนัส/ตัวคูณ: <strong id="res-bonus">0</strong> · คะแนนรวมรอบนี้: <strong id="res-total">0</strong></p>
+      <p style="margin:8px 0">ตอบถูก <strong id="res-correct">0</strong> · ผิด <strong id="res-wrong">0</strong> จาก 15 ข้อ (<strong id="res-pct">0%</strong>) · คอมโบสูงสุด <strong id="res-streak">0</strong></p>
+      <span class="verdict" id="res-verdict"></span>
+      <p id="res-msg" style="margin-top:10px"></p>
+      <div class="scroll"><table class="tbl" aria-label="ผลแต่ละด่าน">
+        <thead><tr><th>ด่าน</th><th class="n">ถูก</th><th class="n">หลัก</th><th class="n">โบนัส</th><th>ผล</th></tr></thead>
+        <tbody id="res-rows"></tbody>
+      </table></div>
+      <p id="res-extra" style="margin-top:10px"></p>
+      <div id="res-advice" style="text-align:left"></div>
+      <p id="res-cum" style="margin-top:10px;font-weight:800;color:var(--green)"></p>
+      <div class="row">
+        <button class="btn" id="btn-again" type="button">เล่นใหม่</button>
+        <button class="btn ghost" id="btn-board2" type="button">คะแนน &amp; ประวัติ</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ตารางคะแนน -->
+  <section id="screen-board" hidden aria-labelledby="t-board">
+    <div class="panel">
+      <h2 id="t-board" style="font-size:1.6rem;color:var(--gold);text-align:center">Leaderboard &amp; Player Records</h2>
+      <p class="note" style="text-align:center">ข้อมูลนี้เก็บเฉพาะในเบราว์เซอร์/อุปกรณ์เครื่องนี้ ไม่ซิงก์ข้ามอุปกรณ์</p>
+      <p id="board-empty" style="text-align:center;color:var(--mute)">ยังไม่มีข้อมูล เล่นให้จบแล้วผลจะถูกบันทึกที่นี่</p>
+      <div class="scroll"><table class="tbl" id="board-tbl" aria-label="อันดับผู้เล่น">
+        <thead><tr><th>#</th><th>ผู้เล่น</th><th class="n">คะแนนสะสม</th><th class="n">สูงสุด</th><th class="n">เล่น</th><th class="n">ถูก/ผิด</th><th class="n">แม่นยำ</th><th class="n">คอมโบ</th><th class="n">ภารกิจ</th></tr></thead>
+        <tbody id="board-rows"></tbody>
+      </table></div>
+    </div>
+    <div class="panel" id="hist-panel" hidden>
+      <h3 id="hist-title">ประวัติการเล่น</h3>
+      <div class="scroll"><table class="tbl" aria-label="ประวัติการเล่น">
+        <thead><tr><th>Session</th><th>วันเวลา</th><th>ระดับ</th><th class="n">หลัก</th><th class="n">โบนัส</th><th class="n">ถูก/ผิด</th><th class="n">%</th><th>ผล</th></tr></thead>
+        <tbody id="hist-rows"></tbody>
+      </table></div>
+    </div>
+    <div class="row">
+      <button class="btn blue" id="btn-csv" type="button">ดาวน์โหลด CSV</button>
+      <button class="btn red" id="btn-clear" type="button">ล้างข้อมูลทั้งหมด</button>
+      <button class="btn" id="btn-board-back" type="button">กลับ</button>
+    </div>
+  </section>
+</div>
+<div id="ov" hidden></div>
+
+<script>
+'use strict';
+/* ======================================================================
+   EPIC ANIME BATTLE: LEGENDARY QUESTION FIGHTER
+   ส่วนที่ 1: เครื่องมือพื้นฐาน, ตัวจัดตารางเวลา (tween/sleep), เสียง, ข้อมูลเกม
+   ====================================================================== */
+const $ = s => document.querySelector(s);
+const TAU = Math.PI * 2, rad = d => d * Math.PI / 180;
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const lerp = (a, b, t) => a + (b - a) * t;
+const rnd = (a, b) => a + Math.random() * (b - a);
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const E = {
+  lin: t => t,
+  out: t => 1 - Math.pow(1 - t, 3),
+  in: t => t * t * t,
+  io: t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2,
+  back: t => { const c = 1.70158; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); }
+};
+const FONT = "'FkBurger','KanchaEmpty','Leelawadee UI','Noto Sans Thai',Tahoma,sans-serif";
+const IS_SMALL = (window.innerWidth < 760) || (navigator.maxTouchPoints > 0 && window.innerWidth < 1000);
+const MAXP = IS_SMALL ? 260 : 520;
+
+/* ---------- ตัวจัดตารางเวลาของเกม (หยุดเวลา/สโลว์โมได้) ---------- */
+let SPEED = 1;                 // ใช้ทดสอบ (เร่งเวลา) ค่าปกติ = 1
+let slow = 1, hitstopMs = 0;
+const tasks = [];
+function tween(o, to, ms, ease) {
+  ease = ease || E.io;
+  return new Promise(res => {
+    const from = {};
+    for (const k in to) from[k] = o[k];
+    if (ms <= 0) { Object.assign(o, to); res(); return; }
+    tasks.push({ t: 0, dur: ms, res, upd: p => { const e = ease(p); for (const k in to) o[k] = from[k] + (to[k] - from[k]) * e; } });
+  });
+}
+function sleep(ms) { return new Promise(res => { if (ms <= 0) res(); else tasks.push({ t: 0, dur: ms, res }); }); }
+const sleepReal = ms => new Promise(res => setTimeout(res, ms / SPEED));
+function stepTasks(dt) {
+  for (let i = tasks.length - 1; i >= 0; i--) {
+    const k = tasks[i];
+    k.t += dt;
+    const p = Math.min(1, k.t / k.dur);
+    if (k.upd) k.upd(p);
+    if (p >= 1) { tasks.splice(i, 1); k.res(); }
+  }
+}
+function hitstop(ms) { hitstopMs = Math.max(hitstopMs, ms); }
+
+/* ---------- เสียง (สังเคราะห์ด้วย Web Audio ไม่ต้องมีไฟล์เสียง) ---------- */
+const Snd = (() => {
+  let ctx = null, master = null, noiseBuf = null, vol = .7, muted = false, sfxG = null, musG = null, curBus = null;
+  const mus = { on: false, int: 0, mode: 'n', step: 0, nextT: 0, timer: null };
+  function init() {
+    if (ctx) { if (ctx.state === 'suspended') ctx.resume(); return; }
+    try {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      ctx = new AC(); master = ctx.createGain();
+      master.gain.value = muted ? 0 : vol; master.connect(ctx.destination);
+      sfxG = ctx.createGain(); sfxG.connect(master); musG = ctx.createGain(); musG.connect(master);
+      sfxG.gain.value = (parseFloat(document.getElementById('vol-sfx').value) || 80) / 100; musG.gain.value = (parseFloat(document.getElementById('vol-mus').value) || 60) / 100;
+      const len = Math.floor(ctx.sampleRate * 1.6);
+      noiseBuf = ctx.createBuffer(1, len, ctx.sampleRate);
+      const d = noiseBuf.getChannelData(0);
+      for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+    } catch (e) { ctx = null; }
+  }
+  const ok = () => !!ctx;
+  const T = d => ctx.currentTime + (d || 0);
+  function osc(type, f1, f2, dur, v, at) {
+    const t = at || T(), o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = type; o.frequency.setValueAtTime(f1, t);
+    if (f2) o.frequency.exponentialRampToValueAtTime(Math.max(1, f2), t + dur);
+    g.gain.setValueAtTime(.0001, t);
+    g.gain.exponentialRampToValueAtTime(Math.max(.0002, v), t + Math.min(.012, dur / 3));
+    g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+    o.connect(g); g.connect(curBus || sfxG); o.start(t); o.stop(t + dur + .03);
+  }
+  function noise(dur, v, f1, f2, type, at, q) {
+    const t = at || T(), s = ctx.createBufferSource(), f = ctx.createBiquadFilter(), g = ctx.createGain();
+    s.buffer = noiseBuf; f.type = type || 'lowpass'; f.Q.value = q || 1;
+    f.frequency.setValueAtTime(f1, t);
+    if (f2) f.frequency.exponentialRampToValueAtTime(Math.max(20, f2), t + dur);
+    g.gain.setValueAtTime(Math.max(.0002, v), t); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+    s.connect(f); f.connect(g); g.connect(curBus || sfxG); s.start(t, Math.random() * .3); s.stop(t + dur + .03);
+  }
+  const go = fn => { if (!ok()) return; try { fn(); } catch (e) { } };
+  const sfx = {
+    tick() { go(() => osc('square', 900, 700, .06, .08)); },
+    correct() { go(() => { osc('square', 523, 0, .12, .09); osc('square', 784, 0, .18, .09, T(.09)); osc('triangle', 1047, 0, .25, .08, T(.18)); }); },
+    wrong() { go(() => { osc('sawtooth', 230, 80, .4, .16); noise(.25, .2, 900, 120); }); },
+    warn() { go(() => osc('square', 1100, 0, .07, .07)); },
+    whoosh() { go(() => noise(.3, .3, 500, 3500, 'bandpass', 0, 1.2)); },
+    slash() { go(() => { noise(.16, .35, 2500, 6000, 'highpass'); osc('square', 1900, 900, .08, .06); }); },
+    punch() { go(() => { osc('sine', 170, 45, .2, .55); noise(.1, .4, 1400, 200); }); },
+    heavy() { go(() => { osc('sine', 100, 28, .55, .85); noise(.4, .6, 1000, 70); }); },
+    blast() { go(() => { osc('sawtooth', 280, 1100, .45, .13); noise(.35, .2, 600, 4000, 'bandpass'); }); },
+    charge(d) { go(() => { osc('sawtooth', 90, 800, d, .13); osc('sine', 200, 1500, d, .1); }); },
+    thunder() { go(() => { noise(1, .7, 3000, 100); osc('sawtooth', 70, 28, .8, .3); noise(.15, .5, 6000, 3000, 'highpass', T(.05)); }); },
+    boom() { go(() => { osc('sine', 75, 24, 1.1, .95); noise(1, .7, 1400, 50); }); },
+    ult() { go(() => { osc('sawtooth', 120, 1800, 1.2, .14); osc('sine', 60, 30, 1.4, .6, T(1.1)); noise(1, .2, 300, 5000, 'bandpass'); }); },
+    dodge() { go(() => { noise(.25, .3, 600, 4500, 'bandpass'); osc('triangle', 800, 300, .22, .08); }); },
+    rift() { go(() => { osc('sine', 90, 420, 1.2, .18); noise(1.1, .16, 200, 3500, 'bandpass'); }); },
+    ping() { go(() => osc('triangle', 1200, 1800, .12, .08)); },
+    win() { go(() => [523, 659, 784, 1047, 1319].forEach((f, i) => osc('square', f, 0, .22, .09, T(i * .11)))); },
+    lose() { go(() => [392, 330, 262, 196].forEach((f, i) => osc('sawtooth', f, 0, .3, .08, T(i * .16)))); },
+    clang() { go(() => { osc('square', 2200, 1400, .09, .08); osc('triangle', 3300, 0, .12, .05); noise(.08, .3, 5000, 2000, 'highpass'); }); },
+    roar() { go(() => { osc('sawtooth', 130, 55, .7, .2); osc('square', 95, 40, .7, .12); noise(.6, .25, 700, 120); }); },
+    hurt() { go(() => { osc('sine', 120, 40, .3, .7); noise(.18, .45, 1500, 150); osc('square', 420, 180, .22, .1, T(.05)); }); },
+    mult() { go(() => { [392, 523, 659, 784, 1047, 1319].forEach((f, i) => osc('square', f, 0, .2, .08, T(i * .07))); noise(.6, .2, 500, 6000, 'bandpass'); }); },
+    claim() { go(() => [660, 880, 1320].forEach((f, i) => osc('triangle', f, 0, .3, .1, T(i * .08)))); }
+  };
+  /* ดนตรีพื้นหลังสร้างจากโน้ตแบบวนลูป ความเร็ว/ชั้นเสียงเพิ่มตามคอมโบ */
+  const PROG = [0, -4, 3, -2];
+  const hz = s => 55 * Math.pow(2, s / 12);
+  function note(step, t) {
+    const bar = Math.floor(step / 16) % 4, s16 = step % 16, ult = mus.mode === 'u';
+    const root = PROG[bar] + (ult ? 3 : 0), maj = bar !== 0 || ult;
+    if ([1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0][s16]) osc('sawtooth', hz(root), 0, .2, .07, t);
+    const lv = ult ? 2 : mus.int;
+    if (lv >= 1) {
+      const ch = [0, maj ? 4 : 3, 7, 12][s16 % 4];
+      osc('square', hz(root + 24 + ch + (lv >= 2 && s16 % 2 ? 12 : 0)), 0, .09, .035, t);
+      if (s16 % 4 === 0) osc('sine', 150, 40, .16, .5, t);
+      if (s16 % 8 === 4) noise(.12, .22, 3000, 1500, 'bandpass', t);
+      if (s16 % 2 === 0 || lv >= 2) noise(.04, .08, 8000, 8000, 'highpass', t);
+    } else if (s16 % 8 === 0) osc('sine', 150, 40, .16, .45, t);
+    if (ult && s16 % 4 === 2) osc('sawtooth', hz(root + 36), 0, .14, .04, t);
+  }
+  function sched() {
+    if (!ctx) return;
+    while (mus.nextT < ctx.currentTime + .18) {
+      curBus = musG; note(mus.step, mus.nextT); curBus = null;
+      const bpm = mus.mode === 'u' ? 152 : (mus.int >= 2 ? 140 : mus.int === 1 ? 130 : 120);
+      mus.nextT += 60 / bpm / 4; mus.step++;
+    }
+  }
+  return {
+    init, sfx, mus,
+    startMusic() { if (!ctx || mus.on) return; mus.on = true; mus.step = 0; mus.nextT = ctx.currentTime + .1; mus.timer = setInterval(sched, 40); },
+    stopMusic() { mus.on = false; clearInterval(mus.timer); },
+    setIntensity(i) { mus.int = i; },
+    setMode(m) { mus.mode = m; },
+    setMusVol(v) { if (musG) musG.gain.setTargetAtTime(v, ctx.currentTime, .02); },
+    setSfxVol(v) { if (sfxG) sfxG.gain.setTargetAtTime(v, ctx.currentTime, .02); },
+    setVol(v) { vol = v; if (ctx) master.gain.setTargetAtTime(muted ? 0 : vol, ctx.currentTime, .02); },
+    setMuted(m) { muted = m; if (ctx) master.gain.setTargetAtTime(muted ? 0 : vol, ctx.currentTime, .02); },
+    get muted() { return muted; }
+  };
+})();
+const sfx = Snd.sfx;
+
+
+/* ---------- ข้อมูลเกม: TIME TRAVELERS ---------- */
+const DIFF = {
+  easy:      { label: 'Easy',      sub: 'เวลาเยอะ ศัตรูอ่อน', time: 60, timed: 20, dmg: 24, win: 1700, hp: .8,  gain: 28, mAdd: 0 },
+  normal:    { label: 'Normal',    sub: 'สมดุล',               time: 45, timed: 15, dmg: 34, win: 1300, hp: 1,   gain: 22, mAdd: 0 },
+  hard:      { label: 'Hard',      sub: 'ศัตรูแกร่ง',           time: 30, timed: 12, dmg: 40, win: 1000, hp: 1.3, gain: 18, mAdd: 0 },
+  legendary: { label: 'Legendary', sub: 'สุดโหด ตัวคูณสูง',     time: 20, timed: 8,  dmg: 51, win: 800,  hp: 1.7, gain: 15, mAdd: 1 }
+};
+const WEAPONS = [
+  { name: 'Chrono Blade', th: 'ดาบโครโน (เริ่มต้น)', icon: '🗡️', bonus: 0, color: '#bfe6ff' },
+  { name: 'Thunder Blade', th: 'ดาบสายฟ้า (+10% ดาเมจ)', icon: '⚡', bonus: .1, color: '#7dd8ff' },
+  { name: 'Flame Blade', th: 'ดาบเพลิง (+20% ดาเมจ)', icon: '🔥', bonus: .2, color: '#ff9a5a' },
+  { name: 'Celestial Blade', th: 'ดาบสวรรค์ (+30% ดาเมจ)', icon: '👑', bonus: .3, color: '#ffe27a' }
+];
+const DEVICES = {
+  core:    { name: 'Time Core',            th: 'แกนเวลา',           icon: '⚙️' },
+  crystal: { name: 'Memory Crystal',       th: 'คริสตัลความทรงจำ',  icon: '💎' },
+  gear:    { name: 'Chrono Gear',          th: 'เฟืองโครโน',        icon: '🕰️' },
+  key:     { name: 'Dimensional Key',      th: 'กุญแจมิติ',         icon: '🗝️' },
+  module:  { name: 'Present Portal Module', th: 'โมดูลประตูปัจจุบัน', icon: '🌀' }
+};
+const TYPE_INFO = {
+  fib:      ['Fill in the Blank', 'แตะคำจากคลังคำเพื่อเติมช่องว่างตามลำดับ แล้วกด "ตรวจคำตอบ"'],
+  scramble: ['Word Scramble', 'แตะตัวอักษรเรียงเป็นคำที่ถูกต้อง แตะตัวอักษรในช่องเพื่อเอาออก'],
+  tf:       ['True or False', 'ตัดสินว่าประโยคถูกหรือผิด ถ้าผิดต้องเลือกประโยคแก้ไขที่ถูกต้องด้วย'],
+  builder:  ['Sentence Builder', 'แตะคำเพื่อเรียงเป็นประโยคที่ถูกต้อง แตะคำในช่องเพื่อเอาออก'],
+  mc:       ['Multiple Choice', 'เลือกคำตอบที่ถูกต้องที่สุดจาก a, b, c, d'],
+  errorhunt:['Error Hunter', 'แตะคำที่ผิดในประโยค กด "ตรวจ" แล้วเลือกคำแก้ไขที่ถูกต้อง'],
+  match:    ['Matching Game', 'แตะรายการซ้ายแล้วแตะคำทางขวาเพื่อจับคู่ ต้องจับคู่ถูกครบทุกคู่'],
+  type:     ['Type Your Answer', 'พิมพ์คำตอบ (ตัวพิมพ์เล็ก/ใหญ่และช่องว่างเกินไม่มีผล) แล้วกด Enter หรือ "ตรวจคำตอบ"'],
+  dialog:   ['Dialogue Quest', 'อ่านบทสนทนา แล้วเลือกประโยคตอบที่เหมาะสมที่สุด'],
+  context:  ['Contextual Challenge', 'อ่านสถานการณ์ แล้วเลือกประโยคที่สื่อความหมายถูกต้อง'],
+  timed:    ['Timed Challenge', 'ตอบให้ทันเวลา! เวลาสั้นกว่าปกติ'],
+  repair:   ['Sentence Repair', 'ประโยคนี้มีข้อผิดพลาด พิมพ์ประโยคที่แก้ไขแล้วให้ถูกต้องทั้งประโยค'],
+  boss:     ['Boss Battle', 'คำถามบอส! ตอบถูกเพื่อปลดล็อก Ultimate Skill และโจมตีหนัก']
+};
+const TOPIC_TH = {
+  form: 'โครงสร้าง have/has + V3 (ประธานกับ have/has)',
+  v3: 'Past Participle (V3) ของคำกริยา',
+  time: 'คำบอกเวลา already / just / yet / ever / never',
+  sf: 'การใช้ since และ for',
+  ctx: 'การใช้ Present Perfect ในสถานการณ์ (ผลต่อปัจจุบัน)',
+  ppps: 'การแยก Present Perfect กับ Past Simple'
+};
+const STAGES = [
+  { id: 1, title: 'Stage 1: The Lost Time Traveler', era: 'ANCIENT CITY · ยุคเมืองโบราณ', pal: 'dawn', kind: 'raijin', boss: 'SIR TICK', bossTh: 'อัศวินนาฬิกา',
+    hp: 6000, col: '#5ea8ff', col2: '#cfe9ff', ult: 'thunder',
+    story: 'You wake up in an ancient city. Your time device is broken and its core is missing! Defeat Sir Tick, the clockwork guardian, to get it back.',
+    storyTh: 'คุณตื่นขึ้นในเมืองโบราณ อุปกรณ์ข้ามเวลาพังและแกนกลางหายไป! เอาชนะ Sir Tick อัศวินนาฬิกาเพื่อชิงแกนเวลากลับมา',
+    quests: [
+      { id: 's1main', main: true, name: 'The Broken Time Device', desc: 'ชนะ Sir Tick (ตอบถูกอย่างน้อย 3 ข้อและ HP ไม่หมด)', cond: { k: 'clear' }, reward: { device: 'core', pts: 30 } },
+      { id: 's1side', name: 'The Lost Memory Crystal', desc: 'ทำคอมโบให้ถึง 3 ข้อติด', cond: { k: 'combo', n: 3 }, reward: { device: 'crystal', pts: 20 } }
+    ],
+    qs: [
+      { type: 'fib', topic: 'form', en: 'Fill in the blanks to complete the sentence.', sent: 'Tom ___ ___ his homework.',
+        bank: ['has', 'have', 'finished', 'finish', 'finishing', 'finishes'], ans: ['has', 'finished'], show: 'Tom has finished his homework.',
+        whyEn: 'Tom is "he", so we use has. Present Perfect = have/has + V3 (finished).', whyTh: 'Tom เป็นเอกพจน์ (he) ใช้ has แล้วตามด้วย V3 คือ finished' },
+      { type: 'scramble', topic: 'v3', en: 'Unscramble the letters to make the V3 (past participle) of "write".', word: 'written', ans: ['written'], show: 'written',
+        whyEn: 'write → wrote → written. V3 of "write" is "written".', whyTh: 'write มีสามช่อง: write – wrote – written (V3 คือ written)' },
+      { type: 'tf', topic: 'form', en: 'Is this sentence correct?', statement: 'She have visited Japan three times.', truth: false,
+        fixes: ['She has visited Japan three times.', 'She having visited Japan three times.', 'She had visit Japan three times.'], show: 'She has visited Japan three times.',
+        whyEn: 'She is singular, so we say "has", not "have": She has visited.', whyTh: 'She เป็นเอกพจน์ ต้องใช้ has ไม่ใช่ have' },
+      { type: 'builder', topic: 'time', en: 'Build the sentence: "I have already eaten lunch."', tiles: ['I', 'have', 'already', 'eaten', 'lunch'],
+        accept: ['I have already eaten lunch', 'I have eaten lunch already'], show: 'I have already eaten lunch.',
+        whyEn: 'Subject + have + (already) + V3. "Already" can go after have or at the end.', whyTh: 'ประธาน + have + (already) + V3 และ already วางหลัง have หรือท้ายประโยคก็ได้' },
+      { type: 'mc', topic: 'form', en: 'Which sentence is correct?', opts: ['My sister has cleaned her room.', 'My sister have cleaned her room.', 'My sister has clean her room.', 'My sister is cleaned her room.'], ans: 0,
+        show: 'My sister has cleaned her room.', whyEn: 'My sister = she → has + V3 (cleaned).', whyTh: 'My sister = she ใช้ has + V3 (cleaned)' }
+    ] },
+  { id: 2, title: 'Stage 2: The Mystery of Time Relics', era: 'MYSTIC FOREST · ป่าลึกลับ', pal: 'sunset', kind: 'ignis', boss: 'GUARDIAN IGNIS', bossTh: 'ผู้พิทักษ์เพลิงโบราณ',
+    hp: 9000, col: '#ff7f9f', col2: '#ffd0b8', ult: 'dragon',
+    story: 'A mysterious forest hides time relics. The fiery Guardian Ignis protects the Chrono Gear and the Dimensional Key. Use your grammar to break through!',
+    storyTh: 'ป่าลึกลับซ่อนวัตถุโบราณแห่งกาลเวลา Guardian Ignis เฝ้าเฟืองโครโนและกุญแจมิติ ใช้ไวยากรณ์ของคุณฝ่าไปให้ได้!',
+    quests: [
+      { id: 's2main', main: true, name: 'The Ancient Guardian', desc: 'ชนะ Guardian Ignis (ถูกอย่างน้อย 3 ข้อและ HP ไม่หมด)', cond: { k: 'clear' }, reward: { device: 'gear', pts: 30 } },
+      { id: 's2side', name: 'The Missing Time Fragments', desc: 'ตอบถูกอย่างน้อย 4 ข้อในด่านนี้', cond: { k: 'correct', n: 4 }, reward: { device: 'key', pts: 20 } }
+    ],
+    qs: [
+      { type: 'errorhunt', topic: 'v3', en: 'Find the mistake in the sentence.', tokens: ['I', 'have', 'visit', 'this', 'museum', 'two', 'times.'], wrong: 2,
+        fixes: ['visited', 'visiting', 'visits'], show: 'I have visited this museum two times.',
+        whyEn: 'After have/has we need V3: visit → visited.', whyTh: 'หลัง have/has ต้องใช้ V3 คือ visited' },
+      { type: 'match', topic: 'sf', en: 'Match each sentence with the correct time word.',
+        pairs: [['I have lived here ___ 2019.', 'since'], ['She has studied English ___ five years.', 'for'], ['Have you ___ been to Phuket?', 'ever'], ["He hasn't finished his work ___.", 'yet']],
+        show: 'since · for · ever · yet', whyEn: '"since" + starting point, "for" + length of time, "ever" in questions, "yet" in negatives/questions.',
+        whyTh: 'since + จุดเริ่มต้น, for + ช่วงเวลา, ever ใช้ในคำถาม, yet ใช้ในประโยคปฏิเสธ/คำถาม' },
+      { type: 'type', topic: 'time', en: 'Type the missing words:  We ___ that movie yet.  (not / see)', answers: ["haven't seen", 'have not seen'], show: "haven't seen (หรือ have not seen)",
+        whyEn: 'Negative: have + not + V3 → "haven\'t seen". "Yet" is used in negatives.', whyTh: 'ปฏิเสธ: have + not + V3 คือ haven\'t seen และ yet ใช้ในประโยคปฏิเสธ' },
+      { type: 'dialog', topic: 'time', en: 'Choose the best reply.', lines: [{ who: 'Mia', text: 'Have you finished your homework yet?' }, { who: 'You', text: '___' }],
+        opts: ['Yes, I have just finished it.', 'Yes, I just finish it.', 'Yes, I has finished it.', "No, I haven't finished never."], ans: 0, show: 'Yes, I have just finished it.',
+        whyEn: 'I + have + just + V3 = something happened a moment ago.', whyTh: 'I + have + just + V3 หมายถึงเพิ่งทำเสร็จ' },
+      { type: 'mc', topic: 'sf', en: 'Mia has lived in Chiang Mai ___ 2018.', opts: ['since', 'for', 'ago', 'yet'], ans: 0, show: 'since',
+        whyEn: '"since" is used with a starting point in time (2018).', whyTh: 'since ใช้กับจุดเริ่มต้นของเวลา (ปี 2018)' }
+    ] },
+  { id: 3, title: 'Stage 3: The Final Time Portal', era: 'FUTURE VOID · ดินแดนสุดท้าย', pal: 'void', kind: 'void', boss: 'TIME GUARDIAN', bossTh: 'ผู้พิทักษ์กาลเวลา',
+    hp: 14000, col: '#b28cff', col2: '#eadcff', ult: 'infinity',
+    story: 'The last land, where the Time Portal sleeps. The Time Guardian will only open it for a traveler who truly understands the Present Perfect. Go home!',
+    storyTh: 'ดินแดนสุดท้ายที่ประตูเวลาหลับใหล Time Guardian จะเปิดประตูให้เฉพาะนักเดินทางที่เข้าใจ Present Perfect อย่างแท้จริง กลับบ้านกันเถอะ!',
+    quests: [
+      { id: 's3main', main: true, name: 'The Portal of the Present', desc: 'ชนะ Time Guardian (ถูกอย่างน้อย 3 ข้อและ HP ไม่หมด)', cond: { k: 'clear' }, reward: { device: 'module', pts: 40 } },
+      { id: 's3side', name: 'Time Master', desc: 'ตอบถูกอย่างน้อย 4 ข้อในด่านนี้ (รางวัลโบนัสคะแนน)', cond: { k: 'correct', n: 4 }, reward: { pts: 50 } }
+    ],
+    qs: [
+      { type: 'context', topic: 'ctx', en: 'Anna ___ her room.', ctx: "It is 5 p.m. Anna's room is clean and tidy now. Her mom is very happy.",
+        opts: ['has just cleaned', 'cleaned two days ago', 'have just cleaned', 'was clean'], ans: 0, show: 'has just cleaned',
+        whyEn: 'The room is clean NOW, so we use Present Perfect: has just cleaned.', whyTh: 'ตอนนี้ห้องสะอาด (ผลต่อปัจจุบัน) จึงใช้ Present Perfect: has just cleaned' },
+      { type: 'timed', topic: 'time', en: '___ you ever ridden a horse?', opts: ['Have', 'Has', 'Did', 'Are'], ans: 0, show: 'Have',
+        whyEn: 'Question form: Have/Has + subject + (ever) + V3. "you" → Have.', whyTh: 'คำถาม: Have/Has + ประธาน + (ever) + V3 ประธาน you ใช้ Have' },
+      { type: 'repair', topic: 'v3', en: 'Repair the sentence.', wrong: 'She has went to school already.',
+        answers: ['She has gone to school already', 'She has already gone to school'], show: 'She has gone to school already.',
+        whyEn: 'The V3 of "go" is "gone", not "went" (went is Past Simple).', whyTh: 'V3 ของ go คือ gone (went เป็นรูป Past Simple)' },
+      { type: 'tf', topic: 'ppps', en: 'Is this sentence correct?', statement: 'I have seen that movie last night.', truth: false,
+        fixes: ['I saw that movie last night.', 'I have saw that movie last night.', 'I has seen that movie last night.'], show: 'I saw that movie last night.',
+        whyEn: '"Last night" is a finished time, so use Past Simple: I saw.', whyTh: 'last night เป็นเวลาที่จบไปแล้ว ต้องใช้ Past Simple: I saw' },
+      { type: 'boss', topic: 'sf', en: 'BOSS QUESTION: Which sentence is correct?',
+        opts: ['We have known each other for three years.', 'We have known each other since three years.', 'We know each other for three years.', 'We knew each other for three years now.'], ans: 0,
+        show: 'We have known each other for three years.', whyEn: '"for" + a length of time (three years) with Present Perfect.', whyTh: 'for + ช่วงเวลา (three years) ใช้กับ Present Perfect' }
+    ] }
+];
+const PLAYER_MAX = 100, PASS_MAIN = 105, MAIN_MAX = 150, TOTAL_Q = 15;
+const ULT_NAMES = { thunder: 'THUNDER TIME BREAKER', dragon: 'CHRONO DRAGON NOVA', infinity: 'INFINITY TIME SLASH', celestial: 'CELESTIAL TIME ANNIHILATION' };
+
+/* ======================================================================
+   ส่วนที่ 2: ระบบวาดภาพ (ฉากหลัง, ตัวละคร, อนุภาค, เอฟเฟกต์) — แยกจากระบบ UI
+   ====================================================================== */
+const cv = $('#cv'), ctx = cv.getContext('2d');
+const fxc = $('#fx'), fctx = fxc.getContext('2d');
+const W = 960, H = 540, GROUND = 432, HERO_X = 280, BOSS_X = 690;
+let DPR = Math.min(window.devicePixelRatio || 1, IS_SMALL ? 1.5 : 2);
+function sizeCanvas() {
+  DPR = Math.min(window.devicePixelRatio || 1, IS_SMALL ? 1.5 : 2);
+  cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
+  const st = $('#stage'); if (!st) return;
+  const r = st.getBoundingClientRect();
+  fxc.width = Math.max(2, Math.round(r.width * DPR)); fxc.height = Math.max(2, Math.round(r.height * DPR));
+  fxc.style.width = r.width + 'px'; fxc.style.height = r.height + 'px';
+}
+window.addEventListener('resize', sizeCanvas);
+
+/* ---------- สี ---------- */
+const hexRGB = h => { h = h.replace('#', ''); if (h.length === 3) h = h.split('').map(c => c + c).join(''); return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)]; };
+const rgba = (h, a) => { const c = hexRGB(h); return 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + a + ')'; };
+const mixc = (a, b, t) => { const x = hexRGB(a), y = hexRGB(b); return 'rgb(' + Math.round(lerp(x[0], y[0], t)) + ',' + Math.round(lerp(x[1], y[1], t)) + ',' + Math.round(lerp(x[2], y[2], t)) + ')'; };
+
+/* ---------- กล้อง & โทนภาพ ---------- */
+const cam = { x: 480, y: 280, z: 1, shake: 0, follow: false };
+const scr = { flash: 0, flashCol: '#ffffff', dim: 0, bars: 0, tint: '#000000', tintA: 0, speed: 0, boost: 0, vig: .2 };
+function camTo(x, y, z, ms, ease) { return tween(cam, { x, y, z }, ms, ease || E.io); }
+function flash(a, col) { scr.flash = Math.max(scr.flash, a); scr.flashCol = col || '#ffffff'; }
+function shake(v) { cam.shake = Math.max(cam.shake, v); }
+
+/* ---------- สุ่มแบบคงที่ (ให้ฉากหลังเหมือนเดิมทุกครั้ง) ---------- */
+function mulberry(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+const PAL = {
+  dawn:   { top: '#7db6ff', mid: '#a9d3ff', bot: '#ffe3ee', sun: '#fff4c2', mt: '#9fbff0', mt2: '#86a8e0', win: '#fff3b0', stars: .1, ring: '#6fb2ff', flr: '#bcd6ff' },
+  sunset: { top: '#ffa9c2', mid: '#ffc9b0', bot: '#fff0c9', sun: '#fff1b0', mt: '#e69ab4', mt2: '#cc83a2', win: '#fff0b0', stars: .05, ring: '#ff8fae', flr: '#ffd3df' },
+  void:   { top: '#a995ff', mid: '#cdb8ff', bot: '#ffd2ee', sun: '#ffffff', mt: '#9d86e0', mt2: '#8570cc', win: '#fff0ff', stars: .8, ring: '#b28cff', flr: '#dccbff' }
+};
+const BG = { stars: [], isl: [], city: [], clouds: [], mts: [] };
+(function initBG() {
+  const r = mulberry(7);
+  for (let i = 0; i < 130; i++) BG.stars.push({ x: r() * W, y: r() * 300, s: r() * 1.6 + .4, p: r() * TAU });
+  for (let i = 0; i < 9; i++) BG.clouds.push({ x: r() * 1300 - 150, y: 40 + r() * 190, w: 140 + r() * 220, s: .05 + r() * .12 });
+  for (let i = 0; i < 6; i++) BG.isl.push({ x: 80 + i * 170 + r() * 60, y: 120 + r() * 120, w: 90 + r() * 120, h: 50 + r() * 60, p: r() * TAU });
+  let x = -40;
+  while (x < W + 80) { const w = 22 + r() * 34, h = 40 + r() * 110; BG.city.push({ x, w, h, spire: r() < .45, win: r() }); x += w + 4 + r() * 6; }
+  for (let i = 0; i < 5; i++) BG.mts.push({ x: i * 250 - 40 + r() * 80, w: 200 + r() * 140, h: 120 + r() * 120, y: 250 + r() * 40 });
+})();
+
+function drawBG(t, pal, boost) {
+  const P = PAL[pal];
+  const cx = (cam.x - 480), zf = 1 + (cam.z - 1) * .3;
+  ctx.save();
+  ctx.translate(480, 270); ctx.scale(zf, zf); ctx.translate(-480, -270);
+  // ท้องฟ้า (เปลี่ยนโทนตามระดับการต่อสู้)
+  const g = ctx.createLinearGradient(0, 0, 0, GROUND);
+  g.addColorStop(0, mixc(P.top, '#2a1a5a', boost * .5));
+  g.addColorStop(.55, mixc(P.mid, '#ff8a3a', boost * .35));
+  g.addColorStop(1, mixc(P.bot, '#fff0b0', boost * .5));
+  ctx.fillStyle = g; ctx.fillRect(-100, -100, W + 200, GROUND + 140);
+  // ดาว
+  const sa = P.stars;
+  if (sa > 0) for (const s of BG.stars) { ctx.globalAlpha = sa * (.5 + .5 * Math.sin(t * 2 + s.p)); ctx.fillStyle = '#fff'; ctx.fillRect(s.x - cx * .02, s.y, s.s, s.s); }
+  ctx.globalAlpha = 1;
+  // ดวงอาทิตย์ / ดาวเคราะห์
+  ctx.globalCompositeOperation = 'lighter';
+  const sx = pal === 'void' ? 690 : 330, sy = pal === 'dawn' ? 330 : pal === 'sunset' ? 300 : 150, sr = pal === 'void' ? 70 : 90;
+  let rg = ctx.createRadialGradient(sx - cx * .04, sy, 0, sx - cx * .04, sy, sr * 3.2);
+  rg.addColorStop(0, rgba(P.sun, .95)); rg.addColorStop(.18, rgba(P.sun, .5)); rg.addColorStop(1, rgba(P.sun, 0));
+  ctx.fillStyle = rg; ctx.fillRect(0, 0, W, GROUND);
+  if (pal === 'void') { // วงแหวนดาวเคราะห์
+    ctx.strokeStyle = rgba('#e6c8ff', .55); ctx.lineWidth = 6; ctx.beginPath(); ctx.ellipse(sx - cx * .04, sy, 150, 28, -.3, 0, TAU); ctx.stroke();
+  }
+  // ลำแสงเมื่อพลังสูง
+  if (boost > .05) {
+    ctx.globalAlpha = boost * .22;
+    for (let i = 0; i < 7; i++) { const a = -1.2 + i * .4 + Math.sin(t * .4 + i) * .08; ctx.fillStyle = rgba('#fff2b0', .6); ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(sx + Math.cos(a + 1.57) * 900 - 60, sy + Math.sin(a + 1.57) * 900); ctx.lineTo(sx + Math.cos(a + 1.57) * 900 + 60, sy + Math.sin(a + 1.57) * 900); ctx.fill(); }
+    ctx.globalAlpha = 1;
+  }
+  ctx.globalCompositeOperation = 'source-over';
+  // เมฆ
+  for (const c of BG.clouds) {
+    const x = ((c.x + t * 6 * c.s * 10 - cx * c.s) % 1300 + 1300) % 1300 - 180;
+    ctx.fillStyle = rgba(P.bot, .22);
+    ctx.beginPath(); ctx.ellipse(x, c.y, c.w / 2, 14, 0, 0, TAU); ctx.ellipse(x + c.w * .22, c.y - 10, c.w / 3, 16, 0, 0, TAU); ctx.fill();
+  }
+  // เกาะลอยฟ้าไกล
+  for (const i of BG.isl) {
+    const x = i.x - cx * .1, y = i.y + Math.sin(t * .7 + i.p) * 6;
+    ctx.fillStyle = rgba(P.mt2, .75);
+    ctx.beginPath(); ctx.moveTo(x - i.w / 2, y); ctx.quadraticCurveTo(x, y - 12, x + i.w / 2, y); ctx.lineTo(x + i.w * .12, y + i.h); ctx.lineTo(x - i.w * .12, y + i.h * .8); ctx.fill();
+    ctx.fillStyle = rgba(P.win, .5); ctx.fillRect(x - 2, y - 16, 4, 10);
+  }
+  // เมืองแฟนตาซีบนขอบฟ้า
+  const by = GROUND - 78;
+  for (const b of BG.city) {
+    const x = b.x - cx * .2;
+    ctx.fillStyle = rgba(P.mt2, .95); ctx.fillRect(x, by - b.h, b.w, b.h + 80);
+    if (b.spire) { ctx.beginPath(); ctx.moveTo(x, by - b.h); ctx.lineTo(x + b.w / 2, by - b.h - 34); ctx.lineTo(x + b.w, by - b.h); ctx.fill(); }
+    ctx.fillStyle = rgba(P.win, .75);
+    for (let k = 0; k < b.h / 18; k++) if (((k * 7 + Math.floor(b.win * 9)) % 3) !== 0) ctx.fillRect(x + 5 + (k % 2) * (b.w / 2 - 3), by - b.h + 8 + k * 14, 4, 5);
+  }
+  // หอคอยกลางเมืองพร้อมลำแสง
+  const tx = 480 - cx * .2;
+  ctx.fillStyle = rgba(P.mt2, 1); ctx.fillRect(tx - 14, by - 210, 28, 290);
+  ctx.beginPath(); ctx.moveTo(tx - 22, by - 210); ctx.lineTo(tx, by - 270); ctx.lineTo(tx + 22, by - 210); ctx.fill();
+  ctx.globalCompositeOperation = 'lighter';
+  ctx.fillStyle = rgba(P.ring, .14 + .06 * Math.sin(t * 2)); ctx.fillRect(tx - 5, -50, 10, by - 200);
+  ctx.globalCompositeOperation = 'source-over';
+  // ภูเขาลอยฟ้าชั้นใกล้
+  for (const m of BG.mts) {
+    const x = m.x - cx * .35, y = m.y + Math.sin(t * .6 + m.x) * 4;
+    ctx.fillStyle = P.mt;
+    ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + m.w * .35, y - m.h); ctx.lineTo(x + m.w * .55, y - m.h * .7); ctx.lineTo(x + m.w, y); ctx.fill();
+    ctx.fillStyle = rgba(P.sun, .12); ctx.beginPath(); ctx.moveTo(x + m.w * .35, y - m.h); ctx.lineTo(x + m.w * .55, y - m.h * .7); ctx.lineTo(x + m.w * .4, y - m.h * .45); ctx.fill();
+    ctx.fillStyle = P.mt2; ctx.beginPath(); ctx.moveTo(x + 10, y + 2); ctx.lineTo(x + m.w * .5, y + m.h * .55); ctx.lineTo(x + m.w - 10, y + 2); ctx.fill();
+  }
+  ctx.restore();
+}
+
+function drawFloor(t, pal) {
+  const P = PAL[pal];
+  const y0 = GROUND - 22, vx = cam.x;
+  const g = ctx.createLinearGradient(0, y0, 0, H + 200);
+  g.addColorStop(0, mixc(P.flr, '#ffffff', .1)); g.addColorStop(1, mixc(P.flr, P.mt2, .35));
+  ctx.fillStyle = g; ctx.fillRect(vx - 900, y0, 1800, 700);
+  ctx.save(); ctx.lineWidth = 1.8;
+  const sh = ((cam.x % 34) + 34) % 34;
+  for (let i = -16; i <= 16; i++) {
+    ctx.strokeStyle = 'rgba(255,255,255,.55)';
+    ctx.beginPath(); ctx.moveTo(vx + i * 34 - sh, y0); ctx.lineTo(vx + i * 190 - sh * 5.6, y0 + 360); ctx.stroke();
+  }
+  for (let k = 0; k < 9; k++) {
+    const yy = y0 + Math.pow((k + (t * .35 % 1)) / 9, 2) * 340;
+    ctx.strokeStyle = 'rgba(255,255,255,' + (.3 + k * .04) + ')'; ctx.beginPath(); ctx.moveTo(vx - 900, yy); ctx.lineTo(vx + 900, yy); ctx.stroke();
+  }
+  for (let i = 0; i < 3; i++) {
+    ctx.strokeStyle = rgba(P.ring, .85 - i * .2 + .1 * Math.sin(t * 3 + i)); ctx.lineWidth = 4 - i * .9;
+    ctx.beginPath(); ctx.ellipse(480, GROUND + 12, 410 - i * 26, 62 - i * 7, 0, 0, TAU); ctx.stroke();
+  }
+  ctx.restore();
+}
+/* ฉากหลังสนามรบ: ธงรบ เสาหัก ดาบปักพื้น ต้นไม้/ผลึก/แท่งหิน ตามยุคของด่าน */
+const PROPS = [];
+(function () { const r = mulberry(31); for (let x = -1000; x < 5200; x += 130 + Math.floor(r() * 110)) PROPS.push({ x, t: Math.floor(r() * 5), s: .75 + r() * .6, p: r() }); })();
+function drawProps(t, pal) {
+  const P = PAL[pal], lo = cam.x - 480 / cam.z - 140, hi = cam.x + 480 / cam.z + 140;
+  for (const o of PROPS) {
+    if (o.x < lo || o.x > hi) continue;
+    ctx.save(); ctx.translate(o.x, GROUND - 14); ctx.scale(o.s, o.s); ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    const ol = '#5a4a8a', k = o.t;
+    ctx.lineWidth = 3; ctx.strokeStyle = ol;
+    if (pal === 'dawn') {
+      if (k === 0) { ctx.fillStyle = '#fff'; ctx.fillRect(-2, -120, 5, 120); ctx.strokeRect(-2, -120, 5, 120); const w = Math.sin(t * 3 + o.x) * 6; ctx.fillStyle = '#ff9fbd'; ctx.beginPath(); ctx.moveTo(3, -118); ctx.quadraticCurveTo(30, -112 + w, 52, -100); ctx.quadraticCurveTo(30, -92 - w, 3, -80); ctx.closePath(); ctx.fill(); ctx.stroke(); }
+      else if (k === 1) { ctx.fillStyle = '#f3ecff'; ctx.beginPath(); ctx.moveTo(-18, 0); ctx.lineTo(-16, -90); ctx.lineTo(-6, -104); ctx.lineTo(4, -86); ctx.lineTo(18, -96); ctx.lineTo(16, 0); ctx.closePath(); ctx.fill(); ctx.stroke(); }
+      else if (k === 2) { ctx.strokeStyle = '#fff'; ctx.lineWidth = 7; ctx.beginPath(); ctx.moveTo(-26, -70); ctx.lineTo(24, 0); ctx.moveTo(26, -70); ctx.lineTo(-24, 0); ctx.stroke(); ctx.strokeStyle = '#8fc0ff'; ctx.lineWidth = 3; ctx.stroke(); }
+      else if (k === 3) { ctx.fillStyle = '#ffe3a6'; ctx.beginPath(); ctx.arc(0, -46, 28, 0, TAU); ctx.fill(); ctx.stroke(); ctx.fillStyle = '#ff9fbd'; ctx.beginPath(); ctx.arc(0, -46, 12, 0, TAU); ctx.fill(); ctx.fillStyle = '#c9b6ff'; ctx.fillRect(-4, -18, 8, 18); }
+      else { ctx.fillStyle = '#d9cdf5'; ctx.fillRect(-14, -34, 28, 34); ctx.strokeRect(-14, -34, 28, 34); ctx.globalCompositeOperation = 'lighter'; ctx.fillStyle = rgba('#ffb35c', .9); ctx.beginPath(); ctx.ellipse(0, -46 + Math.sin(t * 9 + o.x) * 2, 8, 14, 0, 0, TAU); ctx.fill(); }
+    } else if (pal === 'sunset') {
+      if (k === 0) { ctx.fillStyle = '#fff3e0'; ctx.fillRect(-7, -40, 14, 40); ctx.strokeRect(-7, -40, 14, 40); ctx.fillStyle = '#ff9fbd'; ctx.beginPath(); ctx.ellipse(0, -44, 38, 26, 0, Math.PI, TAU); ctx.fill(); ctx.stroke(); ctx.fillStyle = '#fff'; for (const q of [[-14, -54], [8, -60], [18, -48]]) { ctx.beginPath(); ctx.arc(q[0], q[1], 4, 0, TAU); ctx.fill(); } }
+      else if (k === 1) { ctx.fillStyle = '#c99a78'; ctx.fillRect(-8, -70, 16, 70); ctx.strokeRect(-8, -70, 16, 70); ctx.fillStyle = '#9fe0b8'; ctx.beginPath(); ctx.arc(0, -90, 34, 0, TAU); ctx.fill(); ctx.stroke(); ctx.beginPath(); ctx.arc(-22, -70, 22, 0, TAU); ctx.fill(); ctx.stroke(); }
+      else if (k === 2) { ctx.fillStyle = '#e9ddff'; ctx.beginPath(); ctx.moveTo(-20, 0); ctx.lineTo(-16, -80); ctx.lineTo(0, -92); ctx.lineTo(16, -80); ctx.lineTo(20, 0); ctx.closePath(); ctx.fill(); ctx.stroke(); ctx.globalCompositeOperation = 'lighter'; ctx.strokeStyle = rgba('#ff8fae', .6 + .3 * Math.sin(t * 3 + o.x)); ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(-8, -60); ctx.lineTo(0, -40); ctx.lineTo(8, -60); ctx.moveTo(0, -40); ctx.lineTo(0, -20); ctx.stroke(); }
+      else if (k === 3) { ctx.fillStyle = '#c9b6ff'; for (const q of [[-18, 0, -50], [0, 0, -74], [18, 0, -44]]) { ctx.beginPath(); ctx.moveTo(q[0] - 9, q[1]); ctx.lineTo(q[0], q[2]); ctx.lineTo(q[0] + 9, q[1]); ctx.closePath(); ctx.fill(); ctx.stroke(); } }
+      else { ctx.fillStyle = '#c99a78'; ctx.fillRect(-2, -80, 4, 80); ctx.fillStyle = '#fff3b0'; ctx.beginPath(); ctx.arc(0, -86, 12, 0, TAU); ctx.fill(); ctx.stroke(); ctx.globalCompositeOperation = 'lighter'; ctx.fillStyle = rgba('#ffd98a', .5); ctx.beginPath(); ctx.arc(0, -86, 26, 0, TAU); ctx.fill(); }
+    } else {
+      if (k === 0) { const b = Math.sin(t * 1.6 + o.x) * 8; ctx.fillStyle = '#e6d9ff'; ctx.beginPath(); ctx.moveTo(0, -120 + b); ctx.lineTo(18, -90 + b); ctx.lineTo(0, -56 + b); ctx.lineTo(-18, -90 + b); ctx.closePath(); ctx.fill(); ctx.stroke(); }
+      else if (k === 1) { ctx.fillStyle = '#b9a4f0'; ctx.fillRect(-14, -130, 28, 130); ctx.strokeRect(-14, -130, 28, 130); ctx.globalCompositeOperation = 'lighter'; ctx.fillStyle = rgba('#ffffff', .6 + .3 * Math.sin(t * 2 + o.x)); ctx.fillRect(-3, -120, 6, 90); }
+      else if (k === 2) { ctx.fillStyle = '#d6c8ff'; ctx.fillRect(-6, -80, 12, 80); ctx.strokeRect(-6, -80, 12, 80); ctx.strokeStyle = '#7fe0ff'; ctx.lineWidth = 5; ctx.beginPath(); ctx.ellipse(0, -90, 26, 9, 0, 0, TAU); ctx.stroke(); }
+      else if (k === 3) { ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(0, -60, 30, 0, TAU); ctx.fill(); ctx.stroke(); ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(0, -60); ctx.lineTo(0, -80); ctx.moveTo(0, -60); ctx.lineTo(14, -54); ctx.stroke(); ctx.fillStyle = '#d6c8ff'; ctx.fillRect(-10, -30, 20, 30); }
+      else { ctx.fillStyle = '#ffd0ee'; ctx.beginPath(); ctx.moveTo(-12, 0); ctx.lineTo(0, -140); ctx.lineTo(12, 0); ctx.closePath(); ctx.fill(); ctx.stroke(); }
+    }
+    ctx.restore();
+  }
+}
+
+/* ---------- ตัวละคร (โครงกระดูก 2D + ท่าทาง) ---------- */
+const BASEP = { lean: 4, hd: 0, aF: 28, fF: 70, aB: -25, fB: -10, lF: 18, sF: 6, lB: -20, sB: -8, wa: 112, crouch: 0, wl: 1 };
+const PO = o => Object.assign({}, BASEP, o);
+const POSES = {
+  idle:       PO({}),
+  ready:      PO({ lean: 9, crouch: 6, aF: 48, fF: 100, aB: 20, fB: 70, lF: 30, sF: 10, lB: -32, sB: -14, wa: 108 }),
+  dash:       PO({ lean: 40, aF: -70, fF: -80, aB: -40, fB: -70, lF: 62, sF: 22, lB: -62, sB: -34, wa: -88 }),
+  windupHigh: PO({ lean: -10, aF: 150, fF: 172, aB: 120, fB: 150, lF: 26, sF: 8, lB: -30, sB: -16, wa: 176 }),
+  swingDown:  PO({ lean: 24, crouch: 8, aF: 78, fF: 54, aB: 40, fB: 30, lF: 40, sF: 16, lB: -34, sB: -20, wa: 28 }),
+  windupLow:  PO({ lean: 14, crouch: 14, aF: -40, fF: -60, aB: -30, fB: -50, lF: 34, sF: 12, lB: -36, sB: -22, wa: -34 }),
+  swingUp:    PO({ lean: -4, aF: 70, fF: 120, aB: 30, fB: 60, lF: 30, sF: 8, lB: -30, sB: -16, wa: 150 }),
+  thrust:     PO({ lean: 22, aF: 86, fF: 90, aB: 50, fB: 80, lF: 44, sF: 20, lB: -34, sB: -22, wa: 90 }),
+  uppercutW:  PO({ lean: 12, crouch: 24, aF: 10, fF: 0, aB: -20, fB: -30, lF: 38, sF: 30, lB: -38, sB: -34, wa: 10 }),
+  uppercut:   PO({ lean: -10, aF: 175, fF: 176, aB: 90, fB: 120, lF: 12, sF: 4, lB: -16, sB: -10, wa: 172 }),
+  slam:       PO({ lean: 34, aF: 100, fF: 56, aB: 90, fB: 60, lF: 40, sF: 18, lB: -40, sB: -20, wa: 36 }),
+  charge:     PO({ lean: 6, crouch: 10, aF: 84, fF: 88, aB: 76, fB: 84, lF: 30, sF: 10, lB: -32, sB: -14, wa: 86 }),
+  cast:       PO({ lean: -6, aF: 172, fF: 176, aB: 168, fB: 176, lF: 14, sF: 4, lB: -14, sB: -6, wa: 178 }),
+  hurt:       PO({ lean: -26, hd: -14, aF: -40, fF: -60, aB: -50, fB: -70, lF: 10, sF: 0, lB: -30, sB: -20, wa: -20 }),
+  dodge:      PO({ lean: -30, crouch: 12, aF: 60, fF: 100, aB: 20, fB: 60, lF: -6, sF: -14, lB: -44, sB: -30, wa: 100 }),
+  jump:       PO({ lean: 10, crouch: -4, aF: 100, fF: 130, aB: 40, fB: 60, lF: 70, sF: 20, lB: -20, sB: 50, wa: 128 }),
+  guard:      PO({ lean: 10, crouch: 8, aF: 70, fF: 140, aB: 76, fB: 150, lF: 22, sF: 8, lB: -26, sB: -12, wa: 150 }),
+  ko:         PO({ lean: -50, hd: -20, aF: -60, fF: -90, aB: -70, fB: -100, lF: 20, sF: 40, lB: -10, sB: 20, wa: -80 }),
+  victory:    PO({ lean: -6, aF: 150, fF: 172, aB: 30, fB: 60, lF: 20, sF: 6, lB: -24, sB: -10, wa: 178 })
+};
+const KIND = {
+  hero:  { skin: '#ffd9bf', hair: '#171b3c', hair2: '#4de0ff', top: '#e9f2ff', top2: '#2a56c8', pants: '#1c2a5e', boot: '#ff7a2a', eye: '#35c8ff', scarf: '#ff4a3a', weapon: 'sword', aura: '#4aa8ff', s: 1 },
+  raijin:{ skin: '#c9dcf4', hair: '#f4f8ff', hair2: '#b8d8ff', top: '#1b3a8a', top2: '#ffd24a', pants: '#13224e', boot: '#ffd24a', eye: '#ffe14a', scarf: null, horns: '#ffd24a', weapon: 'spear', aura: '#4aa8ff', s: 1.16 },
+  ignis: { skin: '#e0a47a', hair: '#ff6a1a', hair2: '#ffd24a', top: '#7a1020', top2: '#ff4a2a', pants: '#3a0a14', boot: '#ff4a2a', eye: '#fff07a', scarf: null, horns: '#2a0a0a', weapon: 'axe', aura: '#ff4a2a', s: 1.22 },
+  void:  { skin: '#e4dcf8', hair: '#d6b8ff', hair2: '#8a4cf0', top: '#2a0e5a', top2: '#a46bff', pants: '#150633', boot: '#a46bff', eye: '#ff6af0', scarf: null, hood: true, crown: true, weapon: 'scythe', aura: '#a46bff', s: 1.3 }
+};
+function mkFighter(kind, x, face) {
+  return { kind, K: KIND[kind], x, y: 0, face, s: KIND[kind].s, rot: 0, p: Object.assign({}, POSES.idle), expr: 'normal', aura: 0, vis: 1,
+    trail: [], trailOn: false, ghostOn: false, gAcc: 0, glow: 0, wcol: null, tip: { x: 0, y: 0, bx: 0, by: 0 }, hp: 100, max: 100, ox: 0 };
+}
+let hero = mkFighter('hero', HERO_X, 1), boss = mkFighter('raijin', BOSS_X, -1);
+const setPose = (f, name, ms, ease) => tween(f.p, POSES[name], ms, ease);
+
+function drawFighter(f, mono, alpha) {
+  const p = f.p, K = f.K, s = f.s, col = c => mono || c;
+  ctx.save();
+  ctx.translate(f.x + f.ox, GROUND - f.y);
+  ctx.rotate(rad(f.rot) * f.face);
+  ctx.scale(f.face * s, s);
+  if (alpha !== undefined) ctx.globalAlpha *= alpha;
+  ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  const hip = { x: 0, y: -84 + p.crouch + Math.sin(performance.now() / 380 + f.x * .01) * 1.6 };
+  const seg = (x, y, a, len, w, c) => {
+    const ex = x + Math.sin(rad(a)) * len, ey = y + Math.cos(rad(a)) * len;
+    ctx.strokeStyle = col('#0a0c1c'); ctx.lineWidth = w + 4; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(ex, ey); ctx.stroke();
+    ctx.strokeStyle = col(c); ctx.lineWidth = w; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(ex, ey); ctx.stroke();
+    return { x: ex, y: ey };
+  };
+  const lr = rad(p.lean);
+  const sh = { x: hip.x + Math.sin(lr) * 54, y: hip.y - Math.cos(lr) * 54 };
+  const t = (performance.now() / 1000);
+  // ออร่า
+  if (!mono && f.aura > .02) {
+    ctx.save(); ctx.globalCompositeOperation = 'lighter';
+    const ag = ctx.createRadialGradient(0, -90, 10, 0, -90, 130 * (.6 + f.aura * .6));
+    ag.addColorStop(0, rgba(K.aura, .5 * f.aura)); ag.addColorStop(1, rgba(K.aura, 0));
+    ctx.fillStyle = ag; ctx.fillRect(-160, -250, 320, 320); ctx.restore();
+  }
+  // แขน/ขาหลัง
+  const eB = seg(sh.x, sh.y + 2, p.aB, 30, 9, K.top);
+  seg(eB.x, eB.y, p.fB, 28, 8, K.skin);
+  const kB = seg(hip.x, hip.y, p.lB, 42, 12, K.pants);
+  const fB = seg(kB.x, kB.y, p.sB, 40, 11, K.pants);
+  ctx.fillStyle = col(K.boot); ctx.beginPath(); ctx.ellipse(fB.x + 5, fB.y + 3, 12, 6, 0, 0, TAU); ctx.fill();
+  // ผ้าพันคอ / ผ้าคลุม
+  if (K.scarf || K.hood) {
+    ctx.fillStyle = col(K.scarf || K.top2); ctx.strokeStyle = col('#0a0c1c'); ctx.lineWidth = 2;
+    const w1 = Math.sin(t * 7) * 7, w2 = Math.sin(t * 7 + 1) * 9;
+    ctx.beginPath(); ctx.moveTo(sh.x, sh.y); ctx.bezierCurveTo(sh.x - 24, sh.y + 6 + w1, sh.x - 50, sh.y - 4 + w2, sh.x - 78 - (f.aura * 18), sh.y + 10 + w1);
+    ctx.bezierCurveTo(sh.x - 50, sh.y + 16 + w2, sh.x - 22, sh.y + 16, sh.x + 2, sh.y + 10); ctx.fill(); ctx.stroke();
+  }
+  // ลำตัว
+  const nx = Math.cos(lr), ny = Math.sin(lr);
+  ctx.fillStyle = col(K.top); ctx.strokeStyle = col('#0a0c1c'); ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(hip.x - nx * 13, hip.y + ny * 13); ctx.lineTo(sh.x - nx * 18, sh.y + ny * 18);
+  ctx.lineTo(sh.x + nx * 18, sh.y - ny * 18); ctx.lineTo(hip.x + nx * 13, hip.y - ny * 13); ctx.closePath(); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = col(K.top2);
+  ctx.beginPath(); ctx.moveTo(hip.x - nx * 13, hip.y + ny * 13); ctx.lineTo(hip.x + nx * 13, hip.y - ny * 13); ctx.lineTo(hip.x + nx * 12 + Math.sin(lr) * 10, hip.y - ny * 12 - Math.cos(lr) * 10); ctx.lineTo(hip.x - nx * 12 + Math.sin(lr) * 10, hip.y + ny * 12 - Math.cos(lr) * 10); ctx.fill();
+  if (f.kind !== 'hero') { ctx.fillStyle = col(K.top2); ctx.beginPath(); ctx.ellipse(sh.x, sh.y + 2, 17, 10, lr, 0, TAU); ctx.fill(); ctx.stroke(); }
+  // ขาหน้า
+  const kF = seg(hip.x, hip.y, p.lF, 42, 12, K.pants);
+  const fF = seg(kF.x, kF.y, p.sF, 40, 11, K.pants);
+  ctx.fillStyle = col(K.boot); ctx.beginPath(); ctx.ellipse(fF.x + 5, fF.y + 3, 13, 6.5, 0, 0, TAU); ctx.fill();
+  // หัว
+  const hr = rad(p.lean + p.hd);
+  const hc = { x: sh.x + Math.sin(hr) * 24, y: sh.y - Math.cos(hr) * 24 };
+  ctx.save(); ctx.translate(hc.x, hc.y); ctx.rotate(hr);
+  if (K.hood) { ctx.fillStyle = col(K.top); ctx.beginPath(); ctx.arc(-3, 0, 24, Math.PI * .85, Math.PI * 2.15); ctx.lineTo(-6, 22); ctx.closePath(); ctx.fill(); ctx.stroke(); }
+  hairBack(ctx, K, col, f);
+  ctx.fillStyle = col(K.skin); ctx.strokeStyle = col('#0a0c1c'); ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.arc(0, 0, 17, 0, TAU); ctx.fill(); ctx.stroke();
+  if (!mono) face(ctx, f.expr, K, f);
+  hairFront(ctx, K, col, f);
+  if (K.horns) { ctx.fillStyle = col(K.horns); for (const sx of [-1, 1]) { ctx.beginPath(); ctx.moveTo(sx * 8 + 2, -14); ctx.quadraticCurveTo(sx * 24 + 2, -26, sx * 16 + 2, -44); ctx.quadraticCurveTo(sx * 10 + 2, -28, sx * 2 + 2, -14); ctx.fill(); ctx.stroke(); } }
+  if (K.crown) { ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.fillStyle = rgba('#e6c8ff', .9); for (let i = 0; i < 5; i++) { const a = i / 5 * TAU + t * 2; ctx.beginPath(); ctx.moveTo(Math.cos(a) * 22, -40 + Math.sin(a) * 6 - 6); ctx.lineTo(Math.cos(a) * 22 + 4, -40 + Math.sin(a) * 6); ctx.lineTo(Math.cos(a) * 22, -40 + Math.sin(a) * 6 + 8); ctx.lineTo(Math.cos(a) * 22 - 4, -40 + Math.sin(a) * 6); ctx.fill(); } ctx.restore(); }
+  ctx.restore();
+  // แขนหน้า + อาวุธ
+  const eF = seg(sh.x, sh.y + 2, p.aF, 32, 10, K.top);
+  const hd = seg(eF.x, eF.y, p.fF, 30, 9, K.skin);
+  ctx.fillStyle = col(K.skin); ctx.beginPath(); ctx.arc(hd.x, hd.y, 6, 0, TAU); ctx.fill();
+  drawWeapon(ctx, f, hd, col);
+  ctx.restore();
+  // ตำแหน่งปลายอาวุธในโลก (ใช้ทำรอยฟัน)
+  const wl = f.weaponLen * p.wl, wa = rad(p.wa);
+  const tx = hd.x + Math.sin(wa) * wl, ty = hd.y + Math.cos(wa) * wl;
+  f.tip = { x: f.x + f.ox + f.face * s * tx, y: GROUND - f.y + s * ty, bx: f.x + f.ox + f.face * s * hd.x, by: GROUND - f.y + s * hd.y };
+}
+function hairBack(c, K, col, f) {
+  c.fillStyle = col(K.hair); c.strokeStyle = col('#0a0c1c'); c.lineWidth = 2.5;
+  const n = f.kind === 'void' ? 5 : 7;
+  for (let i = 0; i < n; i++) {
+    const a = rad(-205 + i * (170 / (n - 1))), l = (f.kind === 'hero' ? 34 : 30) + (i % 2) * 8 + Math.sin(performance.now() / 260 + i) * 3;
+    c.beginPath(); c.moveTo(Math.cos(a - .28) * 15, Math.sin(a - .28) * 15); c.lineTo(Math.cos(a) * (15 + l), Math.sin(a) * (15 + l)); c.lineTo(Math.cos(a + .28) * 15, Math.sin(a + .28) * 15); c.closePath(); c.fill(); c.stroke();
+  }
+}
+function hairFront(c, K, col, f) {
+  c.fillStyle = col(K.hair); c.strokeStyle = col('#0a0c1c'); c.lineWidth = 2.5;
+  c.beginPath(); c.moveTo(-16, -3); c.quadraticCurveTo(-14, -20, 2, -19); c.quadraticCurveTo(14, -19, 17, -4);
+  c.lineTo(11, -9); c.lineTo(9, 0); c.lineTo(3, -9); c.lineTo(-2, 1); c.lineTo(-8, -8); c.lineTo(-12, 2); c.closePath(); c.fill(); c.stroke();
+  c.fillStyle = col(K.hair2); c.beginPath(); c.moveTo(-6, -17); c.lineTo(0, -8); c.lineTo(3, -18); c.closePath(); c.fill();
+}
+function face(c, expr, K, f) {
+  c.strokeStyle = '#0a0c1c'; c.lineWidth = 2.2; c.fillStyle = '#fff';
+  const eye = (x, y) => {
+    if (expr === 'hurt') { c.beginPath(); c.moveTo(x - 3, y - 4); c.lineTo(x + 3, y); c.lineTo(x - 3, y + 4); c.stroke(); return; }
+    if (expr === 'ko') { c.beginPath(); c.moveTo(x - 3, y - 3); c.lineTo(x + 3, y + 3); c.moveTo(x + 3, y - 3); c.lineTo(x - 3, y + 3); c.stroke(); return; }
+    if (expr === 'happy') { c.beginPath(); c.arc(x, y + 2, 4, Math.PI * 1.1, Math.PI * 1.9); c.stroke(); return; }
+    c.beginPath(); c.ellipse(x, y, 3.6, 5, 0, 0, TAU); c.fill(); c.stroke();
+    c.fillStyle = K.eye; c.beginPath(); c.ellipse(x + 1, y + .5, 2.2, 4, 0, 0, TAU); c.fill();
+    c.fillStyle = '#fff'; c.fillRect(x + .2, y - 2.6, 1.6, 1.8);
+    if (expr === 'angry') { c.beginPath(); c.moveTo(x - 5, y - 7); c.lineTo(x + 5, y - 3.5); c.lineWidth = 3; c.stroke(); c.lineWidth = 2.2; }
+    c.fillStyle = '#fff';
+  };
+  eye(3, 0); eye(12, 0);
+  c.beginPath();
+  if (expr === 'hurt' || expr === 'ko') { c.ellipse(9, 9, 3, 2.5, 0, 0, TAU); c.fillStyle = '#5a1020'; c.fill(); }
+  else if (expr === 'angry') { c.moveTo(4, 9); c.lineTo(14, 8); c.stroke(); }
+  else if (expr === 'happy') { c.arc(9, 6, 5, .1, Math.PI - .1); c.stroke(); }
+  else { c.moveTo(5, 9); c.quadraticCurveTo(9, 11, 13, 8); c.stroke(); }
+  if (f.kind === 'raijin') { c.strokeStyle = '#ffd24a'; c.beginPath(); c.moveTo(-2, -10); c.lineTo(2, -4); c.lineTo(-1, -4); c.lineTo(3, 3); c.stroke(); }
+}
+function drawWeapon(c, f, hd, col) {
+  const K = f.K, p = f.p, L = f.weaponLen * p.wl;
+  c.save(); c.translate(hd.x, hd.y); c.rotate(Math.PI / 2 - rad(p.wa));
+  c.lineJoin = 'round'; c.lineCap = 'round';
+  const glow = f.glow, wc = f.wcol || (f.kind === 'hero' ? '#bfe6ff' : K.aura);
+  c.strokeStyle = col('#0a0c1c');
+  if (K.weapon === 'sword') {
+    c.fillStyle = col('#5a3a2a'); c.fillRect(-12, -3, 14, 6);
+    c.fillStyle = col('#ffd24a'); c.fillRect(1, -9, 5, 18); c.strokeRect(1, -9, 5, 18);
+    c.fillStyle = col(wc); c.lineWidth = 2.5;
+    c.beginPath(); c.moveTo(6, -5); c.lineTo(L - 14, -4); c.lineTo(L, 0); c.lineTo(L - 14, 4); c.lineTo(6, 5); c.closePath(); c.fill(); c.stroke();
+    c.fillStyle = col('#ffffff'); c.fillRect(8, -1, L - 26, 2);
+  } else if (K.weapon === 'spear') {
+    c.strokeStyle = col('#0a0c1c'); c.lineWidth = 7; c.beginPath(); c.moveTo(-26, 0); c.lineTo(L, 0); c.stroke();
+    c.strokeStyle = col('#ffd24a'); c.lineWidth = 3.5; c.beginPath(); c.moveTo(-26, 0); c.lineTo(L, 0); c.stroke();
+    c.fillStyle = col('#e6f4ff'); c.strokeStyle = col('#0a0c1c'); c.lineWidth = 2.5;
+    c.beginPath(); c.moveTo(L - 8, -7); c.lineTo(L + 28, 0); c.lineTo(L - 8, 7); c.closePath(); c.fill(); c.stroke();
+  } else if (K.weapon === 'axe') {
+    c.strokeStyle = col('#0a0c1c'); c.lineWidth = 7; c.beginPath(); c.moveTo(-20, 0); c.lineTo(L - 6, 0); c.stroke();
+    c.strokeStyle = col('#5a2a1a'); c.lineWidth = 3.5; c.beginPath(); c.moveTo(-20, 0); c.lineTo(L - 6, 0); c.stroke();
+    c.fillStyle = col('#ff6a2a'); c.strokeStyle = col('#0a0c1c'); c.lineWidth = 2.5;
+    c.beginPath(); c.moveTo(L - 22, -4); c.quadraticCurveTo(L + 6, -44, L + 30, -8); c.lineTo(L + 8, 0); c.lineTo(L + 30, 8); c.quadraticCurveTo(L + 6, 44, L - 22, 4); c.closePath(); c.fill(); c.stroke();
+  } else {
+    c.strokeStyle = col('#0a0c1c'); c.lineWidth = 7; c.beginPath(); c.moveTo(-26, 0); c.lineTo(L, 0); c.stroke();
+    c.strokeStyle = col('#3a1a7a'); c.lineWidth = 3.5; c.beginPath(); c.moveTo(-26, 0); c.lineTo(L, 0); c.stroke();
+    c.fillStyle = col('#c9a0ff'); c.strokeStyle = col('#0a0c1c'); c.lineWidth = 2.5;
+    c.beginPath(); c.moveTo(L - 8, 0); c.quadraticCurveTo(L + 4, -52, L + 54, -34); c.quadraticCurveTo(L + 16, -34, L + 6, 4); c.closePath(); c.fill(); c.stroke();
+  }
+  if (glow > .02 && !(col('x') !== 'x')) {
+    c.globalCompositeOperation = 'lighter'; c.strokeStyle = rgba(wc, .8 * glow); c.lineWidth = 9 * glow + 2;
+    c.beginPath(); c.moveTo(4, 0); c.lineTo(L, 0); c.stroke(); c.globalCompositeOperation = 'source-over';
+  }
+  c.restore();
+}
+hero.weaponLen = 78; boss.weaponLen = 100;
+
+/* ---------- อนุภาคและเอฟเฟกต์ ---------- */
+const parts = [], rings = [], slashes = [], bolts = [], ghosts = [], floats = [], projs = [], beams = [], rifts = [], fparts = [];
+let dragon = null;
+function P(o, list) {
+  const L = list || parts;
+  if (L.length >= MAXP) return;
+  const q = Object.assign({ life: .6, size: 3, vx: 0, vy: 0, g: 0, drag: 1, color: '#fff', type: 'dot', rot: 0, vr: 0 }, o);
+  q.max = q.life; L.push(q);
+}
+function burst(x, y, n, col, o) {
+  o = o || {};
+  for (let i = 0; i < n; i++) {
+    const a = o.dir !== undefined ? o.dir + rnd(-(o.spread || 1), o.spread || 1) : rnd(0, TAU), sp = rnd(o.min || 120, o.max || 460);
+    P({ x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, g: o.g === undefined ? 380 : o.g, drag: .92, life: rnd(.25, o.life || .7), size: rnd(1.5, o.size || 4), color: pick(Array.isArray(col) ? col : [col]), type: o.type || 'line' });
+  }
+}
+function ring(x, y, col, o) { o = o || {}; rings.push({ x, y, r: o.r0 || 8, dr: o.dr || 420, life: o.life || .45, max: o.life || .45, color: col, w: o.w || 7, sq: o.sq === undefined ? 1 : o.sq }); }
+function slashFx(x, y, ang, len, col, o) { o = o || {}; slashes.push({ x, y, ang, len, w: o.w || 22, curve: o.curve === undefined ? .32 : o.curve, life: o.life || .26, max: o.life || .26, color: col }); }
+function lightning(x1, y1, x2, y2, jag, n) {
+  const pts = [[x1, y1]];
+  for (let i = 1; i < n; i++) { const t = i / n; pts.push([lerp(x1, x2, t) + rnd(-jag, jag), lerp(y1, y2, t) + rnd(-jag * .3, jag * .3)]); }
+  pts.push([x2, y2]); return pts;
+}
+function bolt(x1, y1, x2, y2, col, w, o) {
+  o = o || {};
+  const main = lightning(x1, y1, x2, y2, o.jag || 30, o.n || 9);
+  bolts.push({ pts: main, life: o.life || .3, max: o.life || .3, color: col, w: w || 4 });
+  const br = o.branches === undefined ? 2 : o.branches;
+  for (let i = 0; i < br; i++) { const m = main[1 + Math.floor(Math.random() * (main.length - 2))]; bolts.push({ pts: lightning(m[0], m[1], m[0] + rnd(-120, 120), m[1] + rnd(20, 120), 18, 5), life: (o.life || .3) * .8, max: (o.life || .3) * .8, color: col, w: (w || 4) * .5 }); }
+}
+function floatNum(x, y, txt, col, size) { floats.push({ x, y, txt, color: col || '#fff', size: size || 34, life: 1.1, max: 1.1, vy: -90 }); }
+function bossMid() { return { x: boss.x + boss.ox, y: GROUND - boss.y - 95 * boss.s }; }
+function heroMid() { return { x: hero.x + hero.ox, y: GROUND - hero.y - 90 * hero.s }; }
+function ghostSnap(f, col, a) { ghosts.push({ f: { x: f.x + f.ox, y: f.y, ox: 0, face: f.face, s: f.s, rot: f.rot, p: Object.assign({}, f.p), K: f.K, kind: f.kind, aura: 0, expr: f.expr, glow: 0, weaponLen: f.weaponLen, tip: {} }, col, a: a || .5, life: .38, max: .38 }); }
+function impact(x, y, col, pw, o) {
+  o = o || {}; pw = pw || 1;
+  ring(x, y, col, { dr: 300 * pw, w: 8 * pw, life: .38 });
+  ring(x, y, '#ffffff', { dr: 180 * pw, w: 4, life: .25 });
+  burst(x, y, Math.round(16 * pw), [col, '#ffffff', '#ffe27a'], { max: 520 * pw, size: 4, life: .6 });
+  flash(.12 * pw, o.flash || '#ffffff'); shake(7 * pw); hitstop(55 * pw);
+  if (o.snd !== false) (pw > 1.6 ? sfx.heavy : sfx.punch)();
+}
+
+function updateFx(dt) {
+  const s = dt / 1000;
+  for (let i = parts.length - 1; i >= 0; i--) { const q = parts[i]; q.life -= s; if (q.life <= 0) { parts.splice(i, 1); continue; } const d = Math.pow(q.drag, s * 60); q.vx *= d; q.vy *= d; q.vy += q.g * s; q.x += q.vx * s; q.y += q.vy * s; q.rot += q.vr * s; }
+  for (let i = fparts.length - 1; i >= 0; i--) { const q = fparts[i]; q.life -= s; if (q.life <= 0) { fparts.splice(i, 1); continue; } if (q.tx !== undefined) { const k = 1 - q.life / q.max; q.x = lerp(q.sx, q.tx, E.io(k)) + Math.sin(k * 9 + q.ph) * 14 * (1 - k); q.y = lerp(q.sy, q.ty, E.io(k)) + Math.cos(k * 7 + q.ph) * 14 * (1 - k); } else { q.x += q.vx * s; q.y += q.vy * s; } }
+  for (const a of [rings, slashes, bolts, floats, ghosts, beams, rifts]) for (let i = a.length - 1; i >= 0; i--) { const q = a[i]; q.life -= s; if (q.life <= 0) { a.splice(i, 1); continue; } if (q.dr) q.r += q.dr * s; if (q.vy) q.y += q.vy * s; if (a === floats) q.vy *= .96; }
+  for (const f of [hero, boss]) {
+    if (f.ghostOn) { f.gAcc += dt; if (f.gAcc > 34) { f.gAcc = 0; ghostSnap(f, f.ghostCol || '#6fd8ff', .5); } }
+    if (f.trailOn) { f.trail.push({ x: f.tip.x, y: f.tip.y, bx: f.tip.bx, by: f.tip.by, a: 1 }); }
+    for (let i = f.trail.length - 1; i >= 0; i--) { f.trail[i].a -= s * 5; if (f.trail[i].a <= 0) f.trail.splice(i, 1); }
+    if (f.trail.length > 18) f.trail.splice(0, f.trail.length - 18);
+    if (f.aura > .25 && Math.random() < f.aura * .7 && !IS_SMALL || (f.aura > .25 && Math.random() < .25)) {
+      P({ x: f.x + f.ox + rnd(-26, 26), y: GROUND - f.y - rnd(0, 60), vx: rnd(-20, 20), vy: rnd(-160, -60), life: rnd(.4, .9), size: rnd(2, 4), color: f.K.aura, type: 'ember' });
+    }
+  }
+  if (dragon) {
+    const d = dragon, u = d.u, a = d.a, b = d.b, c2 = d.c;
+    const x = (1 - u) * (1 - u) * a.x + 2 * (1 - u) * u * b.x + u * u * c2.x, y = (1 - u) * (1 - u) * a.y + 2 * (1 - u) * u * b.y + u * u * c2.y + Math.sin(u * 16) * 34 * (1 - u) * (u > 0 ? 1 : 0);
+    d.pts.unshift({ x, y }); if (d.pts.length > 46) d.pts.pop();
+    if (Math.random() < .8) P({ x: x + rnd(-10, 10), y: y + rnd(-10, 10), vx: rnd(-40, 40), vy: rnd(-120, -20), life: rnd(.3, .7), size: rnd(3, 6), color: pick(['#ff4a2a', '#ffb02e', '#fff2b0']), type: 'ember' });
+    if (d.done) { d.fade -= s * 2; if (d.fade <= 0) dragon = null; }
+  }
+  for (const p of projs) { if (p.vx !== undefined) { p.x += p.vx * s; p.y += (p.vy || 0) * s; } P({ x: p.x + rnd(-6, 6), y: p.y + rnd(-6, 6), vx: rnd(-30, 30), vy: rnd(-30, 30), life: rnd(.2, .45), size: rnd(2, p.r * .35), color: pick([p.color, '#ffffff']), type: 'dot' }); }
+  scr.flash = Math.max(0, scr.flash - s * 2.4);
+  cam.shake = Math.max(0, cam.shake - s * 28);
+}
+
+function drawParts(c, list) {
+  c.save(); c.globalCompositeOperation = 'lighter';
+  for (const q of list) {
+    const a = clamp(q.life / q.max, 0, 1);
+    if (q.type === 'line') { c.strokeStyle = rgba(q.color, a); c.lineWidth = q.size * .6; c.beginPath(); c.moveTo(q.x, q.y); c.lineTo(q.x - q.vx * .035, q.y - q.vy * .035); c.stroke(); }
+    else if (q.type === 'ember' || q.type === 'dot') { c.fillStyle = rgba(q.color, a * (q.type === 'ember' ? .9 : 1)); c.beginPath(); c.arc(q.x, q.y, q.size * (q.type === 'ember' ? a : 1), 0, TAU); c.fill(); }
+    else if (q.type === 'shard') { c.save(); c.translate(q.x, q.y); c.rotate(q.rot); c.fillStyle = rgba(q.color, a); c.fillRect(-q.size, -q.size * .4, q.size * 2, q.size * .8); c.restore(); }
+  }
+  c.restore();
+}
+
+function drawPortalFx() {
+  if (typeof portal === 'undefined' || portal.on < .01) return;
+  const o = portal.on, R = portal.r * o;
+  ctx.save(); ctx.translate(portal.x, portal.y); ctx.globalCompositeOperation = 'lighter';
+  const g = ctx.createRadialGradient(0, 0, 0, 0, 0, R * 1.4);
+  g.addColorStop(0, 'rgba(255,255,255,.9)'); g.addColorStop(.35, rgba('#a46bff', .6)); g.addColorStop(1, rgba('#4aa8ff', 0));
+  ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(0, 0, R * .75, R * 1.4, 0, 0, TAU); ctx.fill();
+  for (let i = 0; i < 6; i++) {
+    ctx.strokeStyle = rgba(i % 2 ? '#ffffff' : '#7dd8ff', .75 * o); ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.ellipse(0, 0, R * (.25 + i * .09), R * (.55 + i * .13), tNow * (i % 2 ? 1 : -1) * .9 + i, 0, TAU); ctx.stroke();
+  }
+  ctx.restore();
+  if (Math.random() < .6) P({ x: portal.x + rnd(-R, R), y: portal.y + rnd(-R, R), vx: 0, vy: rnd(-40, 40), life: .5, size: rnd(2, 4), color: pick(['#ffffff', '#a46bff', '#7dd8ff']), type: 'dot' });
+}
+const clockFx = { on: 0, m: 2 };
+function drawWorldFx() {
+  drawPortalFx();
+  // รอยฟันของอาวุธ
+  ctx.save(); ctx.globalCompositeOperation = 'lighter';
+  for (const f of [hero, boss]) {
+    const tr = f.trail; if (tr.length < 2) continue;
+    const col = f.wcol || (f.kind === 'hero' ? '#7dd8ff' : f.K.aura);
+    for (let i = 1; i < tr.length; i++) {
+      const a = tr[i - 1], b = tr[i];
+      ctx.fillStyle = rgba(col, clamp(b.a, 0, 1) * .75);
+      ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.lineTo(b.bx, b.by); ctx.lineTo(a.bx, a.by); ctx.closePath(); ctx.fill();
+    }
+  }
+  // วงแหวนคลื่นกระแทก
+  for (const r of rings) {
+    const a = r.life / r.max;
+    ctx.strokeStyle = rgba(r.color, a); ctx.lineWidth = r.w * a + 1;
+    ctx.beginPath(); ctx.ellipse(r.x, r.y, Math.max(1, r.r), Math.max(1, r.r * r.sq), 0, 0, TAU); ctx.stroke();
+  }
+  // รอยฟันเสี้ยวพลัง
+  for (const s of slashes) {
+    const a = s.life / s.max, ca = Math.cos(s.ang), sa = Math.sin(s.ang);
+    const x1 = s.x - ca * s.len / 2, y1 = s.y - sa * s.len / 2, x2 = s.x + ca * s.len / 2, y2 = s.y + sa * s.len / 2;
+    const cx = s.x - sa * s.len * s.curve, cy = s.y + ca * s.len * s.curve;
+    for (const pass of [1, .45]) {
+      ctx.fillStyle = rgba(pass === 1 ? s.color : '#ffffff', a * (pass === 1 ? .85 : .95));
+      ctx.beginPath();
+      const N = 12;
+      for (let i = 0; i <= N; i++) { const t = i / N, w = s.w * pass * Math.sin(t * Math.PI) * a; const px = (1 - t) * (1 - t) * x1 + 2 * (1 - t) * t * cx + t * t * x2, py = (1 - t) * (1 - t) * y1 + 2 * (1 - t) * t * cy + t * t * y2; const nx = -(ca), ny = -(sa); ctx.lineTo(px + nx * w * .5 * 0 + (-sa) * w * .5, py + ca * w * .5); }
+      for (let i = N; i >= 0; i--) { const t = i / N, w = s.w * pass * Math.sin(t * Math.PI) * a; const px = (1 - t) * (1 - t) * x1 + 2 * (1 - t) * t * cx + t * t * x2, py = (1 - t) * (1 - t) * y1 + 2 * (1 - t) * t * cy + t * t * y2; ctx.lineTo(px + sa * w * .5, py - ca * w * .5); }
+      ctx.closePath(); ctx.fill();
+    }
+  }
+  // สายฟ้า
+  for (const b of bolts) {
+    const a = b.life / b.max;
+    for (const [w, c, al] of [[b.w * 3, b.color, .3], [b.w * 1.4, b.color, .9], [b.w * .5, '#ffffff', 1]]) {
+      ctx.strokeStyle = rgba(c, al * a); ctx.lineWidth = Math.max(.6, w); ctx.lineJoin = 'round';
+      ctx.beginPath(); b.pts.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1])); ctx.stroke();
+    }
+  }
+  // ลำแสง
+  for (const b of beams) {
+    const a = clamp(b.life / b.max, 0, 1), grow = Math.min(1, (1 - a) * 6 + .15), w = b.w * grow * (a > .6 ? 1 : a / .6);
+    const ang = Math.atan2(b.y2 - b.y1, b.x2 - b.x1), len = Math.hypot(b.x2 - b.x1, b.y2 - b.y1);
+    ctx.save(); ctx.translate(b.x1, b.y1); ctx.rotate(ang);
+    const g = ctx.createLinearGradient(0, -w, 0, w);
+    g.addColorStop(0, rgba(b.color, 0)); g.addColorStop(.35, rgba(b.color, .9)); g.addColorStop(.5, 'rgba(255,255,255,1)'); g.addColorStop(.65, rgba(b.color, .9)); g.addColorStop(1, rgba(b.color, 0));
+    ctx.fillStyle = g; ctx.fillRect(0, -w, len, w * 2); ctx.restore();
+  }
+  // รอยแยกมิติ
+  for (const r of rifts) {
+    const a = clamp(r.life / r.max, 0, 1), k = Math.min(1, (1 - a) * 4), sz = r.size * k * (a < .25 ? a / .25 : 1);
+    ctx.save(); ctx.translate(r.x, r.y);
+    const g = ctx.createRadialGradient(0, 0, 0, 0, 0, sz);
+    g.addColorStop(0, 'rgba(8,0,24,.95)'); g.addColorStop(.7, rgba(r.color, .55)); g.addColorStop(1, rgba(r.color, 0));
+    ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(0, 0, sz * .38, sz, .25, 0, TAU); ctx.fill();
+    ctx.strokeStyle = rgba('#ffffff', .95); ctx.lineWidth = 3; ctx.beginPath();
+    for (let i = 0; i <= 14; i++) { const t = i / 14, yy = (t - .5) * sz * 2, xx = Math.sin(t * 17 + r.seed) * sz * .08 * Math.sin(t * Math.PI); i ? ctx.lineTo(xx, yy) : ctx.moveTo(xx, yy); }
+    ctx.stroke(); ctx.restore();
+  }
+  // มังกรเพลิง
+  if (dragon) {
+    const d = dragon, n = d.pts.length;
+    for (let i = n - 1; i >= 0; i--) {
+      const q = d.pts[i], t = i / 46, r = (1 - t) * 30 * d.fade + 3;
+      const g = ctx.createRadialGradient(q.x, q.y, 0, q.x, q.y, r * 1.8);
+      g.addColorStop(0, rgba(i < 3 ? '#fff6c0' : '#ffb02e', .95 * d.fade)); g.addColorStop(.5, rgba('#ff4a2a', .6 * d.fade)); g.addColorStop(1, rgba('#c01020', 0));
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(q.x, q.y, r * 1.8, 0, TAU); ctx.fill();
+    }
+    if (n > 3) {
+      const h = d.pts[0], p2 = d.pts[3], ang = Math.atan2(h.y - p2.y, h.x - p2.x);
+      ctx.save(); ctx.translate(h.x, h.y); ctx.rotate(ang); ctx.globalAlpha = d.fade;
+      ctx.fillStyle = '#ffd27a'; ctx.beginPath(); ctx.moveTo(-6, -22); ctx.lineTo(46, -8); ctx.lineTo(60, 0); ctx.lineTo(46, 12); ctx.lineTo(-6, 24); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = '#ff4a2a'; ctx.beginPath(); ctx.moveTo(-4, -22); ctx.lineTo(-30, -48); ctx.lineTo(10, -20); ctx.fill(); ctx.beginPath(); ctx.moveTo(-4, 24); ctx.lineTo(-30, 48); ctx.lineTo(10, 22); ctx.fill();
+      ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.moveTo(18, -8); ctx.lineTo(34, -4); ctx.lineTo(18, 0); ctx.fill();
+      ctx.fillStyle = '#300'; ctx.beginPath(); ctx.moveTo(50, 0); ctx.lineTo(36, 8); ctx.lineTo(36, -2); ctx.fill();
+      ctx.restore();
+    }
+  }
+  // ลูกพลังงาน
+  for (const p of projs) {
+    const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 2.2);
+    g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(.3, rgba(p.color, .9)); g.addColorStop(1, rgba(p.color, 0));
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 2.2, 0, TAU); ctx.fill();
+  }
+  ctx.restore();
+  drawParts(ctx, parts);
+  // ตัวเลขความเสียหาย
+  ctx.save(); ctx.textAlign = 'center'; ctx.lineJoin = 'round';
+  for (const f of floats) {
+    const a = clamp(f.life / f.max * 2, 0, 1), sc = f.life > f.max - .12 ? 1 + (f.life - (f.max - .12)) * 8 : 1;
+    ctx.font = '900 ' + Math.round(f.size * sc) + 'px ' + FONT;
+    ctx.globalAlpha = a; ctx.lineWidth = 7; ctx.strokeStyle = '#10142e'; ctx.strokeText(f.txt, f.x, f.y);
+    ctx.fillStyle = f.color; ctx.fillText(f.txt, f.x, f.y);
+  }
+  ctx.restore();
+}
+
+/* ---------- วาดทั้งเฟรม ---------- */
+let tNow = 0;
+const view = { pal: 'dawn' };
+function renderBattle() {
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  ctx.clearRect(0, 0, W, H);
+  const sx = cam.shake ? rnd(-cam.shake, cam.shake) : 0, sy = cam.shake ? rnd(-cam.shake, cam.shake) : 0;
+  drawBG(tNow, view.pal, scr.boost);
+  ctx.save();
+  ctx.translate(480 + sx, 270 + sy); ctx.scale(cam.z, cam.z); ctx.translate(-cam.x, -cam.y);
+  drawFloor(tNow, view.pal);
+  drawProps(tNow, view.pal);
+  // เงาใต้ตัวละคร
+  for (const f of [boss, hero]) {
+    if (f.vis <= 0) continue;
+    ctx.fillStyle = 'rgba(0,0,0,' + (.4 * Math.max(.25, 1 - f.y / 300)) + ')';
+    ctx.beginPath(); ctx.ellipse(f.x + f.ox, GROUND + 8, 58 * f.s * Math.max(.4, 1 - f.y / 400), 11 * f.s, 0, 0, TAU); ctx.fill();
+  }
+  for (const g of ghosts) { ctx.save(); ctx.globalCompositeOperation = 'lighter'; drawFighter(g.f, rgba(g.col, 1), (g.life / g.max) * g.a); ctx.restore(); }
+  if (boss.vis > 0) { ctx.save(); ctx.globalAlpha = boss.vis; drawFighter(boss); ctx.restore(); }
+  if (hero.vis > 0) { ctx.save(); ctx.globalAlpha = hero.vis; drawFighter(hero); ctx.restore(); }
+  drawWorldFx();
+  ctx.restore();
+  // เอฟเฟกต์หน้าจอ
+  if (scr.dim > 0.005) { ctx.fillStyle = 'rgba(2,0,12,' + scr.dim + ')'; ctx.fillRect(0, 0, W, H); }
+  if (scr.tintA > 0.005) { ctx.fillStyle = rgba(scr.tint, scr.tintA); ctx.fillRect(0, 0, W, H); }
+  if (scr.speed > 0.01) {
+    ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.strokeStyle = 'rgba(255,255,255,' + (.55 * scr.speed) + ')';
+    for (let i = 0; i < 46; i++) { const a = rnd(0, TAU), r1 = rnd(180, 340), r2 = r1 + rnd(120, 400); ctx.lineWidth = rnd(1, 3.2); ctx.beginPath(); ctx.moveTo(480 + Math.cos(a) * r1, 270 + Math.sin(a) * r1 * .62); ctx.lineTo(480 + Math.cos(a) * r2, 270 + Math.sin(a) * r2 * .62); ctx.stroke(); }
+    ctx.restore();
+  }
+  const vg = ctx.createRadialGradient(480, 270, 230, 480, 270, 640); vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,12,' + scr.vig + ')');
+  ctx.fillStyle = vg; ctx.fillRect(0, 0, W, H);
+  if (scr.flash > .01) { ctx.fillStyle = rgba(scr.flashCol, clamp(scr.flash, 0, 1)); ctx.fillRect(0, 0, W, H); }
+  if (scr.bars > .5) { ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, scr.bars); ctx.fillRect(0, H - scr.bars, W, scr.bars); }
+}
+
+/* ---------- เลเยอร์เอฟเฟกต์เหนือ UI (รอยแยกมิติ/อนุภาคตอนเปลี่ยนข้อ) ---------- */
+const fxRift = { open: 0, x: 0, y: 0, r: 0, col: '#4aa8ff', col2: '#ffffff', kind: 0, rot: 0 };
+function renderFx(t) {
+  const w = fxc.width / DPR, h = fxc.height / DPR;
+  fctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  fctx.clearRect(0, 0, w, h);
+  if (fxRift.open > .01) {
+    const o = fxRift.open, R = fxRift.r * o;
+    fctx.save(); fctx.translate(fxRift.x, fxRift.y); fctx.globalCompositeOperation = 'lighter'; fctx.rotate(fxRift.rot);
+    const g = fctx.createRadialGradient(0, 0, 0, 0, 0, R);
+    g.addColorStop(0, rgba(fxRift.col, .55 * o)); g.addColorStop(.7, rgba(fxRift.col, .22 * o)); g.addColorStop(1, rgba(fxRift.col, 0));
+    fctx.fillStyle = g; fctx.beginPath(); fctx.arc(0, 0, R, 0, TAU); fctx.fill();
+    fctx.strokeStyle = rgba(fxRift.col2, .9 * o); fctx.lineWidth = 3;
+    fctx.beginPath(); fctx.arc(0, 0, R * .92, 0, TAU); fctx.stroke();
+    fctx.strokeStyle = rgba(fxRift.col, .8 * o); fctx.lineWidth = 2; fctx.beginPath(); fctx.arc(0, 0, R * .7, 0, TAU); fctx.stroke();
+    if (fxRift.kind === 0) { // วงเวทหกเหลี่ยม
+      for (let k = 0; k < 2; k++) { fctx.beginPath(); for (let i = 0; i <= 3; i++) { const a = i / 3 * TAU + k * Math.PI / 3; fctx.lineTo(Math.cos(a) * R * .7, Math.sin(a) * R * .7); } fctx.stroke(); }
+      for (let i = 0; i < 24; i++) { const a = i / 24 * TAU; fctx.beginPath(); fctx.moveTo(Math.cos(a) * R * .92, Math.sin(a) * R * .92); fctx.lineTo(Math.cos(a) * R * 1.02, Math.sin(a) * R * 1.02); fctx.stroke(); }
+    } else if (fxRift.kind === 1) { // รอยแตกมิติ
+      fctx.strokeStyle = rgba('#ffffff', .95 * o); fctx.lineWidth = 3;
+      for (let k = 0; k < 6; k++) { const a = k / 6 * TAU + .3; fctx.beginPath(); let x = 0, y = 0; for (let i = 0; i < 7; i++) { x += Math.cos(a + Math.sin(i * 2 + k) * .5) * R * .16; y += Math.sin(a + Math.sin(i * 2 + k) * .5) * R * .16; fctx.lineTo(x, y); } fctx.stroke(); }
+    } else { // ดาวเรืองแสง
+      fctx.beginPath(); for (let i = 0; i <= 10; i++) { const a = i / 10 * TAU, rr = i % 2 ? R * .35 : R * .85; fctx.lineTo(Math.cos(a) * rr, Math.sin(a) * rr); } fctx.closePath(); fctx.stroke();
+    }
+    fctx.restore();
+  }
+  drawParts(fctx, fparts);
+  if (clockFx.on > .01) {
+    const o = clockFx.on, R = 78 * o, cx = w / 2, cy = h * .3;
+    fctx.save(); fctx.translate(cx, cy); fctx.globalCompositeOperation = 'lighter';
+    fctx.strokeStyle = rgba('#ffd24a', .9 * o); fctx.lineWidth = 5; fctx.beginPath(); fctx.arc(0, 0, R, 0, TAU); fctx.stroke();
+    for (let i = 0; i < 12; i++) { const a = i / 12 * TAU; fctx.lineWidth = i % 3 ? 2 : 4; fctx.beginPath(); fctx.moveTo(Math.cos(a) * R * .85, Math.sin(a) * R * .85); fctx.lineTo(Math.cos(a) * R, Math.sin(a) * R); fctx.stroke(); }
+    fctx.strokeStyle = rgba('#ffffff', o); fctx.lineWidth = 4; fctx.beginPath(); fctx.moveTo(0, 0); fctx.lineTo(Math.cos(t * 9) * R * .75, Math.sin(t * 9) * R * .75); fctx.stroke();
+    fctx.lineWidth = 6; fctx.beginPath(); fctx.moveTo(0, 0); fctx.lineTo(Math.cos(t * 1.5) * R * .5, Math.sin(t * 1.5) * R * .5); fctx.stroke();
+    fctx.restore();
+  }
+}
+
+/* ======================================================================
+   ส่วนที่ 3: การต่อสู้ (ท่าโจมตี, AI ศัตรู, Ultimate, Cinematic) — แยกจาก UI
+   ====================================================================== */
+const HC = () => STAGES[G.stage].col;
+const HC2 = () => STAGES[G.stage].col2;
+const dmgFmt = n => Math.round(n).toLocaleString('en-US');
+const dodge = { armed: false, done: false, kind: '', homeX: HERO_X };
+const portal = { on: 0, x: 700, y: GROUND - 110, r: 150, rot: 0 };
+
+function splitDamage(total, weights) {
+  const sum = weights.reduce((a, b) => a + b, 0) || 1;
+  const out = weights.map(w => Math.floor(total * w / sum));
+  let rest = Math.round(total) - out.reduce((a, b) => a + b, 0);
+  for (let i = out.length - 1; rest > 0; i = (i - 1 + out.length) % out.length) { if (weights[i] > 0) { out[i]++; rest--; } }
+  return out;
+}
+function setupStage(i) {
+  const st = STAGES[i], dd = G.diff;
+  view.pal = st.pal;
+  boss = mkFighter(st.kind, BOSS_X, -1); boss.weaponLen = 100;
+  boss.max = Math.round(st.hp * dd.hp); boss.hp = boss.max; boss.minHP = Math.round(boss.max * .06);
+  hero = mkFighter('hero', HERO_X, 1); hero.weaponLen = 78; hero.max = PLAYER_MAX; hero.hp = PLAYER_MAX;
+  const wi = weaponIndex(); hero.wcol = WEAPONS[wi].color; hero.glow = .35;
+  hero.walk = false; cam.follow = false; hero.aura = .25; scr.boost = 0; scr.dim = 0; scr.bars = 0; scr.tintA = 0; scr.speed = 0;
+  Object.assign(cam, { x: 480, y: 280, z: 1, shake: 0 });
+  parts.length = rings.length = slashes.length = bolts.length = ghosts.length = floats.length = projs.length = beams.length = rifts.length = 0; dragon = null;
+  setPose(hero, 'ready', 1); setPose(boss, 'idle', 1);
+}
+function weaponIndex() { let w = Math.min(G.stage, 3); while (w > 0 && !G.weapons[w]) w--; return w; }
+
+/* ---------- ปฏิกิริยาของบอส ---------- */
+async function bossFlinch(dx) {
+  boss.expr = 'hurt';
+  tween(boss.p, POSES.hurt, 60);
+  await tween(boss, { ox: dx }, 70, E.out);
+  tween(boss, { ox: 0 }, 220, E.io);
+  setTimeout(() => { if (boss.expr === 'hurt') boss.expr = 'angry'; }, 260 / SPEED);
+  setPose(boss, 'idle', 240);
+}
+async function bossRecover() {
+  boss.expr = 'angry'; boss.trailOn = false; boss.ghostOn = false;
+  await Promise.all([tween(boss, { x: BOSS_X, y: 0, ox: 0, rot: 0 }, 260), setPose(boss, 'idle', 260)]);
+  boss.expr = 'normal'; boss.aura = 0;
+}
+function hitBossNum(dmg, o) {
+  o = o || {};
+  const m = bossMid();
+  boss.hp = Math.max(boss.minHP || 0, boss.hp - dmg);
+  floatNum(m.x + rnd(-34, 34), m.y - 36, dmgFmt(dmg), o.col || (o.big ? '#ffd24a' : '#ffffff'), o.size || (o.big ? 54 : 36));
+  impact(m.x, m.y, o.fx || HC(), o.pw || 1, { snd: o.snd });
+}
+
+/* ---------- ท่าของผู้เล่น ---------- */
+async function heroDash(toX, ms) {
+  ms = ms || 170;
+  sfx.whoosh(); hero.ghostOn = true; hero.ghostCol = HC(); hero.aura = .9;
+  await Promise.all([tween(hero, { x: toX }, ms, E.out), setPose(hero, 'dash', ms * .6)]);
+  hero.ghostOn = false;
+}
+async function heroBack() {
+  hero.ghostOn = true; hero.ghostCol = HC(); sfx.whoosh(); hero.trailOn = false;
+  await Promise.all([tween(hero, { x: HERO_X, y: 0, rot: 0, ox: 0 }, 240), setPose(hero, 'ready', 240)]);
+  hero.ghostOn = false; hero.aura = .25; hero.glow = .35; hero.face = 1; hero.expr = 'normal';
+}
+async function heroSlash(i, dmg, o) {
+  o = o || {};
+  const th = i % 3 === 2, up = !th && i % 2 === 1;
+  await setPose(hero, th ? 'ready' : (up ? 'windupLow' : 'windupHigh'), 90, E.out);
+  hero.trailOn = true; hero.glow = 1; sfx.slash();
+  const sw = setPose(hero, th ? 'thrust' : (up ? 'swingUp' : 'swingDown'), 80, E.in);
+  await sleep(58);
+  const m = bossMid();
+  slashFx(m.x, m.y, th ? 0 : (up ? -.9 : .9), th ? 150 : 200, HC(), { w: 26 });
+  if (o.miss) { floatNum(m.x, m.y - 40, 'MISS', '#9aa8d8', 32); }
+  else if (o.block) {
+    boss.p && tween(boss.p, POSES.guard, 40);
+    floatNum(m.x, m.y - 50, 'GUARD!', '#9ad8ff', 34);
+    boss.hp = Math.max(boss.minHP || 0, boss.hp - dmg);
+    floatNum(m.x + 30, m.y - 10, dmgFmt(dmg), '#cfe8ff', 26);
+    burst(m.x - 30, m.y, ['#9ad8ff', '#ffffff'], { max: 380, size: 3 }); ring(m.x - 30, m.y, '#9ad8ff', { dr: 200, w: 5, life: .25 }); sfx.punch(); shake(4); hitstop(40);
+    tween(boss, { ox: 22 }, 80, E.out).then(() => tween(boss, { ox: 0 }, 200));
+  } else { sfx.clang(); hitBossNum(dmg, { pw: 1 }); bossFlinch(18); }
+  await sw; hero.trailOn = false; hero.glow = .4; await sleep(60);
+}
+async function heroHeavy(dmg, o) {
+  o = o || {};
+  sfx.charge(.3); hero.aura = 1.1; flash(.1, HC2());
+  await setPose(hero, 'windupHigh', 230, E.out);
+  hero.trailOn = true; hero.glow = 1.2;
+  const sw = setPose(hero, 'slam', 100, E.in);
+  await sleep(70);
+  const m = bossMid();
+  slashFx(m.x, m.y, .7, 280, HC(), { w: 40, life: .35 }); slashFx(m.x, m.y, -.7, 260, '#ffffff', { w: 24, life: .3 });
+  sfx.heavy();
+  hitBossNum(dmg, { big: true, pw: 2.1, col: '#ffd24a', snd: false });
+  ring(boss.x, GROUND + 6, HC(), { dr: 760, w: 10, life: .5, sq: .2 }); ring(boss.x, GROUND + 6, '#ffffff', { dr: 480, w: 5, life: .4, sq: .2 });
+  burst(boss.x, GROUND, ['#ffe27a', '#ffffff', HC()], { dir: -Math.PI / 2, spread: 1.4, max: 620, size: 5, life: .8 });
+  flash(.5, o.final ? '#ffffff' : HC2()); shake(15); hitstop(120);
+  floatNum(m.x, m.y - 90, o.label || 'FINAL IMPACT!', '#ffd24a', 30);
+  await tween(boss, { ox: 100 }, 140, E.out); boss.expr = 'hurt'; tween(boss.p, POSES.hurt, 80);
+  await sw; hero.trailOn = false; await sleep(130);
+}
+async function heroBlast(dmg) {
+  await setPose(hero, 'charge', 240); hero.glow = 1.2; hero.aura = 1; sfx.charge(.55);
+  const orb = { x: hero.x + 62, y: GROUND - hero.y - 96, r: 6, color: HC() }; projs.push(orb);
+  const follow = setInterval(() => { orb.x = hero.x + hero.ox + 62; orb.y = GROUND - hero.y - 96; }, 16);
+  await tween(orb, { r: 30 }, 460, E.in); clearInterval(follow);
+  sfx.blast(); tween(hero, { ox: -16 }, 70, E.out).then(() => tween(hero, { ox: 0 }, 200));
+  const m = bossMid();
+  await tween(orb, { x: m.x - 20, y: m.y, r: 40 }, 260, E.in);
+  projs.splice(projs.indexOf(orb), 1);
+  ring(m.x, m.y, HC(), { dr: 520, w: 12, life: .5 }); ring(m.x, m.y, '#ffffff', { dr: 300, w: 6, life: .35 });
+  hitBossNum(dmg, { pw: 1.6, col: '#cfeaff', size: 44 }); bossFlinch(60);
+  await sleep(120);
+}
+async function heroUppercut(dmg) {
+  await setPose(hero, 'uppercutW', 130, E.out);
+  hero.trailOn = true; hero.glow = 1; sfx.slash(); setPose(hero, 'uppercut', 90, E.in);
+  await sleep(60);
+  const m = bossMid();
+  slashFx(m.x, m.y + 30, -1.2, 230, HC(), { w: 30 });
+  hitBossNum(dmg, { pw: 1.5 });
+  boss.expr = 'hurt'; tween(boss.p, POSES.hurt, 60);
+  tween(boss, { y: 190, rot: -12 }, 300, E.out);
+  tween(hero, { y: 70 }, 220, E.out);
+  await sleep(140); hero.trailOn = false;
+}
+async function heroAir(dmgs, finalDmg) {
+  hero.ghostOn = true; hero.ghostCol = HC();
+  await Promise.all([tween(hero, { y: 190, x: boss.x - 110 }, 240, E.out), setPose(hero, 'jump', 200)]);
+  camTo(boss.x - 60, 190, 1.3, 300);
+  for (let i = 0; i < dmgs.length; i++) {
+    const up = i % 2;
+    await setPose(hero, up ? 'windupLow' : 'windupHigh', 70, E.out);
+    hero.trailOn = true; sfx.slash(); setPose(hero, up ? 'swingUp' : 'swingDown', 70, E.in); await sleep(50);
+    const m = bossMid(); slashFx(m.x, m.y, up ? -.8 : .8, 190, HC(), { w: 24 });
+    hitBossNum(dmgs[i], { pw: 1 }); boss.y += 4; tween(boss, { ox: (i % 2 ? -14 : 14) }, 60).then(() => tween(boss, { ox: 0 }, 100));
+    await sleep(80); hero.trailOn = false;
+  }
+  hero.ghostOn = false;
+  // ฟันดิ่งลงพื้นพร้อมศัตรู
+  await setPose(hero, 'windupHigh', 110, E.out);
+  sfx.charge(.25);
+  hero.trailOn = true; hero.ghostOn = true;
+  const sl = setPose(hero, 'slam', 90, E.in);
+  await Promise.all([tween(hero, { y: 0, x: boss.x - 110 }, 190, E.in), tween(boss, { y: 0, rot: 0 }, 190, E.in)]);
+  hero.ghostOn = false; await sl;
+  camTo(480, 290, 1.1, 200);
+  const m = bossMid();
+  slashFx(m.x, m.y + 20, .7, 300, HC(), { w: 44, life: .38 });
+  sfx.heavy(); hitBossNum(finalDmg, { big: true, pw: 2.2, col: '#ffd24a', snd: false });
+  ring(boss.x, GROUND + 6, HC(), { dr: 820, w: 11, life: .55, sq: .2 }); ring(boss.x, GROUND + 6, '#fff', { dr: 500, w: 5, life: .4, sq: .2 });
+  burst(boss.x, GROUND, ['#ffe27a', '#fff', HC()], { dir: -Math.PI / 2, spread: 1.5, max: 640, size: 5, life: .85 });
+  flash(.5, HC2()); shake(18); hitstop(130);
+  floatNum(m.x, m.y - 90, 'FINAL IMPACT!', '#ffd24a', 30);
+  tween(boss, { ox: 100 }, 140, E.out); boss.expr = 'hurt'; tween(boss.p, POSES.hurt, 80);
+  await sleep(180); hero.trailOn = false;
+}
+
+/* ตอบถูก: คอมโบจริง (ค่าเสียหายรวม T กระจายตามจังหวะโจมตี) */
+async function attackCombo(T, streak) {
+  hero.aura = .9; hero.expr = 'angry'; G.idle = false;
+  const variant = streak >= 3 && Math.random() < .7 ? 'air' : pick(['ground', 'blast', 'ground']);
+  const ai = Math.random() < .22 ? 'guard' : (Math.random() < .2 ? 'evade' : 'take');
+  const n = clamp(3 + (streak >= 2 ? 1 : 0) + (streak >= 4 ? 1 : 0), 3, 5);
+  if (variant === 'blast') {
+    const w = [1.4]; for (let i = 1; i < n - 1; i++) w.push(1); w.push(2.4);
+    const d = splitDamage(T, w);
+    await heroBlast(d[0]);
+    await heroDash(boss.x - 120);
+    for (let i = 1; i < n - 1; i++) await heroSlash(i, d[i]);
+    await heroHeavy(d[n - 1]);
+  } else if (variant === 'air') {
+    const w = [1.4, 1, 1, 2.4], d = splitDamage(T, w);
+    await heroDash(boss.x - 120);
+    await heroUppercut(d[0]);
+    await heroAir([d[1], d[2]], d[3]);
+  } else {
+    const w = []; for (let i = 0; i < n - 1; i++) w.push(1); w.push(2.4);
+    if (ai === 'guard') { w[0] *= .4; w[1] *= .4; }
+    if (ai === 'evade') w[0] = 0;
+    const d = splitDamage(T, w);
+    await heroDash(boss.x - 120);
+    for (let i = 0; i < n - 1; i++) {
+      if (ai === 'evade' && i === 0) {
+        boss.ghostOn = true; boss.ghostCol = STAGES[G.stage].col; sfx.dodge();
+        const ev = tween(boss, { ox: 90, y: 20 }, 120, E.out);
+        await heroSlash(i, 0, { miss: true }); await ev;
+        boss.ghostOn = false; tween(boss, { ox: 0, y: 0 }, 160);
+      } else await heroSlash(i, d[i], { block: ai === 'guard' && i < 2 });
+    }
+    if (ai === 'guard') { floatNum(boss.x, GROUND - 230, 'GUARD BREAK!', '#ffd24a', 34); }
+    await heroHeavy(d[n - 1]);
+  }
+  hero.expr = 'normal';
+  await Promise.all([bossRecover(), heroBack()]);
+  G.idle = true;
+}
+
+/* ---------- ศัตรูโต้กลับ (AI) + ระบบหลบ ---------- */
+function setDodgeUI(on) { dodge.armed = on; const b = $('#btn-dodge'); b.classList.toggle('armed', on); b.disabled = !on; }
+async function heroDodgeAnim() {
+  sfx.dodge(); hero.ghostOn = true; hero.ghostCol = '#ffffff'; hero.aura = 1;
+  if (dodge.kind === 'dash') { tween(hero, { x: dodge.homeX - 90 }, 150, E.out); setPose(hero, 'dodge', 140); }
+  else { tween(hero, { y: 140, x: dodge.homeX - 30 }, 230, E.out); setPose(hero, 'jump', 200); }
+  await sleep(260); hero.ghostOn = false;
+}
+function pressDodge() {
+  if (!dodge.armed || dodge.done) return;
+  dodge.done = true; heroDodgeAnim();
+}
+async function heroHurt(dmg, from) {
+  hero.expr = 'hurt'; hero.hp = Math.max(0, hero.hp - dmg);
+  const m = heroMid();
+  floatNum(m.x, m.y - 40, '-' + dmg, '#ff6a7a', 42);
+  impact(m.x, m.y, STAGES[G.stage].col, 1.3);
+  sfx.hurt(); tween(hero.p, POSES.hurt, 60);
+  await tween(hero, { ox: -70 }, 90, E.out);
+  tween(hero, { ox: 0 }, 260, E.io);
+}
+async function bossCounter(base, timeout) {
+  const st = STAGES[G.stage];
+  const kind = pick(['dash', 'blast', 'smash']);
+  G.idle = false; dodge.kind = kind; dodge.done = false; dodge.homeX = hero.x;
+  boss.expr = 'angry'; boss.aura = 1.1; sfx.roar(); sfx.charge(1.0);
+  let orb = null;
+  if (kind === 'dash') { setPose(boss, 'windupLow', 520); ring(boss.x, boss.y + GROUND - 90, st.col, { r0: 190, dr: -330, w: 6, life: .55 }); }
+  else if (kind === 'blast') {
+    setPose(boss, 'charge', 400); orb = { x: boss.x - 66, y: GROUND - 100 * boss.s, r: 6, color: st.col }; projs.push(orb);
+    tween(orb, { r: 36 }, 900, E.in);
+  } else { setPose(boss, 'cast', 300); tween(boss, { y: 200 }, 520, E.out); boss.ghostOn = true; boss.ghostCol = st.col; }
+  await sleep(520);
+  // ช่วงหลบ: ผู้เล่นกด DODGE ให้ทัน
+  setDodgeUI(true); banner('DODGE!', '#ff4a5e', 'กด DODGE หรือ Space');
+  await sleep(G.diff.win);
+  setDodgeUI(false);
+  const dodged = dodge.done, dmg = dodged ? Math.max(1, Math.round(base * .35)) : base;
+  const hx = dodge.homeX;
+  if (kind === 'dash') {
+    boss.ghostOn = true; boss.ghostCol = st.col; boss.trailOn = true; sfx.whoosh();
+    await Promise.all([tween(boss, { x: dodged ? hx - 150 : hx + 100 }, 170, E.in), setPose(boss, 'dash', 100)]);
+    setPose(boss, 'swingDown', 70, E.in); await sleep(40);
+    slashFx(hx, GROUND - 90, .8, 220, st.col, { w: 30 });
+    if (dodged) floatNum(hx - 20, GROUND - 190, 'DODGE!', '#9ad8ff', 38);
+    else await heroHurt(dmg);
+    boss.ghostOn = false; boss.trailOn = false;
+  } else if (kind === 'blast') {
+    sfx.blast(); setPose(boss, 'thrust', 80);
+    await tween(orb, { x: dodged ? -80 : hx + 10, y: dodged ? GROUND - 160 : GROUND - 90, r: 44 }, dodged ? 520 : 300, E.in);
+    projs.splice(projs.indexOf(orb), 1);
+    const ex = dodged ? 40 : hx, ey = dodged ? GROUND - 150 : GROUND - 90;
+    ring(ex, ey, st.col, { dr: 520, w: 12, life: .5 }); burst(ex, ey, 22, [st.col, '#fff'], { max: 560, size: 5 }); flash(.2, st.col2); shake(8); sfx.boom();
+    if (dodged) floatNum(hx - 20, GROUND - 190, 'DODGE!', '#9ad8ff', 38); else await heroHurt(dmg);
+  } else {
+    boss.ghostOn = true; sfx.charge(.2);
+    await Promise.all([tween(boss, { y: 0, x: hx + 160 }, 190, E.in), setPose(boss, 'slam', 120, E.in)]);
+    boss.ghostOn = false;
+    sfx.heavy(); shake(14); flash(.3, st.col2);
+    ring(boss.x - 20, GROUND + 6, st.col, { dr: 900, w: 12, life: .5, sq: .2 }); ring(boss.x - 20, GROUND + 6, '#fff', { dr: 560, w: 5, life: .4, sq: .2 });
+    burst(boss.x - 20, GROUND, [st.col, '#fff'], { dir: -Math.PI / 2, spread: 1.4, max: 520, size: 4 });
+    await sleep(190);
+    if (dodged) floatNum(hx - 20, GROUND - 190, 'DODGE!', '#9ad8ff', 38); else await heroHurt(dmg);
+  }
+  hero.aura = .25;
+  const dead = hero.hp <= 0;
+  if (dead) await heroKO();
+  await Promise.all([bossRecover(), dead ? Promise.resolve() : heroBack()]);
+  hero.expr = dead ? 'ko' : 'normal'; G.idle = true;
+  return { dodged, dmg, dead, kind, timeout };
+}
+async function heroKO() {
+  hero.expr = 'ko'; hero.ghostOn = false; hero.trailOn = false; hero.aura = 0;
+  tween(hero.p, POSES.ko, 220);
+  await Promise.all([tween(hero, { rot: 82, y: 0, ox: -30 }, 360, E.out)]);
+  sfx.lose(); ring(hero.x, GROUND + 6, '#ffffff', { dr: 300, w: 5, life: .4, sq: .22 });
+}
+
+/* ---------- Ultimate Skill (Cinematic) ---------- */
+async function chargeFx(f, col, ms) {
+  const t0 = tNow * 1000;
+  while ((tNow * 1000 - t0) < ms) {
+    const m = { x: f.x + f.ox, y: GROUND - f.y - 90 };
+    for (let i = 0; i < (IS_SMALL ? 2 : 4); i++) {
+      const a = rnd(0, TAU), r = rnd(140, 240);
+      P({ x: m.x + Math.cos(a) * r, y: m.y + Math.sin(a) * r * .7, vx: -Math.cos(a) * r * 2.2, vy: -Math.sin(a) * r * 1.5, life: .45, size: rnd(2, 4), color: col, type: 'dot' });
+    }
+    await sleep(40);
+  }
+}
+async function ultIntro(name, col) {
+  G.idle = false; Snd.setMode('u'); sfx.ult(); slow = 1;
+  tween(scr, { bars: 58, dim: .5 }, 450);
+  banner(name, col, 'ULTIMATE SKILL');
+  camTo(hero.x + 90, 300, 1.38, 600, E.io);
+  hero.aura = 1.3; hero.glow = 1.3; hero.expr = 'angry';
+  await setPose(hero, 'cast', 380);
+  await chargeFx(hero, col, 900);
+}
+async function ultOutro(keepBoss) {
+  await Promise.all([tween(scr, { bars: 0, dim: 0 }, 500), camTo(480, 280, 1, 650)]);
+  Snd.setMode('n'); hero.face = 1; hero.expr = 'normal';
+  if (!keepBoss) await Promise.all([bossRecover(), heroBack()]); else await heroBack();
+  hero.aura = .25; hero.glow = .35; G.idle = true;
+}
+async function ultThunder(parts4) {
+  const col = '#4aa8ff', col2 = '#bfe9ff';
+  await ultIntro(ULT_NAMES.thunder, col);
+  for (let k = 0; k < 6; k++) { bolt(hero.x + rnd(-80, 80), -30, hero.x + rnd(-30, 30), GROUND - 60, col, 5, { jag: 40, life: .35 }); if (k === 0) sfx.thunder(); flash(.25, col2); await sleep(110); }
+  flash(.8, '#ffffff'); hero.ghostOn = true; hero.ghostCol = col; sfx.whoosh();
+  const y = GROUND - 90; bolt(hero.x, y, boss.x + 220, y, col, 7, { jag: 24, n: 12, life: .4 });
+  camTo(480, 290, 1.12, 160);
+  await Promise.all([tween(hero, { x: boss.x + 200 }, 140, E.in), setPose(hero, 'dash', 100)]);
+  hero.ghostOn = false; hero.face = -1; setPose(hero, 'swingDown', 60);
+  for (let k = 0; k < parts4.length; k++) {
+    const bm = bossMid();
+    bolt(boss.x + rnd(-60, 60), -40, boss.x + rnd(-20, 20), GROUND - 10, k === parts4.length - 1 ? '#ffffff' : col, 8, { jag: 50, n: 12, life: .5, branches: 3 });
+    sfx.thunder(); flash(.9, col2); shake(22);
+    hitBossNum(parts4[k], { big: k === parts4.length - 1, pw: 2, col: '#ffd24a', size: 48, snd: false, fx: col });
+    ring(boss.x, GROUND + 6, col, { dr: 800, w: 10, life: .5, sq: .22 });
+    boss.expr = 'hurt'; tween(boss.p, POSES.hurt, 60); await sleep(230);
+  }
+}
+async function ultDragon(parts4) {
+  const col = '#ff4a5e';
+  await ultIntro(ULT_NAMES.dragon, col);
+  const tgt = bossMid();
+  dragon = { u: 0, a: { x: hero.x + 50, y: GROUND - 160 }, b: { x: 470, y: 50 }, c: { x: tgt.x, y: tgt.y }, pts: [], fade: 1, done: false };
+  sfx.blast(); camTo(480, 250, 1.1, 700);
+  await tween(dragon, { u: 1 }, 1400, E.io);
+  sfx.boom();
+  for (let k = 0; k < parts4.length; k++) {
+    hitBossNum(parts4[k], { big: k === parts4.length - 1, pw: 2.2, col: '#ffd24a', size: 48, snd: false, fx: '#ff8a2a' });
+    ring(tgt.x, tgt.y, '#ff6a2a', { dr: 700, w: 14, life: .6 }); ring(tgt.x, GROUND + 6, '#ffb02e', { dr: 800, w: 10, life: .5, sq: .2 });
+    burst(tgt.x, tgt.y, 26, ['#ff4a2a', '#ffb02e', '#fff2b0'], { max: 640, size: 6, life: .9 });
+    flash(.7, '#ffb06a'); shake(20); boss.expr = 'hurt'; tween(boss.p, POSES.hurt, 60);
+    await sleep(210);
+  }
+  dragon.done = true;
+}
+async function ultInfinity(parts4) {
+  const col = '#a46bff';
+  await ultIntro(ULT_NAMES.infinity, col);
+  const n = parts4.length + 3; const d = splitDamage(parts4.reduce((a, b) => a + b, 0) * .55, new Array(n).fill(1));
+  hero.ghostOn = true; hero.ghostCol = col;
+  for (let k = 0; k < n; k++) {
+    ghostSnap(hero, col, .7);
+    const a = k * 2.4 + .5; hero.x = boss.x + Math.cos(a) * 170 * (k % 2 ? 1 : -1); hero.y = Math.max(0, Math.sin(a) * 110 + 60);
+    hero.face = hero.x < boss.x ? 1 : -1; setPose(hero, k % 2 ? 'swingUp' : 'swingDown', 50);
+    const m = bossMid(); sfx.slash();
+    slashFx(m.x, m.y, a + 1.57, 320, k % 2 ? '#ffffff' : col, { w: 30, life: .3, curve: .1 });
+    hitBossNum(d[k], { pw: 1.1, fx: col, size: 32 }); flash(.2, col); await sleep(120);
+  }
+  hero.ghostOn = false; hero.x = HERO_X + 60; hero.y = 0; hero.face = 1; setPose(hero, 'cast', 200);
+  const m = bossMid();
+  rifts.push({ x: m.x, y: m.y, life: 1.3, max: 1.3, size: 250, color: col, seed: rnd(0, 9) }); sfx.rift();
+  camTo(m.x - 100, 270, 1.3, 500);
+  await sleep(750);
+  sfx.boom(); flash(1, '#e0c8ff'); shake(26);
+  for (let k = 0; k < parts4.length; k++) { hitBossNum(parts4[k] * .45, { big: k === parts4.length - 1, pw: 2, col: '#ffd24a', size: 46, snd: false, fx: col }); await sleep(120); }
+  ring(m.x, m.y, col, { dr: 900, w: 14, life: .7 }); burst(m.x, m.y, 30, [col, '#fff', '#e0c8ff'], { max: 700, size: 6, life: 1 });
+}
+async function ultCelestial(parts4) {
+  const col = '#ffd24a';
+  await ultIntro(ULT_NAMES.celestial, col);
+  tween(scr, { dim: .75 }, 400);
+  tween(hero, { y: 70 }, 500, E.out);
+  const orb = { x: hero.x + 20, y: GROUND - 280, r: 10, color: col }; projs.push(orb);
+  sfx.charge(1.6);
+  const grow = tween(orb, { r: 115 }, 1600, E.in);
+  for (let i = 0; i < 10; i++) { ring(orb.x, orb.y, col, { r0: 200, dr: -300, w: 4, life: .6 }); await sleep(150); }
+  await grow;
+  setPose(hero, 'thrust', 120);
+  const m = bossMid();
+  sfx.boom(); flash(1, '#ffffff'); shake(30);
+  beams.push({ x1: orb.x, y1: orb.y, x2: m.x + 600, y2: m.y, w: 95, life: 1.2, max: 1.2, color: col });
+  projs.splice(projs.indexOf(orb), 1);
+  for (let k = 0; k < parts4.length; k++) {
+    hitBossNum(parts4[k], { big: true, pw: 2.2, col: '#fff2b0', size: 52, snd: false, fx: col });
+    ring(m.x, m.y, col, { dr: 900, w: 16, life: .7 }); burst(m.x, m.y, 28, [col, '#fff', '#ffe27a'], { max: 760, size: 6, life: 1 });
+    flash(.8, '#fff2b0'); shake(22); await sleep(220);
+  }
+  await sleep(300);
+}
+const ULTS = { thunder: ultThunder, dragon: ultDragon, infinity: ultInfinity, celestial: ultCelestial };
+/* ใช้ท่าไม้ตาย: final=true คือฉากปิดบอส (ตัดเลือดที่เหลือทั้งหมด) */
+async function playUltimate(kind, total, final) {
+  const w = [1, 1, 1.6]; if (kind === 'celestial') w.push(2.2);
+  const d = splitDamage(total, w);
+  await ULTS[kind](d);
+  if (final) { boss.hp = 0; }
+  await ultOutro(final);
+}
+
+/* ---------- บอสพ่ายแพ้ / ชัยชนะ ---------- */
+async function bossDefeat() {
+  boss.expr = 'ko'; boss.aura = 0; boss.hp = 0; G.idle = false;
+  tween(boss.p, POSES.ko, 240);
+  for (let k = 0; k < 6; k++) {
+    const m = bossMid(); const x = m.x + rnd(-60, 60), y = m.y + rnd(-70, 70);
+    ring(x, y, pick(['#ffffff', STAGES[G.stage].col, '#ffd24a']), { dr: 260, w: 6, life: .35 });
+    burst(x, y, 12, ['#fff', STAGES[G.stage].col, '#ffe27a'], { max: 480, size: 4 }); sfx.punch(); shake(10); boss.vis = k % 2 ? 1 : .35;
+    await sleep(170);
+  }
+  const m = bossMid(); sfx.boom(); flash(1, '#ffffff'); shake(28);
+  ring(m.x, m.y, '#ffffff', { dr: 1100, w: 16, life: .8 }); ring(m.x, m.y, STAGES[G.stage].col, { dr: 800, w: 12, life: .7 });
+  burst(m.x, m.y, 60, ['#ffffff', STAGES[G.stage].col, '#ffe27a', STAGES[G.stage].col2], { max: 900, size: 7, life: 1.4 });
+  boss.vis = 0; await sleep(600);
+}
+async function heroVictory() {
+  hero.expr = 'happy'; hero.aura = .8; setPose(hero, 'victory', 300);
+  camTo(hero.x + 100, 300, 1.2, 800);
+  sfx.win();
+  for (let i = 0; i < 40; i++) {
+    P({ x: rnd(100, 860), y: -10, vx: rnd(-40, 40), vy: rnd(120, 260), g: 60, life: rnd(1.2, 2.4), size: rnd(3, 6), color: pick(['#ffd24a', '#4aa8ff', '#ff4a5e', '#3df0a0', '#ffffff']), type: 'shard', vr: rnd(-6, 6) });
+  }
+  await sleep(1400);
+  await camTo(480, 280, 1, 600);
+}
+
+/* ---------- ฉากเปลี่ยนยุค (Time Jump) และฉากจบ ---------- */
+async function portalOpen(ms) { sfx.rift(); ring(portal.x, portal.y, '#ffffff', { dr: 500, w: 8, life: .6 }); await tween(portal, { on: 1 }, ms || 800, E.out); }
+async function portalClose(ms) { await tween(portal, { on: 0 }, ms || 600, E.in); }
+async function enterPortal() {
+  hero.ghostOn = true; hero.ghostCol = '#ffffff'; sfx.whoosh();
+  await Promise.all([tween(hero, { x: portal.x - 10 }, 700, E.in), setPose(hero, 'dash', 400)]);
+  await Promise.all([tween(hero, { vis: 0, y: 40 }, 300), tween(scr, { speed: 1 }, 200)]);
+  hero.ghostOn = false; scr.speed = 0;
+  flash(1, '#ffffff'); ring(portal.x, portal.y, '#ffffff', { dr: 900, w: 14, life: .8 });
+}
+async function eraJump(next) {
+  G.idle = false; portal.x = hero.x + 300; portal.y = GROUND - 110; camTo(hero.x + 200, 270, 1.15, 500);
+  banner('TIME JUMP', '#a46bff', STAGES[next].era);
+  scr.tint = '#a46bff'; tween(scr, { tintA: .35 }, 600);
+  await portalOpen(800);
+  await enterPortal();
+  await sleep(250);
+  setupStage(next);
+  hero.vis = 0; hero.y = 320; boss.x = BOSS_X + 260; scr.tintA = .35; flash(1, '#ffffff');
+  portal.on = 1; portal.x = HERO_X; portal.y = 160;
+  await sleep(250);
+  hero.vis = 1; sfx.whoosh(); hero.ghostOn = true; hero.ghostCol = '#bfe9ff';
+  await Promise.all([tween(hero, { y: 0 }, 650, E.out), setPose(hero, 'ready', 500), tween(scr, { tintA: 0 }, 900)]);
+  hero.ghostOn = false; ring(hero.x, GROUND + 6, '#ffffff', { dr: 520, w: 8, life: .5, sq: .22 }); shake(8);
+  await portalClose(500); portal.x = 700; portal.y = GROUND - 110;
+  await camTo(480, 280, 1, 500);
+}
+async function assemblyCinematic() {
+  G.idle = false; Snd.setMode('u'); hero.x = HERO_X + 120;
+  setPose(hero, 'cast', 400); camTo(hero.x + 60, 280, 1.3, 800);
+  tween(scr, { dim: .45 }, 600);
+  const cols = ['#4aa8ff', '#ff4a5e', '#ffd24a', '#a46bff', '#3df0a0'];
+  const orbs = cols.map((c, i) => ({ x: hero.x + Math.cos(i / 5 * TAU) * 220, y: GROUND - 150 + Math.sin(i / 5 * TAU) * 120, r: 18, color: c }));
+  orbs.forEach(o => projs.push(o));
+  sfx.charge(2.2);
+  await Promise.all(orbs.map(o => tween(o, { x: hero.x + 40, y: GROUND - 190, r: 26 }, 1800, E.io)));
+  sfx.claim(); flash(.9, '#ffe27a');
+  orbs.forEach(o => projs.splice(projs.indexOf(o), 1));
+  const core = { x: hero.x + 40, y: GROUND - 190, r: 30, color: '#ffd24a' }; projs.push(core);
+  await tween(core, { r: 80 }, 900, E.in);
+  sfx.boom(); flash(1, '#fff2b0'); shake(24); ring(core.x, core.y, '#ffd24a', { dr: 1000, w: 16, life: .8 });
+  burst(core.x, core.y, 50, ['#ffd24a', '#fff', '#ffe27a'], { max: 800, size: 6, life: 1.2 });
+  projs.splice(projs.indexOf(core), 1);
+  tween(scr, { dim: 0 }, 600);
+  await sleep(500);
+}
+async function portalUnstable() {
+  G.idle = false; camTo(560, 270, 1.15, 500);
+  portal.x = 700; portal.y = GROUND - 110;
+  await portalOpen(600);
+  for (let i = 0; i < 6; i++) { portal.on = i % 2 ? .9 : .25; shake(6); sfx.warn(); await sleep(150); }
+  sfx.lose(); ring(portal.x, portal.y, '#ff4a5e', { dr: 500, w: 8, life: .5 });
+  await portalClose(500); await camTo(480, 280, 1, 500);
+}
+
+/* ---------- เดินทางไปยังด่านถัดไป (ฉากเดิน + ภารกิจต่อสู้) ---------- */
+async function heroWalkTo(x, ms, follow) {
+  hero.walk = true; hero.face = 1; cam.follow = !!follow;
+  await tween(hero, { x }, ms, E.lin);
+  hero.walk = false; cam.follow = false; hero.y = 0; setPose(hero, 'ready', 200);
+}
+async function walkJourney(next) {
+  const st = STAGES[next];
+  G.idle = false; boss.vis = 0; hero.ox = 0; hero.x = HERO_X; hero.face = 1;
+  Snd.setIntensity(0);
+  banner('JOURNEY', '#7fbaff', 'เดินทางไปยัง ' + st.era);
+  await camTo(HERO_X + 140, 280, 1, 400);
+  hero.aura = .3; sfx.whoosh();
+  await heroWalkTo(HERO_X + 1500, IS_SMALL ? 3200 : 4200, true);
+  banner('MISSION ' + st.id, st.col, st.quests[0].name + ' · ภารกิจ: ต่อสู้เพื่อชนะบอส'); sfx.ping();
+  await sleep(1000);
+}
+
+/* ======================================================================
+   ส่วนที่ 4: ตรรกะเกม, UI, มินิเกม, ภารกิจ, อุปกรณ์, โปรไฟล์และ Session
+   ====================================================================== */
+const h = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt !== undefined) e.textContent = txt; return e; };
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const norm = s => String(s).toLowerCase().replace(/[’‘`]/g, "'").replace(/[.!?,;:]+$/, '').replace(/\s+/g, ' ').trim();
+const normA = s => norm(s).replace(/'/g, '');
+const SCREENS = ['start', 'game', 'result', 'board'];
+const setText = (el, t) => { if (el._t !== t) { el.textContent = t; el._t = t; } };
+const setW = (el, v) => { v = Math.round(clamp(v, 0, 100) * 10) / 10 + '%'; if (el._w !== v) { el.style.width = v; el._w = v; } };
+
+let G = null, D = DIFF.normal, diffKey = 'normal', paused = false, modalOpen = false;
+
+/* ---------- ที่เก็บข้อมูล (LocalStorage) ---------- */
+const LS_KEY = 'ttpp_v1';
+function loadDB() { try { const r = JSON.parse(localStorage.getItem(LS_KEY)); if (r && r.players) return r; } catch (e) { } return { players: {}, seq: 0, prefs: {} }; }
+let DB = loadDB();
+function saveDB() { try { localStorage.setItem(LS_KEY, JSON.stringify(DB)); return true; } catch (e) { return false; } }
+const normName = n => String(n).replace(/\s+/g, ' ').trim();
+function findPlayer(name) { const k = normName(name).toLowerCase(); return Object.values(DB.players).find(p => p.name.toLowerCase() === k) || null; }
+function pStats(p) {
+  const a = { total: 0, best: 0, plays: p.sessions.length, correct: 0, wrong: 0, quests: 0, maxCombo: 0, main: 0, bonus: 0 };
+  p.sessions.forEach(s => { a.total += s.total; a.main += s.main; a.bonus += s.bonus; a.best = Math.max(a.best, s.total); a.correct += s.correct; a.wrong += s.wrong; a.quests += s.quests.length; a.maxCombo = Math.max(a.maxCombo, s.maxCombo); });
+  a.acc = (a.correct + a.wrong) ? Math.round(a.correct / (a.correct + a.wrong) * 100) : 0;
+  return a;
+}
+const fmt = n => Math.round(n).toLocaleString('en-US');
+const pad = n => String(n).padStart(2, '0');
+const dtStr = t => { const d = new Date(t); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes()); };
+
+/* ---------- UI พื้นฐาน ---------- */
+function show(id) {
+  SCREENS.forEach(s => { $('#screen-' + s).hidden = (s !== id); });
+  $('#btn-pause').hidden = id !== 'game'; $('#btn-inv').hidden = id !== 'game';
+  window.scrollTo(0, 0);
+  if (id === 'game') sizeCanvas();
+  const hd = $('#screen-' + id + ' h1, #screen-' + id + ' h2'); if (hd) { hd.setAttribute('tabindex', '-1'); hd.focus({ preventScroll: true }); }
+}
+function banner(text, col, sub) {
+  const b = $('#banner'); b.innerHTML = '';
+  const s = h('span', '', text); s.style.setProperty('--bc', col || '#4aa8ff');
+  if (sub) s.appendChild(h('small', '', sub));
+  b.appendChild(s);
+}
+function modal(title, bodyEl, buttons, keepMusic) {
+  const ov = $('#ov'); ov.innerHTML = '';
+  const box = h('div', 'modal panel'); box.appendChild(h('h2', '', title)); box.appendChild(bodyEl);
+  const row = h('div', 'row');
+  (buttons || []).forEach(b => {
+    const btn = h('button', 'btn ' + (b.cls || ''), b.text); btn.type = 'button'; if (b.id) btn.id = b.id; btn.disabled = !!b.disabled;
+    btn.addEventListener('click', () => b.fn(btn)); row.appendChild(btn);
+  });
+  box.appendChild(row); ov.appendChild(box); ov.hidden = false; ov.scrollTop = 0;
+  if (!modalOpen && G && G.run && !$('#screen-game').hidden) { paused = true; }
+  modalOpen = true;
+  const f = row.querySelector('button:not(:disabled)'); if (f) f.focus({ preventScroll: true });
+}
+function closeModal() { $('#ov').hidden = true; $('#ov').innerHTML = ''; modalOpen = false; paused = false; }
+function confirmModal(text, yes, no) {
+  modal('ยืนยัน', h('p', '', text), [{ text: 'ยืนยัน', cls: 'red', fn: yes }, { text: 'ยกเลิก', cls: 'ghost', fn: no || closeModal }]);
+}
+
+/* ---------- ข้อมูลรอบเล่น ---------- */
+function blankStage(att) {
+  return { correct: 0, wrong: 0, answered: 0, main: 0, bonus: 0, multUses: 0, multBase: 0, multBonus: 0, multMissed: 0, maxCombo: 0, topicsWrong: [], ult: 0,
+    cleared: false, attempts: att || 0, armedIn: null, qdone: [false, false, false, false, false], finalMult: 0, questBonus: 0, dodges: 0 };
+}
+const T = k => G.sd.reduce((a, s) => a + s[k], 0);
+function newRun(player) {
+  G = { run: true, player, diff: D, dkey: diffKey, sid: 'S' + Date.now().toString(36) + Math.floor(Math.random() * 1296).toString(36), start: Date.now(),
+    stage: 0, qi: 0, sd: [blankStage(), blankStage(), blankStage()], devices: {}, weapons: [true, false, false, false], weaponClaimed: [false, false, false, false],
+    claimed: {}, questDone: {}, armed: null, armedCarry: [null, null, null], energy: 0, streak: 0, locked: true, answered: false, busy: false, idle: false,
+    saved: false, timer: { on: false, left: 0, max: 0 }, q: null, portal: false, portalBonus: 0, mcBtns: [], lastWarn: 99, lastSession: null, mouseNoise: 0 };
+}
+
+/* ---------- HUD ---------- */
+function updateHUD(raw) {
+  if (!G || !G.run) return;
+  setW($('#pl-now'), hero.hp / PLAYER_MAX * 100); setW($('#pl-lag'), hero.hp / PLAYER_MAX * 100);
+  setText($('#pl-hpn'), Math.round(hero.hp) + '/' + PLAYER_MAX);
+  const bp = boss.max ? boss.hp / boss.max * 100 : 0;
+  setW($('#bs-now'), bp); setW($('#bs-lag'), bp); setText($('#bs-hpn'), fmt(boss.hp) + '/' + fmt(boss.max));
+  setW($('#en-now'), G.energy); $('#en-bar').classList.toggle('full', G.energy >= 100);
+  const tm = G.timer; setW($('#tm-now'), tm.max ? tm.left / tm.max * 100 : 100); $('#tm-bar').classList.toggle('low', tm.max && tm.left / tm.max < .25);
+  setText($('#q-time'), tm.max && tm.on ? '⏱ ' + Math.ceil(tm.left / 1000) + ' s' : '');
+  setText($('#c-combo'), 'COMBO ' + G.streak);
+  setText($('#c-mult'), G.armed ? '×' + G.armed.m + ' NEXT!' : 'x1');
+  setText($('#s-score'), 'คะแนน ' + T('main') + '/' + MAIN_MAX);
+  setText($('#s-bonus'), 'โบนัส +' + T('bonus'));
+  setText($('#s-ok'), '✔ ' + T('correct') + ' · ✘ ' + T('wrong'));
+  setText($('#s-dev'), '🧩 ' + Object.keys(G.devices).length + '/5');
+  const st = STAGES[G.stage], d = G.sd[G.stage], side = st.quests[1];
+  const sideP = side.cond.k === 'combo' ? d.maxCombo / side.cond.n : d.correct / side.cond.n;
+  const mainP = Math.min(d.correct, 3) / 3;
+  setText($('#s-quest'), 'ภารกิจ: ชนะบอส ' + Math.min(d.correct, 3) + '/3 · ' + (side.cond.k === 'combo' ? 'คอมโบ ' + Math.min(d.maxCombo, side.cond.n) + '/' + side.cond.n : 'ถูก ' + Math.min(d.correct, side.cond.n) + '/' + side.cond.n));
+  setW($('#s-qbar'), (mainP + Math.min(1, sideP)) / 2 * 100);
+  const ult = $('#btn-ult'), canUlt = G.energy >= 100 && !G.locked && !G.busy && !paused;
+  ult.disabled = !canUlt; ult.classList.toggle('ready', canUlt);
+}
+
+/* ---------- มินิเกม: ตัวแสดงผลแต่ละประเภท ---------- */
+const Q = () => STAGES[G.stage].qs[G.qi];
+function mkBtn(cls, txt, fn) { const b = h('button', cls, txt); b.type = 'button'; b.addEventListener('click', fn); return b; }
+function checkRow(host, label, fn) { const row = h('div', 'act'); const b = mkBtn('btn', label || 'ตรวจคำตอบ', fn); b.disabled = true; row.appendChild(b); host.appendChild(row); return b; }
+function optionsMC(q, host) {
+  const order = shuffle(q.opts.map((t, i) => ({ t, i })));
+  const box = h('div', 'opts'); G.mcBtns = [];
+  order.forEach((o, k) => {
+    const b = h('button', 'opt'); b.type = 'button'; b._i = o.i;
+    b.innerHTML = '<span class="k">' + 'abcd'[k] + '</span><span class="t"></span>'; b.querySelector('.t').textContent = o.t;
+    b.addEventListener('click', () => {
+      if (G.locked) return; sfx.tick();
+      const ok = o.i === q.ans;
+      G.mcBtns.forEach(x => { if (x._i === q.ans) x.classList.add('correct'); else if (x === b) x.classList.add('wrong'); else x.classList.add('dim'); });
+      const bl = host.querySelector('.fillme'); if (bl) bl.textContent = q.opts[q.ans];
+      submitAnswer(ok);
+    });
+    box.appendChild(b); G.mcBtns.push(b);
+  });
+  host.appendChild(box);
+}
+const R = {};
+R.mc = (q, host) => optionsMC(q, host);
+R.timed = R.mc; R.boss = R.mc;
+R.context = (q, host) => { host.appendChild(h('div', 'ctx', q.ctx)); optionsMC(q, host); };
+R.dialog = (q, host) => {
+  q.lines.forEach(l => { const b = h('div', 'bub' + (l.who === 'You' ? ' me' : '')); b.appendChild(h('span', 'who', l.who)); const t = h('span', l.text === '___' ? 'fillme' : '', l.text === '___' ? '…' : l.text); b.appendChild(t); host.appendChild(b); });
+  optionsMC(q, host);
+};
+R.fib = (q, host) => {
+  const sent = h('p', 'qtext'); sent.lang = 'en'; sent.style.minHeight = '0';
+  const segs = q.sent.split('___'), fills = new Array(segs.length - 1).fill(null), blanks = [];
+  const bank = h('div', 'bank');
+  const upd = () => { blanks.forEach((b, i) => { b.textContent = fills[i] ? fills[i].word : '\u00a0'; }); chk.disabled = fills.some(f => !f); };
+  segs.forEach((s, i) => { sent.appendChild(document.createTextNode(s)); if (i < blanks.length + 1 && i < segs.length - 1) { const b = h('button', 'bl', '\u00a0'); b.type = 'button'; b.addEventListener('click', () => { if (G.locked || !fills[i]) return; fills[i].tile.classList.remove('used'); fills[i] = null; sfx.tick(); upd(); }); blanks.push(b); sent.appendChild(b); } });
+  shuffle(q.bank).forEach(w => {
+    const t = h('button', 'tile', w); t.type = 'button';
+    t.addEventListener('click', () => { if (G.locked || t.classList.contains('used')) return; const k = fills.findIndex(f => !f); if (k < 0) return; fills[k] = { word: w, tile: t }; t.classList.add('used'); sfx.tick(); upd(); });
+    bank.appendChild(t);
+  });
+  host.appendChild(sent); host.appendChild(bank);
+  const chk = checkRow(host, 'ตรวจคำตอบ', () => { if (G.locked) return; submitAnswer(fills.every((f, i) => f && f.word === q.ans[i])); });
+};
+function tileBuilder(host, items, label, validate, joiner) {
+  const slots = h('div', 'slots'), bank = h('div', 'tiles'), placed = [];
+  const upd = () => { slots.innerHTML = ''; placed.forEach((p, i) => { const t = h('button', 'tile', p.w); t.type = 'button'; t.addEventListener('click', () => { if (G.locked) return; p.tile.classList.remove('used'); placed.splice(i, 1); sfx.tick(); upd(); }); slots.appendChild(t); }); chk.disabled = placed.length !== items.length; };
+  items.forEach(w => { const t = h('button', 'tile', w); t.type = 'button'; t.addEventListener('click', () => { if (G.locked || t.classList.contains('used')) return; placed.push({ w, tile: t }); t.classList.add('used'); sfx.tick(); upd(); }); bank.appendChild(t); });
+  host.appendChild(slots); host.appendChild(bank);
+  const chk = checkRow(host, label, () => { if (G.locked) return; submitAnswer(validate(placed.map(p => p.w).join(joiner))); });
+  const clr = mkBtn('btn ghost', 'ล้าง', () => { if (G.locked) return; placed.length = 0; bank.querySelectorAll('.tile').forEach(t => t.classList.remove('used')); upd(); });
+  chk.parentNode.insertBefore(clr, chk);
+}
+R.scramble = (q, host) => {
+  let L = shuffle(q.word.split('')); let guard = 0; while (L.join('') === q.word && guard++ < 10) L = shuffle(L);
+  tileBuilder(host, L, 'ตรวจคำตอบ', s => q.ans.some(a => norm(a) === norm(s)), '');
+};
+R.builder = (q, host) => {
+  let L = shuffle(q.tiles); let guard = 0; while (q.accept.some(a => norm(a) === norm(L.join(' '))) && guard++ < 10) L = shuffle(L);
+  tileBuilder(host, L, 'ตรวจประโยค', s => q.accept.some(a => norm(a) === norm(s)), ' ');
+};
+R.tf = (q, host) => {
+  host.appendChild(h('div', 'stmt', q.statement));
+  const row = h('div', 'tfrow'), step2 = h('div');
+  const mk = (txt, val) => { const b = h('button', 'opt', txt); b.type = 'button'; b.addEventListener('click', () => {
+    if (G.locked) return; sfx.tick();
+    if (val !== q.truth) { b.classList.add('wrong'); submitAnswer(false); return; }
+    if (q.truth) { b.classList.add('correct'); submitAnswer(true); return; }
+    row.querySelectorAll('button').forEach(x => x.disabled = true); b.classList.add('correct');
+    step2.appendChild(h('p', 'how', 'ถูกต้อง ประโยคนี้ผิด! เลือกประโยคที่แก้ไขแล้วให้ถูกต้อง:'));
+    const box = h('div', 'opts'); G.mcBtns = [];
+    shuffle(q.fixes.map((t, i) => ({ t, i }))).forEach((o, k) => { const fb = h('button', 'opt'); fb.type = 'button'; fb._i = o.i; fb.innerHTML = '<span class="k">' + 'abc'[k] + '</span><span class="t"></span>'; fb.querySelector('.t').textContent = o.t;
+      fb.addEventListener('click', () => { if (G.locked) return; sfx.tick(); const ok = o.i === 0; G.mcBtns.forEach(x => x.classList.add(x._i === 0 ? 'correct' : (x === fb ? 'wrong' : 'dim'))); submitAnswer(ok); }); box.appendChild(fb); G.mcBtns.push(fb); });
+    step2.appendChild(box); G.tfStep2 = true;
+  }); return b; };
+  row.appendChild(mk('✔ True (ถูก)', true)); row.appendChild(mk('✘ False (ผิด)', false));
+  host.appendChild(row); host.appendChild(step2);
+};
+R.errorhunt = (q, host) => {
+  const box = h('div'), step2 = h('div'); let sel = -1; const toks = [];
+  q.tokens.forEach((w, i) => { const b = h('button', 'tok', w); b.type = 'button'; b.addEventListener('click', () => { if (G.locked || G.ehStep2) return; sel = i; toks.forEach((t, j) => t.classList.toggle('sel', j === i)); sfx.tick(); chk.disabled = false; }); toks.push(b); box.appendChild(b); });
+  host.appendChild(box); host.appendChild(step2); G.ehStep2 = false;
+  const chk = checkRow(host, 'ตรวจ', () => {
+    if (G.locked || sel < 0) return;
+    if (sel !== q.wrong) { toks[sel].classList.add('sel'); submitAnswer(false); return; }
+    G.ehStep2 = true; chk.disabled = true; chk.parentNode.hidden = true;
+    step2.appendChild(h('p', 'how', 'ใช่แล้ว! คำนี้ผิด เลือกคำแก้ไขที่ถูกต้อง:'));
+    const o = h('div', 'opts'); G.mcBtns = [];
+    shuffle(q.fixes.map((t, i) => ({ t, i }))).forEach((x, k) => { const fb = h('button', 'opt'); fb.type = 'button'; fb._i = x.i; fb.innerHTML = '<span class="k">' + 'abc'[k] + '</span><span class="t"></span>'; fb.querySelector('.t').textContent = x.t;
+      fb.addEventListener('click', () => { if (G.locked) return; sfx.tick(); G.mcBtns.forEach(y => y.classList.add(y._i === 0 ? 'correct' : (y === fb ? 'wrong' : 'dim'))); submitAnswer(x.i === 0); }); o.appendChild(fb); G.mcBtns.push(fb); });
+    step2.appendChild(o);
+  });
+};
+R.match = (q, host) => {
+  const L = q.pairs.map(p => p[0].replace('___', '____')), Rr = shuffle(q.pairs.map(p => p[1]));
+  const pairOfL = new Array(L.length).fill(-1), pairOfR = new Array(Rr.length).fill(-1); let selL = -1;
+  const cols = h('div', 'mcols'), cl = h('div'), cr = h('div'), lb = [], rb = [];
+  const upd = () => {
+    lb.forEach((b, i) => { b.className = 'mi' + (pairOfL[i] >= 0 ? ' paired' : '') + (selL === i ? ' sel' : ''); b.innerHTML = ''; if (pairOfL[i] >= 0) b.appendChild(h('span', 'pn', String(i + 1))); b.appendChild(document.createTextNode(L[i])); });
+    rb.forEach((b, j) => { b.className = 'mi' + (pairOfR[j] >= 0 ? ' paired' : ''); b.innerHTML = ''; if (pairOfR[j] >= 0) b.appendChild(h('span', 'pn', String(pairOfR[j] + 1))); b.appendChild(document.createTextNode(Rr[j])); });
+    chk.disabled = pairOfL.some(x => x < 0);
+  };
+  L.forEach((t, i) => { const b = h('button', 'mi'); b.type = 'button'; b.lang = 'en'; b.addEventListener('click', () => { if (G.locked) return; sfx.tick(); if (pairOfL[i] >= 0) { pairOfR[pairOfL[i]] = -1; pairOfL[i] = -1; } selL = i; upd(); }); lb.push(b); cl.appendChild(b); });
+  Rr.forEach((t, j) => { const b = h('button', 'mi'); b.type = 'button'; b.lang = 'en'; b.addEventListener('click', () => { if (G.locked) return; sfx.tick(); if (pairOfR[j] >= 0) { pairOfL[pairOfR[j]] = -1; pairOfR[j] = -1; upd(); return; } if (selL < 0) return; pairOfL[selL] = j; pairOfR[j] = selL; selL = -1; upd(); }); rb.push(b); cr.appendChild(b); });
+  cols.appendChild(cl); cols.appendChild(cr); host.appendChild(cols);
+  const chk = checkRow(host, 'ตรวจทุกคู่', () => { if (G.locked) return; submitAnswer(pairOfL.every((j, i) => j >= 0 && Rr[j] === q.pairs[i][1])); });
+  upd();
+};
+R.type = (q, host) => {
+  if (q.wrong) host.appendChild(h('div', 'wrongs', q.wrong));
+  const row = h('div', 'typein'); const inp = h('input', 'field'); inp.type = 'text'; inp.autocomplete = 'off'; inp.setAttribute('autocapitalize', 'none'); inp.setAttribute('aria-label', 'พิมพ์คำตอบ'); inp.placeholder = 'พิมพ์คำตอบที่นี่';
+  const go = () => { if (G.locked || !inp.value.trim()) return; submitAnswer(q.answers.some(a => normA(a) === normA(inp.value))); };
+  inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); go(); } });
+  const b = mkBtn('btn', 'ตรวจคำตอบ', go); row.appendChild(inp); row.appendChild(b); host.appendChild(row);
+  G.focusEl = inp;
+};
+R.repair = R.type;
+
+/* ---------- การแสดงคำถาม ---------- */
+function setQVisible(v) { ['#qtext', '#qbody', '#q-how'].forEach(s => $(s).classList.toggle('qhide', !v)); }
+function buildQuestion() {
+  const q = Q(); G.q = q; G.answered = false; G.locked = true; G.ehStep2 = false; G.tfStep2 = false; G.mcBtns = []; G.focusEl = null;
+  const meta = $('#q-meta'); meta.innerHTML = '';
+  const tag = h('span', 'typeTag', TYPE_INFO[q.type][0] + (q.type === 'timed' ? ' ⚡' : '')); meta.appendChild(tag);
+  meta.appendChild(document.createTextNode('ข้อ ' + (G.qi + 1) + ' / 5 · รวม ' + (G.stage * 5 + G.qi + 1) + ' / 15'));
+  $('#q-how').textContent = 'วิธีเล่น: ' + TYPE_INFO[q.type][1];
+  const qt = $('#qtext'); qt.innerHTML = '';
+  if (q.en.indexOf('___') >= 0 && (q.type === 'mc' || q.type === 'timed' || q.type === 'context')) {
+    const parts = q.en.split('___'); qt.appendChild(document.createTextNode(parts[0])); qt.appendChild(h('span', 'blank fillme', '\u00a0')); qt.appendChild(document.createTextNode(parts[1] || ''));
+  } else qt.textContent = q.en;
+  const body = $('#qbody'); body.innerHTML = ''; body.classList.remove('locked'); R[q.type](q, body);
+  $('#fb').hidden = true; $('#fb').innerHTML = '';
+  setQVisible(false);
+  const blank = qt.querySelector('.fillme'); if (blank && q.type === 'dialog') blank.textContent = '';
+}
+async function revealQuestion() {
+  const qt = $('#qtext'); setQVisible(true);
+  [$('#qtext'), $('#q-how')].forEach(e => { e.classList.remove('qshow'); void e.offsetWidth; e.classList.add('qshow'); });
+  const kids = [...$('#qbody').children]; sfx.ping();
+  kids.forEach(k => k.classList.remove('pop'));
+  const items = kids.length === 1 && kids[0].classList.contains('opts') ? [...kids[0].children] : kids;
+  items.forEach((k, i) => { k.style.animationDelay = (i * 140) + 'ms'; k.classList.add('pop'); setTimeout(() => sfx.tick(), i * 140 / SPEED); });
+  await sleep(items.length * 140 + 450);
+  items.forEach(k => { k.classList.remove('pop'); k.style.animationDelay = ''; });
+}
+function startTimer() {
+  const ms = (G.q.type === 'timed' ? D.timed : D.time) * 1000;
+  G.timer = { on: true, left: ms, max: ms }; G.locked = false; G.lastWarn = 99;
+  if (G.focusEl && !IS_SMALL) G.focusEl.focus({ preventScroll: true });
+}
+
+/* ---------- ตรวจคำตอบ + คะแนน + ตัวคูณ ---------- */
+async function submitAnswer(correct, timeout) {
+  if (!G || G.locked || G.answered) return;
+  const d = G.sd[G.stage];
+  if (d.qdone[G.qi]) return;
+  G.locked = true; G.answered = true; d.qdone[G.qi] = true; d.answered++;
+  G.timer.on = false; $('#qbody').classList.add('locked');
+  const q = G.q, frac = G.timer.max ? clamp(G.timer.left / G.timer.max, 0, 1) : 0;
+  const info = { timeout: !!timeout, ok: correct };
+  let milestone = null;
+  if (correct) {
+    d.correct++; d.main += 10; G.streak++; d.maxCombo = Math.max(d.maxCombo, G.streak);
+    let bonus = Math.round(frac * 5) + Math.min(G.streak, 5);
+    if (G.armed) { const m = G.armed.m; info.mult = m; d.multUses++; d.multBase += bonus; bonus *= m; d.multBonus += bonus; G.armed = null; }
+    d.bonus += bonus; info.bonus = bonus;
+    G.energy = Math.min(100, G.energy + D.gain + (q.type === 'boss' ? 100 : 0));
+    const tc = T('correct');
+    if (tc % 5 === 0) { const m = tc / 5 + 1 + D.mAdd; milestone = { level: tc / 5, m }; if (tc < 15) G.armed = { m }; else d.finalMult = m; }
+  } else {
+    d.wrong++; G.streak = 0; d.topicsWrong.push(q.topic);
+    if (G.armed) { d.multMissed++; info.multLost = G.armed.m; G.armed = null; }
+  }
+  Snd.setIntensity(G.streak >= 3 ? 2 : G.streak >= 1 ? 1 : 0);
+  G.busy = true; G.idle = false;
+  if (correct) {
+    sfx.correct();
+    const T2 = boss.max * (.12 + .015 * Math.min(G.streak, 4)) * (1 + WEAPONS[weaponIndex()].bonus);
+    const room = Math.max(0, boss.hp - (boss.minHP || 0));
+    slow = .08; await sleepReal(240); slow = 1;
+    camTo(hero.x + 80, 300, 1.25, 320);
+    scr.boost = Math.min(1, G.streak * .22);
+    await attackCombo(Math.min(T2, room), G.streak);
+    await camTo(480, 280, 1, 380);
+    if (milestone) await multiplierCinematic(milestone, tcFinal(milestone));
+  } else {
+    sfx.wrong(); scr.boost = 0;
+    camTo(boss.x - 60, 300, 1.2, 320);
+    const base = Math.round(D.dmg * (1 + .1 * G.stage));
+    const r = await bossCounter(base, timeout);
+    if (r.dodged) d.dodges++;
+    G.energy = Math.min(100, G.energy + (r.dodged ? 12 : 8));
+    info.counter = r;
+    await camTo(480, 280, 1, 380);
+  }
+  G.busy = false; G.idle = true;
+  showFeedback(info);
+}
+const tcFinal = m => T('correct') >= 15;
+async function multiplierCinematic(ms, isFinal) {
+  G.busy = true; sfx.mult();
+  banner('TIME MULTIPLIER CHALLENGE', '#ffd24a', '×' + ms.m + (isFinal ? '  ·  โบนัสประตูเวลาสุดท้ายคูณ' : '  ·  ข้อถัดไปได้โบนัสคูณ (ต้องตอบถูก)'));
+  clockFx.on = 0; tween(clockFx, { on: 1 }, 400, E.out); clockFx.m = ms.m;
+  flash(.5, '#ffe27a'); shake(8);
+  const m = heroMid();
+  for (let i = 0; i < 3; i++) { ring(m.x, m.y, '#ffd24a', { dr: 520 + i * 160, w: 8, life: .6 }); await sleep(160); }
+  burst(m.x, m.y, 30, ['#ffd24a', '#fff', '#ffe27a'], { max: 700, size: 5, life: 1 });
+  await sleep(900);
+  await tween(clockFx, { on: 0 }, 400, E.in);
+  G.busy = false;
+}
+function showFeedback(info) {
+  const q = G.q, fb = $('#fb'), ok = info.ok; fb.innerHTML = '';
+  fb.className = 'fb ' + (ok ? 'good' : 'bad');
+  const head = h('strong', '', ok
+    ? '✔ ถูกต้อง! +10 คะแนน · โบนัส +' + info.bonus + (info.mult ? ' (ตัวคูณ ×' + info.mult + ')' : '')
+    : (info.timeout ? '⏱ หมดเวลา! ' : '✘ ยังไม่ถูกต้อง ') + (info.counter ? (info.counter.dodged ? '· หลบได้! เสีย ' + info.counter.dmg + ' HP' : '· เสีย ' + info.counter.dmg + ' HP') : '') + (info.multLost ? ' · ตัวคูณ ×' + info.multLost + ' หมดไป' : ''));
+  fb.appendChild(head);
+  if (!ok) fb.appendChild(h('p', '', 'เฉลย: ' + q.show));
+  fb.appendChild(h('p', '', 'EN: ' + q.whyEn));
+  if (!ok) fb.appendChild(h('p', '', 'TH: ' + q.whyTh));
+  if (ok && G.armed) fb.appendChild(h('p', '', '⏳ ตัวคูณ ×' + G.armed.m + ' รอใช้กับข้อถัดไป!'));
+  const dead = hero.hp <= 0, last = G.qi >= 4;
+  const go = h('div', 'go'); const nb = mkBtn('btn', dead ? 'จบ (HP หมด)' : last ? 'จบด่าน' : 'ข้อต่อไป ▶', onNext); nb.id = 'btn-next'; go.appendChild(nb); fb.appendChild(go);
+  fb.hidden = false; nb.focus({ preventScroll: true });
+}
+async function onNext() {
+  if (G.busy || !G.answered) return;
+  sfx.tick(); G.busy = true;
+  $('#fb').hidden = true;
+  if (hero.hp <= 0 || G.qi >= 4) { await endStage(); return; }
+  await transitionToNext();
+}
+
+/* ---------- ฉากเปลี่ยนข้อแบบ Cinematic 4 ระยะ ---------- */
+const FXT = [
+  { col: '#4aa8ff', col2: '#bfe9ff', tint: '#2a6aff' }, { col: '#ff4a5e', col2: '#ffc08a', tint: '#ff3a2a' },
+  { col: '#a46bff', col2: '#e0c8ff', tint: '#7a3aff' }, { col: '#ffd24a', col2: '#fff2b0', tint: '#ffb02e' }, { col: '#3df0a0', col2: '#c8ffe8', tint: '#2ad08a' }
+];
+function stageRect() { return $('#stage').getBoundingClientRect(); }
+function panelRect() { const s = stageRect(), r = $('#qpanel').getBoundingClientRect(); return { x: r.left - s.left, y: r.top - s.top, w: r.width, h: r.height }; }
+async function transitionToNext() {
+  const th = FXT[(G.stage * 5 + G.qi + (Math.random() < .4 ? 2 : 0)) % FXT.length];
+  G.busy = true; G.idle = false; G.locked = true;
+  // Phase 2: Cinematic Transition
+  sfx.rift(); camTo(480, 300, 1.3, 420, E.out); shake(7); scr.tint = th.tint; tween(scr, { tintA: .25 }, 300); scr.speed = 1;
+  const mid = { x: (hero.x + boss.x) / 2, y: GROUND - 100 };
+  ring(mid.x, mid.y, th.col, { dr: 900, w: 12, life: .6 }); ring(mid.x, mid.y, th.col2, { dr: 600, w: 6, life: .45 }); ring(mid.x, mid.y, '#fff', { dr: 380, w: 4, life: .35 });
+  burst(mid.x, mid.y, 34, [th.col, th.col2, '#ffffff'], { max: 760, size: 5, life: 1 }); flash(.55, th.col2);
+  await sleep(480); scr.speed = 0;
+  // Phase 3: Dimensional Rift
+  const pr = panelRect(), cx = pr.x + pr.w / 2, cy = pr.y + pr.h / 2;
+  Object.assign(fxRift, { x: cx, y: cy, r: Math.min(pr.w * .55, 360), col: th.col, col2: th.col2, kind: Math.floor(Math.random() * 3), open: 0 });
+  sfx.rift(); tween(fxRift, { open: 1, rot: fxRift.rot + 1.2 }, 600, E.out);
+  const dis = IS_SMALL ? 50 : 90;
+  for (let i = 0; i < dis; i++) { const sx = pr.x + rnd(0, pr.w), sy = pr.y + rnd(0, pr.h); P({ x: sx, y: sy, sx, sy, tx: cx, ty: cy, ph: rnd(0, 6), life: rnd(.5, .9), size: rnd(1.5, 3.4), color: pick([th.col, th.col2, '#ffffff']), type: 'dot' }, fparts); }
+  setQVisible(false); await sleep(620);
+  G.qi++; buildQuestion();
+  for (let i = 0; i < dis; i++) { const tx = pr.x + rnd(0, pr.w), ty = pr.y + rnd(0, pr.h); P({ x: cx, y: cy, sx: cx, sy: cy, tx, ty, ph: rnd(0, 6), life: rnd(.55, .95), size: rnd(1.5, 3.4), color: pick([th.col, th.col2, '#ffffff']), type: 'dot' }, fparts); }
+  await sleep(380);
+  await revealQuestion();
+  tween(fxRift, { open: 0 }, 450, E.in);
+  // Phase 4: Battle Resume
+  camTo(480, 280, 1, 520); tween(scr, { tintA: 0 }, 500);
+  setPose(hero, 'ready', 300); setPose(boss, 'idle', 300);
+  banner('READY!', th.col, 'ข้อ ' + (G.stage * 5 + G.qi + 1) + ' / 15');
+  await sleep(520);
+  G.busy = false; G.idle = true; startTimer();
+}
+
+/* ---------- Ultimate (ผู้เล่นกด) ---------- */
+async function useUltimate() {
+  if (!G || !G.run || G.energy < 100 || G.locked || G.busy || paused || modalOpen) return;
+  G.busy = true; G.energy = 0; G.timer.on = false;
+  const d = G.sd[G.stage]; d.ult++;
+  const room = Math.max(0, boss.hp - (boss.minHP || 0));
+  await playUltimate(STAGES[G.stage].ult, Math.min(boss.max * .2, room), false);
+  d.bonus += 20; floatNum(hero.x, GROUND - 240, 'ULTIMATE BONUS +20', '#ffd24a', 28);
+  G.busy = false; G.timer.on = true;
+}
+
+/* ---------- ด่าน: เริ่ม / จบ / รางวัล ---------- */
+async function beginStage(i) {
+  closeModal(); G.busy = true; G.locked = true; G.idle = false;
+  const prev = G.sd[i]; G.sd[i] = blankStage(prev.attempts + 1);
+  G.sd[i].armedIn = i === 0 ? null : (G.armedCarry[i] || null); G.armed = G.sd[i].armedIn;
+  G.stage = i; G.qi = 0; G.streak = 0; G.energy = 30; G.timer = { on: false, left: 0, max: 0 };
+  const st = STAGES[i];
+  setupStage(i); boss.x = BOSS_X + 300; hero.x = HERO_X - 360;
+  $('#lv-title').textContent = st.title; setText($('#bs-name'), st.boss); setText($('#pl-name'), G.player.name);
+  buildQuestion(); show('game'); Snd.setIntensity(0); Snd.startMusic();
+  banner(st.boss, st.col, 'STAGE ' + st.id + ' · ' + st.era); sfx.ping();
+  const walkIn = heroWalkTo(HERO_X, 1100, false);
+  boss.ghostOn = true; boss.ghostCol = st.col; sfx.whoosh();
+  await tween(boss, { x: BOSS_X }, 900, E.out); boss.ghostOn = false; boss.aura = 1; shake(10); sfx.heavy(); ring(boss.x, GROUND + 6, st.col, { dr: 700, w: 9, life: .5, sq: .2 });
+  await walkIn; boss.expr = 'angry'; await sleep(500); boss.aura = 0;
+  banner('FIGHT!', st.col, 'ตอบถูกเพื่อโจมตี!'); await sleep(700);
+  await revealQuestion(); G.busy = false; G.idle = true; startTimer();
+}
+function showBrief(i) {
+  const st = STAGES[i], body = h('div');
+  body.appendChild(h('p', '', st.era));
+  body.appendChild(h('p', '', st.story)); body.appendChild(h('p', 'note', st.storyTh));
+  body.appendChild(h('p', '', 'ภารกิจ (Quests):'));
+  st.quests.forEach(q => { const r = h('div', 'qrow'); r.appendChild(h('span', 'st', q.main ? '★' : '☆')); const t = h('div'); t.appendChild(h('strong', '', q.name)); t.appendChild(h('div', 'note', q.desc + ' — รางวัล: ' + (q.reward.device ? DEVICES[q.reward.device].icon + ' ' + DEVICES[q.reward.device].name + ' ' : '') + '+' + q.reward.pts + ' โบนัส')); r.appendChild(t); body.appendChild(r); });
+  modal(st.title, body, [{ text: 'เริ่มด่าน ▶', fn: () => beginStage(i) }]);
+}
+function evalQuests() {
+  const i = G.stage, d = G.sd[i], st = STAGES[i];
+  st.quests.forEach(q => {
+    const c = q.cond; let ok = false;
+    if (c.k === 'clear') ok = d.cleared; else if (c.k === 'combo') ok = d.cleared && d.maxCombo >= c.n; else if (c.k === 'correct') ok = d.cleared && d.correct >= c.n;
+    G.questDone[q.id] = ok;
+  });
+}
+async function endStage() {
+  G.busy = true; G.idle = false; G.timer.on = false;
+  const i = G.stage, d = G.sd[i], st = STAGES[i];
+  const cleared = d.correct >= 3 && hero.hp > 0;
+  if (cleared) {
+    boss.minHP = 0; d.cleared = true;
+    await playUltimate(i === 2 ? 'celestial' : st.ult, Math.max(boss.hp, 1), true);
+    await bossDefeat(); await heroVictory();
+    banner('STAGE CLEAR!', '#ffd24a', st.title); sfx.win();
+    G.armedCarry[i + 1] = G.armed;
+    evalQuests(); await sleep(900);
+    showReward();
+  } else {
+    if (hero.hp > 0) { banner('STAGE FAILED', '#ff4a5e', 'ตอบถูกไม่ถึง 3 ข้อ'); boss.expr = 'angry'; await heroKO(); } else banner('GAME OVER', '#ff4a5e', 'HP หมด');
+    await sleep(900);
+    showGameOver();
+  }
+}
+function showReward() {
+  const i = G.stage, st = STAGES[i], d = G.sd[i];
+  const body = h('div'); body.appendChild(h('p', '', 'ตอบถูก ' + d.correct + '/5 ข้อ · คะแนนหลัก ' + d.main + ' · โบนัส +' + d.bonus));
+  const btns = [], claimBtns = [];
+  const nextBtn = { text: i < 2 ? 'Next Stage ▶' : 'Return to Present 🌀', id: 'btn-after', disabled: true, fn: async () => { closeModal(); if (i < 2) { await walkJourney(i + 1); await eraJump(i + 1); showBrief(i + 1); } else finishAdventure(); } };
+  const refresh = () => { const nb = $('#btn-after'); if (nb) nb.disabled = !claimBtns.every(c => c.done()); };
+  st.quests.forEach(q => {
+    const r = h('div', 'qrow'), done = !!G.questDone[q.id];
+    r.appendChild(h('span', 'st ' + (done ? 'ok' : 'no'), done ? '✔' : '✘'));
+    const t = h('div'); t.appendChild(h('strong', '', q.name + (q.main ? ' (ภารกิจหลัก)' : '')));
+    t.appendChild(h('div', 'note', q.desc + (done ? '' : ' — ยังไม่สำเร็จ'))); r.appendChild(t); body.appendChild(r);
+    if (done) {
+      const lab = q.reward.device ? 'Collect Mystery Device: ' + DEVICES[q.reward.device].icon + ' ' + DEVICES[q.reward.device].name : 'Claim Reward: +' + q.reward.pts + ' โบนัส';
+      const b = h('button', 'btn blue', lab); b.type = 'button'; b.style.margin = '6px 6px 0 0';
+      const rec = { done: () => !!G.claimed[q.id] };
+      b.addEventListener('click', () => { if (G.claimed[q.id]) return; G.claimed[q.id] = true; if (q.reward.device) G.devices[q.reward.device] = true; d.bonus += q.reward.pts; d.questBonus += q.reward.pts; sfx.claim(); b.disabled = true; b.textContent = '✔ ' + lab; refresh(); updateHUD(); });
+      if (G.claimed[q.id]) { b.disabled = true; }
+      claimBtns.push(rec); body.appendChild(b);
+    }
+  });
+  const wi = i + 1, w = WEAPONS[wi];
+  body.appendChild(h('p', '', 'อาวุธใหม่: ' + w.icon + ' ' + w.name + ' — ' + w.th));
+  const wb = h('button', 'btn', 'Unlock Weapon: ' + w.icon + ' ' + w.name); wb.type = 'button';
+  const wrec = { done: () => G.weaponClaimed[wi] };
+  wb.addEventListener('click', () => { if (G.weaponClaimed[wi]) return; G.weaponClaimed[wi] = true; G.weapons[wi] = true; sfx.claim(); wb.disabled = true; wb.textContent = '✔ ปลดล็อกแล้ว'; refresh(); });
+  claimBtns.push(wrec); body.appendChild(wb);
+  modal('VICTORY! ' + st.boss, body, [nextBtn]);
+}
+function showGameOver() {
+  const body = h('div'); const d = G.sd[G.stage];
+  body.appendChild(h('p', '', 'ด่านนี้ยังไม่ผ่าน: ตอบถูก ' + d.correct + '/5 ข้อ ต้องถูกอย่างน้อย 3 ข้อและ HP ต้องไม่หมด'));
+  body.appendChild(h('p', 'note', 'เล่นด่านนี้ใหม่ได้ คะแนนของด่านนี้จะเริ่มนับใหม่ ด่านก่อนหน้ายังอยู่ครบ'));
+  modal('GAME OVER', body, [
+    { text: 'เล่นด่านนี้ใหม่', cls: 'blue', fn: () => { closeModal(); beginStage(G.stage); } },
+    { text: 'ดูสรุปผล', cls: 'ghost', fn: () => { closeModal(); finalizeSession('lose'); showResult('lose'); } },
+    { text: 'กลับหน้าหลัก', cls: 'ghost', fn: () => goHome(true) }
+  ]);
+}
+async function finishAdventure() {
+  show('game'); G.busy = true;
+  const all = Object.keys(DEVICES).every(k => G.devices[k]);
+  if (all) {
+    banner('ASSEMBLING THE TIME DEVICE', '#ffd24a', 'ประกอบอุปกรณ์ข้ามเวลา'); await assemblyCinematic();
+    banner('TIME PORTAL OPENED!', '#ffd24a', 'ประตูเวลาเปิดแล้ว'); portal.x = 700; portal.y = GROUND - 110; await portalOpen(1000);
+    await enterPortal(); G.portal = true;
+    const fm = G.sd[2].finalMult || 1, pb = 50 * fm; G.portalBonus = pb; G.sd[2].bonus += pb;
+    if (G.sd[2].finalMult) { G.sd[2].multUses++; G.sd[2].multBase += 50; G.sd[2].multBonus += pb; }
+    banner('WELCOME BACK TO THE PRESENT!', '#3df0a0', 'โบนัสกลับสู่ปัจจุบัน +' + pb + (fm > 1 ? ' (×' + fm + ')' : '')); sfx.win();
+    await sleep(2200);
+  } else { banner('PORTAL UNSTABLE', '#ff4a5e', 'อุปกรณ์ยังไม่ครบ ประตูเวลาไม่เสถียร'); await portalUnstable(); await sleep(900); }
+  Snd.stopMusic(); G.busy = false;
+  finalizeSession(G.portal ? 'win' : 'lose'); showResult(G.portal ? 'win' : 'lose');
+}
+
+/* ---------- บันทึก Session ---------- */
+function finalizeSession(result) {
+  if (!G || !G.run || G.saved) return;
+  if (result === 'quit' && T('answered') === 0) { G.saved = true; return; }
+  G.saved = true;
+  const p = G.player, before = pStats(p).total;
+  const main = T('main'), bonus = T('bonus') , total = main + bonus, correct = T('correct'), wrong = T('wrong');
+  const quests = Object.keys(G.questDone).filter(k => G.questDone[k] && G.claimed[k]);
+  const s = {
+    sid: G.sid, pid: p.id, name: p.name, start: G.start, end: Date.now(), diff: G.dkey, main, bonus, total, before, after: before + total,
+    totalQ: TOTAL_Q, answered: correct + wrong, correct, wrong, acc: Math.round(correct / TOTAL_Q * 100),
+    multUses: T('multUses'), multBase: T('multBase'), multBonus: T('multBonus'), multMissed: T('multMissed'),
+    quests, devices: Object.keys(G.devices), weapons: G.weapons.filter(Boolean).length, stages: G.sd.filter(x => x.cleared).length,
+    portal: !!G.portal, result, pass: main >= PASS_MAIN, maxCombo: Math.max(...G.sd.map(x => x.maxCombo)),
+    topics: [].concat(...G.sd.map(x => x.topicsWrong))
+  };
+  p.sessions.push(s); if (p.sessions.length > 300) p.sessions.shift();
+  DB.prefs = { name: p.name, diff: G.dkey }; G.lastSession = s; saveDB();
+}
+
+/* ---------- หน้าสรุปผล ---------- */
+function showResult(result) {
+  const s = G.lastSession; if (!s) { finalizeSession(result); }
+  const S = G.lastSession || { main: T('main'), bonus: T('bonus'), total: T('main') + T('bonus'), correct: T('correct'), wrong: T('wrong'), maxCombo: 0, pass: false, topics: [], quests: [], devices: [], weapons: 1, stages: 0, portal: false, after: 0 };
+  Snd.stopMusic();
+  setText($('#res-who'), 'ผู้เล่น: ' + G.player.name + ' (ID ' + G.player.id + ') · ' + dtStr(Date.now()) + ' · ' + DIFF[G.dkey].label);
+  setText($('#res-score'), S.main); setText($('#res-bonus'), '+' + S.bonus + (S.multUses ? ' (ตัวคูณใช้ ' + S.multUses + ' ครั้ง: ' + S.multBase + '→' + S.multBonus + ')' : ''));
+  setText($('#res-total'), S.total);
+  setText($('#res-correct'), S.correct); setText($('#res-wrong'), S.wrong);
+  const pct = Math.round(S.correct / TOTAL_Q * 100); setText($('#res-pct'), pct + '%'); setText($('#res-streak'), S.maxCombo);
+  const v = $('#res-verdict'); v.textContent = S.pass ? 'ผ่านเกณฑ์ 70% (' + S.main + '/150) 🎉' : 'ยังไม่ผ่านเกณฑ์ (ต้อง ' + PASS_MAIN + '/150)'; v.className = 'verdict ' + (S.pass ? 'pass' : 'fail');
+  let msg;
+  if (S.portal && S.pass) msg = 'ยอดเยี่ยม! คุณซ่อมเครื่องข้ามเวลาครบ เปิด Time Portal และกลับสู่ปัจจุบันสำเร็จ พร้อมคะแนนผ่านเกณฑ์';
+  else if (S.portal) msg = 'คุณกลับสู่ปัจจุบันได้แล้ว แต่คะแนนยังไม่ถึง 70% ลองทบทวนหัวข้อด้านล่างแล้วเล่นใหม่';
+  else if (S.stages === 3) msg = 'ผ่านครบ 3 ด่านแต่ชิ้นส่วนอุปกรณ์ไม่ครบ (ต้องทำภารกิจย่อยให้สำเร็จด้วย) ประตูเวลาจึงยังไม่เปิด';
+  else msg = 'การเดินทางยังไม่จบ ผ่านด่านได้ ' + S.stages + '/3 ด่าน ลองใหม่อีกครั้ง!';
+  setText($('#res-msg'), msg);
+  const rows = $('#res-rows'); rows.innerHTML = '';
+  STAGES.forEach((st, i) => { const d = G.sd[i], tr = h('tr'); const stt = d.cleared ? '✔ ผ่าน' : d.attempts ? '✘ ไม่ผ่าน' : '– ยังไม่เล่น';
+    [['Stage ' + st.id, ''], [d.correct + '/5', 'n'], [String(d.main), 'n'], ['+' + d.bonus, 'n'], [stt, '']].forEach(c => tr.appendChild(h('td', c[1], c[0]))); rows.appendChild(tr); });
+  const dv = Object.keys(G.devices).map(k => DEVICES[k].icon).join(' ') || '-';
+  setText($('#res-extra'), 'ด่านที่ผ่าน ' + S.stages + '/3 · อาวุธ ' + S.weapons + '/4 · ชิ้นส่วน ' + Object.keys(G.devices).length + '/5 (' + dv + ') · ภารกิจสำเร็จ ' + S.quests.length + '/6 · Time Portal: ' + (S.portal ? 'เปิดแล้ว ✔' : 'ยังไม่เปิด ✘'));
+  const adv = $('#res-advice'); adv.innerHTML = '';
+  const cnt = {}; (S.topics || []).forEach(t => cnt[t] = (cnt[t] || 0) + 1);
+  const keys = Object.keys(cnt).sort((a, b) => cnt[b] - cnt[a]);
+  if (keys.length) { adv.appendChild(h('p', '', '📚 หัวข้อที่ควรทบทวน:')); const ul = h('ul', 'advice'); keys.forEach(k => ul.appendChild(h('li', '', TOPIC_TH[k] + ' (ผิด ' + cnt[k] + ' ข้อ)'))); adv.appendChild(ul); }
+  else adv.appendChild(h('p', 'ok', '🎓 ไม่มีหัวข้อที่ตอบผิด เยี่ยมมาก!'));
+  const ranked = Object.values(DB.players).map(p => ({ p, t: pStats(p).total })).sort((a, b) => b.t - a.t);
+  const rk = ranked.findIndex(x => x.p.id === G.player.id) + 1;
+  setText($('#res-cum'), 'คะแนนสะสมของ ' + G.player.name + ': ' + fmt(S.before || 0) + ' → ' + fmt(S.after || 0) + ' · อันดับ ' + (rk || '-') + '/' + ranked.length + (S.sid ? ' · บันทึก Session ' + S.sid + ' แล้ว' : ''));
+  show('result');
+}
+
+/* ---------- ตารางคะแนน / ประวัติ / CSV ---------- */
+let boardFrom = 'start';
+function showBoard(from) {
+  boardFrom = from || 'start'; DB = loadDB();
+  const rows = $('#board-rows'); rows.innerHTML = '';
+  const list = Object.values(DB.players).map(p => ({ p, a: pStats(p) })).sort((x, y) => y.a.total - x.a.total);
+  $('#board-empty').hidden = list.length > 0; $('#board-tbl').hidden = list.length === 0; $('#hist-panel').hidden = true;
+  list.forEach((x, i) => {
+    const tr = h('tr'); const nm = h('td'); const b = h('button', 'who', x.p.name); b.type = 'button'; b.addEventListener('click', () => showHistory(x.p.id)); nm.appendChild(b); nm.appendChild(h('span', 'note', ' ' + x.p.id));
+    tr.appendChild(h('td', '', String(i + 1))); tr.appendChild(nm);
+    [fmt(x.a.total), fmt(x.a.best), String(x.a.plays), x.a.correct + '/' + x.a.wrong, x.a.acc + '%', String(x.a.maxCombo), String(x.a.quests)].forEach(t => tr.appendChild(h('td', 'n', t)));
+    rows.appendChild(tr);
+  });
+  show('board');
+}
+function showHistory(pid) {
+  const p = DB.players[pid]; if (!p) return;
+  $('#hist-title').textContent = 'ประวัติการเล่นของ ' + p.name + ' (' + p.id + ')';
+  const rows = $('#hist-rows'); rows.innerHTML = '';
+  p.sessions.slice().reverse().forEach(s => {
+    const tr = h('tr'); [s.sid, dtStr(s.start), DIFF[s.diff] ? DIFF[s.diff].label : s.diff].forEach(t => tr.appendChild(h('td', '', t)));
+    [s.main + '/150', '+' + s.bonus, s.correct + '/' + s.wrong, s.acc + '%'].forEach(t => tr.appendChild(h('td', 'n', t)));
+    tr.appendChild(h('td', '', (s.result === 'win' ? 'ชนะ' : s.result === 'lose' ? 'แพ้' : 'ออกก่อนจบ') + (s.pass ? ' · ผ่าน' : '')));
+    rows.appendChild(tr);
+  });
+  $('#hist-panel').hidden = false; $('#hist-panel').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+function exportCSV() {
+  const cols = ['sid', 'pid', 'name', 'startTime', 'endTime', 'difficulty', 'mainScore', 'bonusScore', 'totalScore', 'cumulativeBefore', 'cumulativeAfter', 'questions', 'correct', 'wrong', 'accuracyPct', 'multiplierUses', 'multiplierBaseBonus', 'multiplierBonus', 'quests', 'devices', 'stagesCleared', 'weapons', 'portalOpened', 'result', 'passed', 'maxCombo'];
+  const esc = v => '"' + String(v).replace(/"/g, '""') + '"';
+  const lines = [cols.join(',')];
+  Object.values(DB.players).forEach(p => p.sessions.forEach(s => lines.push([s.sid, s.pid, s.name, new Date(s.start).toISOString(), new Date(s.end).toISOString(), s.diff, s.main, s.bonus, s.total, s.before, s.after, s.totalQ, s.correct, s.wrong, s.acc, s.multUses, s.multBase, s.multBonus, s.quests.join('|'), s.devices.join('|'), s.stages, s.weapons, s.portal, s.result, s.pass, s.maxCombo].map(esc).join(','))));
+  const blob = new Blob(['\ufeff' + lines.join('\n')], { type: 'text/csv;charset=utf-8' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'time_travelers_records.csv'; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+}
+
+/* ---------- Pause / Inventory / Home ---------- */
+function showInventory(fromPause) {
+  const body = h('div'); body.appendChild(h('p', '', '🧩 Mystery Time Device'));
+  const g1 = h('div', 'inv'); Object.keys(DEVICES).forEach(k => { const d = DEVICES[k], it = h('div', 'it ' + (G.devices[k] ? 'have' : 'off')); it.appendChild(h('div', 'ic', d.icon)); it.appendChild(h('div', '', d.name)); it.appendChild(h('div', 'note', G.devices[k] ? 'ได้รับแล้ว ✔' : 'ยังไม่ได้')); g1.appendChild(it); });
+  body.appendChild(g1); body.appendChild(h('p', '', '⚔️ Weapons'));
+  const g2 = h('div', 'inv'), wi = weaponIndex(); WEAPONS.forEach((w, i) => { const it = h('div', 'it ' + (G.weapons[i] ? 'have' : 'off')); it.appendChild(h('div', 'ic', w.icon)); it.appendChild(h('div', '', w.name)); it.appendChild(h('div', 'note', G.weapons[i] ? (i === wi ? 'ใช้อยู่' : 'ปลดล็อกแล้ว') : '🔒 ยังไม่ปลดล็อก')); g2.appendChild(it); });
+  body.appendChild(g2);
+  body.appendChild(h('p', 'note', 'คะแนนหลัก ' + T('main') + '/150 · โบนัส +' + T('bonus') + ' · ถูก ' + T('correct') + ' ผิด ' + T('wrong')));
+  modal('Inventory', body, [{ text: fromPause ? 'กลับ' : 'ปิด', fn: () => fromPause ? pauseGame() : closeModal() }]);
+}
+function pauseGame() {
+  if (!G || !G.run || $('#screen-game').hidden) return;
+  if (modalOpen && !$('#btn-resume')) return;
+  const body = h('div'); body.appendChild(h('p', 'center', 'เกมหยุดชั่วคราว เวลาและการต่อสู้หยุดอยู่'));
+  Snd.stopMusic();
+  modal('⏸ Paused', body, [
+    { text: 'Resume ▶', id: 'btn-resume', fn: () => { closeModal(); Snd.startMusic(); } },
+    { text: 'Inventory', cls: 'blue', fn: () => showInventory(true) },
+    { text: 'Restart Game', cls: 'ghost', fn: () => confirmModal('เริ่มเกมใหม่ทั้งหมด? รอบนี้จะถูกบันทึกเป็น "ออกก่อนจบ"', () => restartGame(), pauseGame) },
+    { text: 'กลับหน้าหลัก', cls: 'ghost', fn: () => confirmModal('กลับหน้าหลัก? รอบนี้จะถูกบันทึกเป็น "ออกก่อนจบ"', () => goHome(true), pauseGame) }
+  ]);
+}
+function goHome(save) {
+  if (G && G.run) { if (save && !G.saved) finalizeSession(G.sd.some(s => s.cleared) && false ? 'win' : 'quit'); G.run = false; }
+  tasks.length = 0; Snd.stopMusic(); closeModal(); setDodgeUI(false); updateNameInfo(); show('start');
+}
+function restartGame() {
+  const name = G.player.name; goHome(true); $('#pname').value = name; startRun();
+}
+
+/* ---------- เริ่มเกม / โปรไฟล์ ---------- */
+function renderDiffs() {
+  const box = $('#diffs'); box.innerHTML = '';
+  Object.keys(DIFF).forEach(k => { const d = DIFF[k], b = h('button', 'diff', d.label); b.type = 'button'; b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', String(k === diffKey)); b.appendChild(h('small', '', d.sub));
+    b.addEventListener('click', () => { diffKey = k; D = DIFF[k]; renderDiffs(); sfx.tick(); }); box.appendChild(b); });
+}
+function updateNameInfo() {
+  const n = normName($('#pname').value), info = $('#name-info');
+  if (!n) { info.textContent = ''; return; }
+  const p = findPlayer(n);
+  info.textContent = p ? 'โปรไฟล์เดิม ID ' + p.id + ' · คะแนนสะสม ' + fmt(pStats(p).total) + ' · เล่นแล้ว ' + p.sessions.length + ' ครั้ง' : 'ผู้เล่นใหม่: จะสร้างโปรไฟล์ให้ตอนเริ่มเกม';
+}
+function startRun() {
+  const input = $('#pname'), v = normName(input.value);
+  if (!v) { $('#name-err').textContent = 'กรุณาพิมพ์ชื่อนักเรียนก่อนเริ่มเกม'; input.setAttribute('aria-invalid', 'true'); input.focus(); return; }
+  input.removeAttribute('aria-invalid'); $('#name-err').textContent = '';
+  Snd.init(); sfx.tick();
+  let p = findPlayer(v);
+  if (!p) { DB.seq++; p = { id: 'P' + String(DB.seq).padStart(4, '0'), name: v, created: Date.now(), sessions: [] }; DB.players[p.id] = p; }
+  DB.prefs = { name: v, diff: diffKey }; saveDB();
+  D = DIFF[diffKey]; newRun(p);
+  const body = h('div');
+  body.appendChild(h('p', '', 'You are a time traveler. Your time device broke and you are stuck in the past! Collect 5 Mystery Time Device parts and use the Present Perfect to defeat the Time Guardians.'));
+  body.appendChild(h('p', 'note', 'คุณคือนักเดินทางข้ามเวลาที่ติดอยู่ในอดีต อุปกรณ์ข้ามเวลาพังแล้ว! รวบรวมชิ้นส่วน 5 ชิ้นด้วยพลัง Present Perfect แล้วเปิด Time Portal กลับบ้าน'));
+  body.appendChild(h('p', 'note', 'ระดับ: ' + D.label + ' · ผู้เล่น: ' + p.name + ' (' + p.id + ')'));
+  show('game'); setupStage(0); setText($('#pl-name'), p.name); setText($('#bs-name'), STAGES[0].boss); $('#lv-title').textContent = STAGES[0].title; updateHUD();
+  modal('TIME TRAVELERS', body, [{ text: 'เริ่มผจญภัย ▶', fn: () => showBrief(0) }]);
+}
+
+/* ---------- วงจรหลัก ---------- */
+let lastT = performance.now();
+function frame(now) {
+  const raw = Math.min(50, now - lastT); lastT = now;
+  let sc = slow; if (hitstopMs > 0) { hitstopMs -= raw; sc = .05; }
+  const dt = paused ? 0 : raw * sc * SPEED;
+  if (dt > 0) {
+    tNow += dt / 1000; stepTasks(dt); updateFx(dt);
+    if (hero.walk) { const s = Math.sin(tNow * 11), p = hero.p; p.lF = 34 * s; p.sF = p.lF * .3 - 8 * Math.abs(s); p.lB = -34 * s; p.sB = p.lB * .3 - 8; p.aF = -40 * s + 10; p.fF = p.aF + 40; p.aB = 40 * s + 10; p.fB = p.aB + 30; p.lean = 12; p.wa = 100; hero.y = Math.abs(s) * 5; }
+    if (cam.follow) cam.x = hero.x + 140;
+    if (G && G.run && G.idle && hero.hp > 0 && !modalOpen) { boss.ox = Math.sin(tNow * 1.3) * 10; hero.ox = Math.sin(tNow * 1.7 + 1) * 5; }
+    if (G && G.run && G.timer.on && !G.busy) {
+      G.timer.left -= raw * SPEED;
+      const sec = Math.ceil(G.timer.left / 1000);
+      if (sec <= 5 && sec !== G.lastWarn && sec > 0) { G.lastWarn = sec; sfx.warn(); }
+      if (G.timer.left <= 0) { G.timer.left = 0; G.timer.on = false; submitAnswer(false, true); }
+    }
+  }
+  if (!$('#screen-game').hidden) { renderBattle(); renderFx(tNow); updateHUD(); }
+  requestAnimationFrame(frame);
+}
+
+/* ---------- ผูกปุ่ม/คีย์บอร์ด ---------- */
+$('#btn-start').addEventListener('click', startRun);
+$('#pname').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); startRun(); } });
+$('#pname').addEventListener('input', () => { $('#name-err').textContent = ''; $('#pname').removeAttribute('aria-invalid'); updateNameInfo(); });
+$('#btn-board').addEventListener('click', () => showBoard('start'));
+$('#btn-board2').addEventListener('click', () => showBoard('result'));
+$('#btn-board-back').addEventListener('click', () => show(boardFrom === 'result' && G && G.lastSession ? 'result' : 'start'));
+$('#btn-csv').addEventListener('click', () => { if (!Object.keys(DB.players).length) { alert('ยังไม่มีข้อมูลให้ดาวน์โหลด'); return; } exportCSV(); });
+$('#btn-clear').addEventListener('click', () => confirmModal('ลบประวัติและคะแนนของผู้เล่นทุกคนในเครื่องนี้? การลบนี้ย้อนกลับไม่ได้', () => { DB = { players: {}, seq: 0, prefs: {} }; saveDB(); closeModal(); showBoard(boardFrom); }));
+$('#btn-again').addEventListener('click', () => { G.run = false; updateNameInfo(); show('start'); $('#pname').focus(); });
+$('#btn-dodge').addEventListener('click', pressDodge);
+$('#btn-ult').addEventListener('click', useUltimate);
+$('#btn-pause').addEventListener('click', pauseGame);
+$('#btn-inv').addEventListener('click', () => { if (G && G.run && !modalOpen) showInventory(false); });
+$('#mute').addEventListener('click', () => { const m = !Snd.muted; Snd.setMuted(m); $('#mute').textContent = m ? '🔇' : '🔊'; $('#mute').setAttribute('aria-pressed', String(m)); if (!m) { Snd.init(); sfx.tick(); } });
+$('#vol-mus').addEventListener('input', e => { Snd.init(); Snd.setMusVol(e.target.value / 100); });
+$('#vol-sfx').addEventListener('input', e => { Snd.init(); Snd.setSfxVol(e.target.value / 100); sfx.tick(); });
+document.addEventListener('keydown', e => {
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+  const gameOn = G && G.run && !$('#screen-game').hidden;
+  if (!gameOn) return;
+  const tgt = e.target && e.target.tagName;
+  if (e.key === 'p' || e.key === 'P') { if (tgt === 'INPUT') return; if (modalOpen && $('#btn-resume')) { closeModal(); Snd.startMusic(); } else pauseGame(); return; }
+  if (modalOpen || tgt === 'INPUT') return;
+  if (e.code === 'Space') { e.preventDefault(); pressDodge(); return; }
+  if (e.key === 'u' || e.key === 'U') { useUltimate(); return; }
+  if (!G.locked && G.mcBtns.length) {
+    const k = 'abcd'.indexOf(e.key.toLowerCase()), n = parseInt(e.key, 10) - 1, i = k >= 0 ? k : n;
+    if (i >= 0 && i < G.mcBtns.length) { const b = G.mcBtns[i]; if (b && !b.disabled) b.click(); }
+  }
+});
+document.addEventListener('visibilitychange', () => { if (document.hidden && G && G.run && !$('#screen-game').hidden && !modalOpen) pauseGame(); });
+window.addEventListener('orientationchange', () => setTimeout(sizeCanvas, 300));
+
+/* ---------- เริ่มต้น ---------- */
+(function init() {
+  if (DB.prefs && DB.prefs.diff && DIFF[DB.prefs.diff]) { diffKey = DB.prefs.diff; D = DIFF[diffKey]; }
+  if (DB.prefs && DB.prefs.name) $('#pname').value = DB.prefs.name;
+  renderDiffs(); updateNameInfo(); sizeCanvas();
+  try { document.fonts && document.fonts.load("900 20px FkBurger").catch(() => { }); } catch (e) { }
+  requestAnimationFrame(frame);
+})();
+
+</script>
+</body>
+</html>
